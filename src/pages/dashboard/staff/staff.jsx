@@ -177,6 +177,20 @@ export function Staff() {
                     <td className={className}>
                       <div>{dob}</div>
                     </td>
+                    <Link to={`delete/${id}`}>
+                      <Button
+                        variant={"gradient"}
+                        color={"blue"}
+                        className="flex items-center px-3 py-1 capitalize"
+                      >
+                        <Typography
+                          color="inherit"
+                          className="font-medium capitalize"
+                        >
+                          Delete
+                        </Typography>
+                      </Button>
+                    </Link>
 
                     <td className={className}>
                       <div>{String(active)}</div>
