@@ -10,7 +10,7 @@ import {
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Staff } from "./pages/dashboard/staff";
-import StaffDetails from "./pages/dashboard/staffDetails";
+import StaffEdit from "./pages/dashboard/staffEdit";
 import StaffAdd from "./pages/dashboard/staffAdd";
 import Customer from "./pages/dashboard/custormer";
 import Warehouses from "./pages/dashboard/warehouses";
@@ -30,7 +30,7 @@ export const routes = [
       {
         notOnSidebar: true,
         path: "/staff/:id",
-        element: <StaffDetails />,
+        element: <StaffEdit />,
       },
       {
         icon: <UserGroupIcon {...icon} />,

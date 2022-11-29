@@ -58,7 +58,7 @@ function SelectMuiField(props) {
         {...field} // field có 4 thuộc tính là name , value, onChange,onBlur
         disabled={disabled}
         className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
-          showError ? "border-[2px] border-red-500" : ""
+          showError ? "border-[2px] border-red-500 focus:outline-none" : ""
         }`}
       >
         <option value="">--{defaultOp}--</option>

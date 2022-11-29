@@ -39,7 +39,7 @@ const validationShema = Yup.object().shape({
   commune: Yup.string().required("This field is required"),
   address: Yup.string().required("This field is required"),
 });
-function StaffDetails() {
+function StaffEdit() {
   const handleSubmit = (value) => {
     // console.log(value);
   };
@@ -188,4 +188,4 @@ function StaffDetails() {
   );
 }
 
-export default StaffDetails;
+export default StaffEdit;

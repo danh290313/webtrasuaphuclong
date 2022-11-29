@@ -37,7 +37,9 @@ function InputField(props) {
         disabled={disabled}
         placeholder={placeholder}
         className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
-          showError ? "border-[2px] border-red-500" : ""
+          showError
+            ? "border-[2px] border-red-500 focus:border-red-500 focus:outline-none"
+            : ""
         }`}
         autoFocus={autoFocus}
       />

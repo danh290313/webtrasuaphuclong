@@ -34,7 +34,7 @@ function DatePickerField(props) {
         disabled={disabled}
         type="date"
         className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
-          showError ? "border-[2px] border-red-500" : ""
+          showError ? "border-[2px] border-red-500 focus:outline-none" : ""
         }`}
       />
       {showError && <span className="text-red-500">{errors[name]}</span>}
