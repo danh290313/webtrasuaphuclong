@@ -10,39 +10,37 @@ import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 const options = [
-  { id: "1", value: "nam" },
-  { id: "2", value: "nu" },
+  { id: "1", value: "Trà sữa" },
+  { id: "2", value: "Cà phê" },
+  { id: "2", value: "Nước ép" },
 ];
 const initialValues = {
-  fullname: "tu",
-  sex: "",
-  phoneNumber: "022222222",
-  "identity-card-number": "",
-  address: "",
-  birthday: "",
-  email: "",
-  province: "",
-  district: "",
-  commune: "",
-  address: "",
+  id: "123",
+  name: "do uong",
+  description: "des",
+  price: "40000",
+  discount: "45",
+  sale_on_days: "",
+  image: "",
   active: true,
+  type: "2",
 };
 const validationShema = Yup.object().shape({
-  phoneNumber: Yup.number().required("This field is required"),
-  fullname: Yup.string()
-    .min(2, "Name must be at least 2 characters")
+  name: Yup.string()
+    .min(5, "Name must be at least 5 characters")
     .required("This field is required"),
-  sex: Yup.string().required("This field is required"),
+  description: Yup.string().min(5, "Name must be at least 10 characters"),
   "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  birthday: Yup.string().required("This field is required"),
-  email: Yup.string()
-    .email("Email must included '@'")
-    .required("This field is required"),
-
-  address: Yup.string().required("This field is required"),
-  hometown: Yup.string().required("This field is required"),
+  price: Yup.string()
+    .required("This field is required")
+    .matches(/^[0-9]+$/, "Number only"),
+  discount: Yup.string().matches(/^[0-9]+$/, "Number only"),
+  sale_on_days: Yup.string(),
+  image: Yup.string().required("This field is required"),
+  active: Yup.boolean(),
+  type: Yup.string().required("This field is required"),
 });
-function StaffEdit() {
+function DrinksEdit() {
   const handleSubmit = (value) => {
     // console.log(value);
   };
@@ -64,39 +62,36 @@ function StaffEdit() {
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
-                            name="fullname"
+                            name="name"
                             component={InputField}
-                            label="Full name"
+                            label="Name"
                           />
                         </FormGroup>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="phoneNumber"
+                            name="description"
                             component={InputField}
-                            label="Phone"
+                            label="Description"
                           />
                         </FormGroup>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="sex"
-                            component={SelectField}
-                            value="value"
-                            label="Gender"
-                            options={options.value}
-                            defaultOp="Choose gender"
+                            name="discount"
+                            component={InputField}
+                            label="Discount"
                           />
                         </FormGroup>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="identity-card-number"
-                            component={InputField}
-                            label="CMND/CCCD"
+                            name="sale_on_days"
+                            component={DatePickerField}
+                            label="Sale on day"
                           />
                         </FormGroup>
                       </Grid>
@@ -104,10 +99,9 @@ function StaffEdit() {
                         <FormGroup>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Field
-                              name="birthday"
-                              component={DatePickerField}
-                              label="Day of birth"
-                              inputFormat="DD/MM/YYYY"
+                              name="image"
+                              component={InputField}
+                              label="Image"
                             />
                           </LocalizationProvider>
                         </FormGroup>
@@ -115,40 +109,11 @@ function StaffEdit() {
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="email"
-                            component={InputField}
-                            label="Email"
-                          />
-                        </FormGroup>
-                      </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="address"
-                            component={InputField}
-                            label="Address"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="hometown"
-                            component={InputField}
-                            label="Hometown"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="active"
+                            name="type"
                             component={SelectField}
-                            label="Active"
-                            value="value"
-                            //options=
-                            defaultOp="Choose Active"
+                            label="Type"
+                            options={options}
+                            defaultOp="Choose drink's type"
                           />
                         </FormGroup>
                       </Grid>
@@ -158,7 +123,7 @@ function StaffEdit() {
                             name="active"
                             component={SwitchField}
                             label="active"
-                            confirm={"Deactive this staff ?"}
+                            confirm={"Deactive this drink ?"}
                           />
                         </FormGroup>
                       </Grid>
@@ -187,4 +152,4 @@ function StaffEdit() {
   );
 }
 
-export default StaffEdit;
+export default DrinksEdit;

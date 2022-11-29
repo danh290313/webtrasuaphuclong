@@ -17,6 +17,8 @@ import CustomerAdd from "./pages/dashboard/customer/customerAdd";
 import CustomerEdit from "./pages/dashboard/customer/customerEdit";
 
 import Warehouses from "./pages/dashboard/warehouses";
+import { Drinks } from "./pages/dashboard/drinks";
+import DrinksEdit from "./pages/dashboard/drinksEdit";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -62,6 +64,17 @@ export const routes = [
         name: "customer",
         path: "/customer",
         element: <Customer />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/drinks/:id",
+        element: <DrinksEdit />,
+      },
+      {
+        icon: <UserGroupIcon {...icon} />,
+        name: "drinks",
+        path: "/drinks",
+        element: <Drinks />,
       },
       {
         icon: <UserGroupIcon {...icon} />,

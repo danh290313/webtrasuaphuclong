@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styles from "./InputField.module.scss";
+import { Input } from "@material-tailwind/react";
 InputField.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
@@ -22,14 +23,10 @@ function InputField(props) {
   const { field, form, type, label, placeholder, disabled, autoFocus } = props;
   const { name } = field;
   const { errors, touched } = form;
-
   const showError = touched[name] && errors[name]; // có message lỗi và touched=true thì trả ra true
-  // console.log('form: ', form);
-  // console.log('field: ', field);
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
-
       <input
         id={name}
         {...field} // field có 4 thuộc tính là name , value, onChange,onBlur

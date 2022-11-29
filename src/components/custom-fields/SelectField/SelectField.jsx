@@ -35,21 +35,8 @@ function SelectMuiField(props) {
   const { name } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name]; // có message lỗi và touched=true thì trả ra true
-  const handleChangeAutoComplete = (e, newvalue) => {
-    form.setFieldValue(name, newvalue ? newvalue[id] : "");
-  };
-  const handleBlurTextField = (e) => {
-    form.setTouched({ ...form.touched, [name]: true });
-    const findingOption = options.find(
-      (option) => option[value] === e.target.value
-    );
-    const idOption = findingOption
-      ? findingOption[id]
-      : field.value === ""
-      ? ""
-      : field.value;
-    form.setFieldValue(name, idOption);
-  };
+  const findOp = options.find((v) => v.id === field.value);
+
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
@@ -62,14 +49,15 @@ function SelectMuiField(props) {
         }`}
       >
         <option value="">--{defaultOp}--</option>
-        <option value="1">Nam </option>
-        <option value="2">Nữ</option>
+        {options
+          ? options.map((option, i) => (
+              <option value={option.id} selected={!!findOp}>
+                {option.value}
+              </option>
+            ))
+          : null}
       </select>
       {showError && <span className="text-red-500">{errors[name]}</span>}
-      {/* <ErrorMessage
-        name={name}
-        render={(msg) => <span className={cx("error")}>{msg}</span>}
-      /> */}
     </>
   );
 }

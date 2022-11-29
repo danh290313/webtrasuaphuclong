@@ -65,8 +65,6 @@ export function Customer() {
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
-
-      
         <div>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -95,21 +93,13 @@ export function Customer() {
             </Typography>
           </Button>
         </Link>
-
-
       </div>
       <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {[
-                  "name",
-                  "gender",
-                  "phone",
-                  "dob",
-                  "active",
-                ].map((el) => (
+                {["name", "gender", "phone", "dob", "active"].map((el) => (
                   <th
                     key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -125,77 +115,65 @@ export function Customer() {
               </tr>
             </thead>
             <tbody>
-              {customer.map(
-                (
-                  { id, 
-                    name,
-                    gender,
-                    phone,
-                    dob,
-                    active},
-                  key
-                ) => {
-                  const className = `py-3 px-5 ${
-                    key === customer.length - 1
-                      ? ""
-                      : "border-b border-blue-gray-50"
-                  }`;
+              {customer.map(({ id, name, gender, phone, dob, active }, key) => {
+                const className = `py-3 px-5 whitespace-nowrap ${
+                  key === staff.length - 1 ? "" : "border-b border-blue-gray-50"
+                }`;
 
-                  return (
-                    <tr key={key}>
-                      <td className={className}>
-                        <div>{name}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{gender}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{phone}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{dob}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{String(active)}</div>
-                      </td>
-                      <td className={className}>
-                        <div className="flex space-x-2">
-                          <Link to={id}>
-                            <Button
-                              variant={"gradient"}
-                              color={"blue"}
-                              className="flex items-center px-3 py-1 capitalize"
-                            >
-                              <Typography
-                                color="inherit"
-                                className="font-medium capitalize"
-                              >
-                                Edit
-                              </Typography>
-                            </Button>
-                          </Link>
-                          {/* </td>
-                          <td className={className}> */}
-
+                return (
+                  <tr key={key}>
+                    <td className={className}>
+                      <div>{name}</div>
+                    </td>
+                    <td className={className}>
+                      <div>{gender}</div>
+                    </td>
+                    <td className={className}>
+                      <div>{phone}</div>
+                    </td>
+                    <td className={className}>
+                      <div>{dob}</div>
+                    </td>
+                    <td className={className}>
+                      <div>{String(active)}</div>
+                    </td>
+                    <td className={className}>
+                      <div className="flex space-x-2">
+                        <Link to={id}>
                           <Button
                             variant={"gradient"}
                             color={"blue"}
                             className="flex items-center px-3 py-1 capitalize"
-                            onClick={() => handleResetPass(id)}
                           >
                             <Typography
                               color="inherit"
-                              className="whitespace-nowrap font-medium capitalize"
+                              className="font-medium capitalize"
                             >
-                              Reset pass
+                              Edit
                             </Typography>
                           </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+                        </Link>
+                        {/* </td>
+                          <td className={className}> */}
+
+                        <Button
+                          variant={"gradient"}
+                          color={"blue"}
+                          className="flex items-center px-3 py-1 capitalize"
+                          onClick={() => handleResetPass(id)}
+                        >
+                          <Typography
+                            color="inherit"
+                            className="whitespace-nowrap font-medium capitalize"
+                          >
+                            Reset pass
+                          </Typography>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>
