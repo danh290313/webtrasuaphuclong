@@ -8,14 +8,26 @@ import {
   Tooltip,
   Progress,
   Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Dialog,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 import {
+  ArrowPathIcon,
   EllipsisVerticalIcon,
   MagnifyingGlassIcon,
+  PencilSquareIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const customer = [
   {
     id: "123",
@@ -117,7 +129,7 @@ export function Customer() {
             <tbody>
               {customer.map(({ id, name, gender, phone, dob, active }, key) => {
                 const className = `py-3 px-5 whitespace-nowrap ${
-                  key === staff.length - 1 ? "" : "border-b border-blue-gray-50"
+                  key === customer.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
 
                 return (
@@ -137,55 +149,43 @@ export function Customer() {
                     <td className={className}>
                       <div>{String(active)}</div>
                     </td>
+                   
+
+                    
+
                     <td className={className}>
-                      <div className="flex space-x-2">
-                        <Link to={id}>
-                          <Link to={`delete/${id}`}>
-                            <Button
-                              variant={"gradient"}
-                              color={"blue"}
-                              className="flex items-center px-3 py-1 capitalize"
-                            >
-                              <Typography
-                                color="inherit"
-                                className="font-medium capitalize"
-                              >
-                                Delete
-                              </Typography>
-                            </Button>
-                          </Link>
+                      <div className="flex space-x-3">
 
-                          <Button
-                            variant={"gradient"}
-                            color={"blue"}
-                            className="flex items-center px-3 py-1 capitalize"
-                          >
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
-                            >
-                              Edit
-                            </Typography>
-                          </Button>
-                        </Link>
-                        {/* </td>
-                          <td className={className}> */}
-
-                        <Button
-                          variant={"gradient"}
-                          color={"blue"}
-                          className="flex items-center px-3 py-1 capitalize"
-                          onClick={() => handleResetPass(id)}
+                      <Link to={`delete/${id}`}>
+                      <Button
+                        variant={"gradient"}
+                        color={"blue"}
+                        className="flex items-center px-3 py-1 capitalize"
+                      >
+                        <Typography
+                          color="inherit"
+                          className="font-medium capitalize"
                         >
-                          <Typography
-                            color="inherit"
-                            className="whitespace-nowrap font-medium capitalize"
-                          >
-                            Reset pass
-                          </Typography>
-                        </Button>
+                          Delete
+                        </Typography>
+                      </Button>
+                    </Link>
+
+                        <Link to={id}>
+                          <Tooltip content="Edit">
+                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                          </Tooltip>
+                        </Link>
+                        <button onClick={() => handleOpen(id)}>
+                          <Tooltip content="Reset password">
+                            <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
+                          </Tooltip>
+                        </button>
                       </div>
                     </td>
+                  
+                  
+                    
                   </tr>
                 );
               })}

@@ -8,9 +8,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DatePickerField from "@/components/custom-fields/DatePickerField/DatePickerField";
 import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
+import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 const options = [
-  { id: "1", value: "nam" },
-  { id: "2", value: "nu" },
+  { id: "1", value: "Male" },
+  { id: "2", value: "Female" },
 ];
 
 const initialValues = {
@@ -97,12 +98,13 @@ function CustomerAdd() {
                         </FormGroup>
                       </Grid>
                       <Grid item xs={12} md={6}>
-                        <FormGroup >
-                          <label >
-                              <Field type="checkbox" name="active"  value="1"/>
-                                  Đang hoạt động
-                          </label>
-
+                        <FormGroup>
+                          <Field
+                            name="active"
+                            component={SwitchField}
+                            label="active"
+                            confirm={"Deactive this staff ?"}
+                          />
                         </FormGroup>
                       </Grid>
 

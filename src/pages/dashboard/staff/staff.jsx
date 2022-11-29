@@ -177,7 +177,18 @@ export function Staff() {
                     <td className={className}>
                       <div>{dob}</div>
                     </td>
-                    <Link to={`delete/${id}`}>
+
+                    <td className={className}>
+                        <div>{String(active)}</div>
+                      </td>
+
+                   
+                    
+                   
+                    <td className={className}>
+                      <div className="flex space-x-3">
+
+                      <Link to={`delete/${id}`}>
                       <Button
                         variant={"gradient"}
                         color={"blue"}
@@ -192,14 +203,9 @@ export function Staff() {
                       </Button>
                     </Link>
 
-                    <td className={className}>
-                      <div>{String(active)}</div>
-                    </td>
-                    <td className={className}>
-                      <div className="flex space-x-3">
                         <Link to={id}>
                           <Tooltip content="Edit">
-                            <PencilSquareIcon className="h-5 w-5 cursor-pointer text-light-blue-600" />
+                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
                           </Tooltip>
                         </Link>
                         <button onClick={() => handleOpen(id)}>
@@ -213,6 +219,7 @@ export function Staff() {
                   </tr>
                 );
               })}
+            
             </tbody>
           </table>
         </CardBody>

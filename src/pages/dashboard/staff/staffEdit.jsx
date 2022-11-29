@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 const options = [
-  { id: "1", value: "nam" },
-  { id: "2", value: "nu" },
+  { id: "1", value: "Male" },
+  { id: "2", value: "Female" },
 ];
 const initialValues = {
   fullname: "tu",
@@ -21,11 +21,8 @@ const initialValues = {
   address: "",
   birthday: "",
   email: "",
-  province: "",
-  district: "",
-  commune: "",
-  address: "",
-  active: true,
+  hometown: "",
+  active: "",
 };
 const validationShema = Yup.object().shape({
   phoneNumber: Yup.number().required("This field is required"),
@@ -86,7 +83,7 @@ function StaffEdit() {
                             component={SelectField}
                             value="value"
                             label="Gender"
-                            options={options.value}
+                            options={options}
                             defaultOp="Choose gender"
                           />
                         </FormGroup>
@@ -140,18 +137,7 @@ function StaffEdit() {
                           />
                         </FormGroup>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="active"
-                            component={SelectField}
-                            label="Active"
-                            value="value"
-                            //options=
-                            defaultOp="Choose Active"
-                          />
-                        </FormGroup>
-                      </Grid>
+                      
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
