@@ -62,10 +62,8 @@ function SelectMuiField(props) {
         }`}
       >
         <option value="">--{defaultOp}--</option>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+        <option value="1">Nam </option>
+        <option value="2">Nữ</option>
       </select>
       {showError && <span className="text-red-500">{errors[name]}</span>}
       {/* <ErrorMessage

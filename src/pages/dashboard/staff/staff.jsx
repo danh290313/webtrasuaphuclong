@@ -46,6 +46,10 @@ const staff = [
     hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
+    branch: {
+      id: 123,
+      name: "Binh Thuan"
+    }
   },
   {
     id: "123",
@@ -62,6 +66,7 @@ const staff = [
     name: "tu nguyen",
     gender: "male",
     address: "ho chi minh",
+    "identity-card-number": "",
     dob: "11/11/1111",
     hometown: "Binh Thuan",
     active: "true",
@@ -104,7 +109,7 @@ export function Staff() {
             className="flex items-center px-3 py-1 capitalize"
           >
             <Typography color="inherit" className="font-medium capitalize">
-              Add staff
+              Add Staff
             </Typography>
           </Button>
         </Link>
@@ -118,9 +123,7 @@ export function Staff() {
                   "name",
                   "gender",
                   "phone",
-                  "adress",
                   "dob",
-                  "home",
                   "active",
                   "",
                 ].map((el) => (
@@ -130,7 +133,7 @@ export function Staff() {
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                     className="text-[11px] font-bold uppercase text-blue-gray-400"
                     >
                       {el}
                     </Typography>
@@ -141,7 +144,7 @@ export function Staff() {
             <tbody>
               {staff.map(
                 (
-                  { active, address, dob, gender, hometown, id, name, phone },
+                  { active, dob, gender, id, name, phone },
                   key
                 ) => {
                   const className = `py-3 px-5 ${
@@ -161,15 +164,11 @@ export function Staff() {
                       <td className={className}>
                         <div>{phone}</div>
                       </td>
-                      <td className={className}>
-                        <div>{address}</div>
-                      </td>
+                      
                       <td className={className}>
                         <div>{dob}</div>
                       </td>
-                      <td className={className}>
-                        <div>{hometown}</div>
-                      </td>
+                     
                       <td className={className}>
                         <div>{String(active)}</div>
                       </td>
@@ -189,6 +188,8 @@ export function Staff() {
                               </Typography>
                             </Button>
                           </Link>
+
+
                           {/* </td>
                           <td className={className}> */}
 

@@ -9,10 +9,13 @@ import {
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Staff } from "./pages/dashboard/staff";
-import StaffEdit from "./pages/dashboard/staffEdit";
-import StaffAdd from "./pages/dashboard/staffAdd";
-import Customer from "./pages/dashboard/custormer";
+import { Staff } from "./pages/dashboard/staff/staff";
+import StaffEdit from "./pages/dashboard/staff/staffEdit";
+import StaffAdd from "./pages/dashboard/staff/staffAdd";
+import Customer from "./pages/dashboard/customer/customer";
+import CustomerAdd from "./pages/dashboard/customer/customerAdd";
+import CustomerEdit from "./pages/dashboard/customer/customerEdit";
+
 import Warehouses from "./pages/dashboard/warehouses";
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -22,22 +25,38 @@ export const routes = [
   {
     layout: "dashboard",
     pages: [
+      //staff
       {
         notOnSidebar: true,
         path: "/staff/add",
         element: <StaffAdd />,
       },
+
       {
         notOnSidebar: true,
         path: "/staff/:id",
         element: <StaffEdit />,
       },
+
       {
         icon: <UserGroupIcon {...icon} />,
         name: "staff",
         path: "/staff",
         element: <Staff />,
       },
+      //customer
+      {
+        notOnSidebar: true,
+        path: "/customer/add",
+        element: <CustomerAdd />,
+      },
+
+      {
+        notOnSidebar: true,
+        path: "/customer/:id",
+        element: <CustomerEdit />,
+      },
+
       {
         icon: <UserGroupIcon {...icon} />,
         name: "customer",

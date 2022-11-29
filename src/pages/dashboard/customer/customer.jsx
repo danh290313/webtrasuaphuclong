@@ -16,14 +16,12 @@ import {
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
-const staff = [
+const customer = [
   {
     id: "123",
     name: "tu nguyen",
     gender: "male",
-    address: "ho chi minh",
     dob: "11/11/1111",
-    hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
   },
@@ -31,9 +29,7 @@ const staff = [
     id: "123",
     name: "tu nguyen",
     gender: "male",
-    address: "ho chi minh",
     dob: "11/11/1111",
-    hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
   },
@@ -41,9 +37,7 @@ const staff = [
     id: "123",
     name: "tu nguyen",
     gender: "male",
-    address: "ho chi minh",
     dob: "11/11/1111",
-    hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
   },
@@ -51,9 +45,7 @@ const staff = [
     id: "123",
     name: "tu nguyen",
     gender: "male",
-    address: "ho chi minh",
     dob: "11/11/1111",
-    hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
   },
@@ -61,9 +53,7 @@ const staff = [
     id: "123",
     name: "tu nguyen",
     gender: "male",
-    address: "ho chi minh",
     dob: "11/11/1111",
-    hometown: "Binh Thuan",
     active: "true",
     phone: "092222222",
   },
@@ -75,6 +65,8 @@ export function Customer() {
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
+
+      
         <div>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -91,6 +83,20 @@ export function Customer() {
             />
           </div>
         </div>
+
+        <Link to="add" className="">
+          <Button
+            variant={"gradient"}
+            color={"blue"}
+            className="flex items-center px-3 py-1 capitalize"
+          >
+            <Typography color="inherit" className="font-medium capitalize">
+              Add Customer
+            </Typography>
+          </Button>
+        </Link>
+
+
       </div>
       <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -101,11 +107,8 @@ export function Customer() {
                   "name",
                   "gender",
                   "phone",
-                  "adress",
                   "dob",
-                  "home",
                   "active",
-                  "",
                 ].map((el) => (
                   <th
                     key={el}
@@ -122,13 +125,18 @@ export function Customer() {
               </tr>
             </thead>
             <tbody>
-              {staff.map(
+              {customer.map(
                 (
-                  { active, address, dob, gender, hometown, id, name, phone },
+                  { id, 
+                    name,
+                    gender,
+                    phone,
+                    dob,
+                    active},
                   key
                 ) => {
                   const className = `py-3 px-5 ${
-                    key === staff.length - 1
+                    key === customer.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
                   }`;
@@ -145,13 +153,7 @@ export function Customer() {
                         <div>{phone}</div>
                       </td>
                       <td className={className}>
-                        <div>{address}</div>
-                      </td>
-                      <td className={className}>
                         <div>{dob}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{hometown}</div>
                       </td>
                       <td className={className}>
                         <div>{String(active)}</div>

@@ -14,17 +14,17 @@ const options = [
 ];
 const initialValues = {
   fullname: "tu",
-  phoneNumber: "022222222",
   sex: "",
+  phoneNumber: "022222222",
   "identity-card-number": "",
+  address: "",
   birthday: "",
   email: "",
-  province: "",
-  district: "",
-  commune: "",
-  address: "",
+  hometown: "",
+  active: "",
 };
 const validationShema = Yup.object().shape({
+  phoneNumber: Yup.number().required("This field is required"),
   fullname: Yup.string()
     .min(2, "Name must be at least 2 characters")
     .required("This field is required"),
@@ -34,10 +34,9 @@ const validationShema = Yup.object().shape({
   email: Yup.string()
     .email("Email must included '@'")
     .required("This field is required"),
-  province: Yup.string().required("This field is required"),
-  district: Yup.string().required("This field is required"),
-  commune: Yup.string().required("This field is required"),
+  
   address: Yup.string().required("This field is required"),
+  hometown: Yup.string().required("This field is required"),
 });
 function StaffEdit() {
   const handleSubmit = (value) => {
@@ -59,7 +58,7 @@ function StaffEdit() {
               return (
                 <>
                   <Form>
-                    <Grid container spacing={2}>
+                  <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
@@ -75,7 +74,6 @@ function StaffEdit() {
                             name="phoneNumber"
                             component={InputField}
                             label="Phone"
-                            disabled
                           />
                         </FormGroup>
                       </Grid>
@@ -86,7 +84,7 @@ function StaffEdit() {
                             component={SelectField}
                             value="value"
                             label="Gender"
-                            options={options}
+                            options={options.value}
                             defaultOp="Choose gender"
                           />
                         </FormGroup>
@@ -121,48 +119,42 @@ function StaffEdit() {
                           />
                         </FormGroup>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="province"
-                            component={SelectField}
-                            label="Province"
-                            options={options}
-                            defaultOp="Choose province"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="district"
-                            component={SelectField}
-                            label="District"
-                            options={options}
-                            defaultOp="Choose district"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="commune"
-                            component={SelectField}
-                            label="Commune"
-                            options={options}
-                            defaultOp="Choose commune"
-                          />
-                        </FormGroup>
-                      </Grid>
+                      
+                      
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
                             name="address"
                             component={InputField}
-                            label="Hometown"
+                            label="Address"
                           />
                         </FormGroup>
                       </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormGroup>
+                          <Field
+                            name="hometown"
+                            component={InputField}
+                            label="Hometown"
+                  
+                          />
+                        </FormGroup>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormGroup>
+                          <Field
+                            name="active"
+                            component={SelectField}
+                            label="Active"
+                            value="value"
+                            //options=
+                            defaultOp="Choose Active"
+
+
+                          />
+                        </FormGroup>
+                      </Grid>
+
                     </Grid>
                     <Button
                       variant={"gradient"}
