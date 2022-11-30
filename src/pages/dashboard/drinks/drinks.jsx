@@ -195,6 +195,8 @@ export function Drinks() {
                           </button> */}
                         </div>
                       </td>
+
+
                       {/* diaglog reset pass */}
                     </tr>
                   );

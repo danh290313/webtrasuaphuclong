@@ -10,9 +10,8 @@ import {
   Button,
 } from "@material-tailwind/react";
 import {
-  EllipsisVerticalIcon,
   MagnifyingGlassIcon,
-  XMarkIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
@@ -20,6 +19,7 @@ const warehouses = [
   {
     id: "123",
     name: "chi nhanh da nang",
+    address: "vung tau",
     phone_number: "0922222222",
     date_opend: "11/11/1111",
     active: "true",
@@ -52,13 +52,25 @@ export function Warehouses() {
             />
           </div>
         </div>
+
+        <Link to="add" className="">
+          <Button
+            variant={"gradient"}
+            color={"blue"}
+            className="flex items-center px-3 py-1 capitalize"
+          >
+            <Typography color="inherit" className="font-medium capitalize">
+              Add Warehouse
+            </Typography>
+          </Button>
+        </Link>
       </div>
       <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {["name", "phone_number", "date opend", "active", ""].map(
+                {["name", "address", "phone_number", "date opend", "active", ""].map(
                   (el) => (
                     <th
                       key={el}
@@ -77,7 +89,7 @@ export function Warehouses() {
             </thead>
             <tbody>
               {warehouses.map(
-                ({ active, date_opend, id, name, phone_number }, key) => {
+                ({ active, date_opend, id, name, phone_number, address }, key) => {
                   const className = `py-3 px-5 ${
                     key === warehouses.length - 1
                       ? ""
@@ -90,6 +102,9 @@ export function Warehouses() {
                         <div>{name}</div>
                       </td>
                       <td className={className}>
+                        <div>{address}</div>
+                      </td>
+                      <td className={className}>
                         <div>{phone_number}</div>
                       </td>
                       <td className={className}>
@@ -100,20 +115,11 @@ export function Warehouses() {
                       </td>
                       <td className={className}>
                         <div className="flex space-x-2">
-                          <Link to={id}>
-                            <Button
-                              variant={"gradient"}
-                              color={"blue"}
-                              className="flex items-center px-3 py-1 capitalize"
-                            >
-                              <Typography
-                                color="inherit"
-                                className="font-medium capitalize"
-                              >
-                                Edit
-                              </Typography>
-                            </Button>
-                          </Link>
+                        <Link to={id}>
+                          <Tooltip content="Edit">
+                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                          </Tooltip>
+                        </Link>
                         </div>
                       </td>
                     </tr>

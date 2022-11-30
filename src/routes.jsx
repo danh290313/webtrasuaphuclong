@@ -16,9 +16,11 @@ import Customer from "./pages/dashboard/customer/customer";
 import CustomerAdd from "./pages/dashboard/customer/customerAdd";
 import CustomerEdit from "./pages/dashboard/customer/customerEdit";
 
-import Warehouses from "./pages/dashboard/warehouses";
-import { Drinks } from "./pages/dashboard/drinks";
-import DrinksEdit from "./pages/dashboard/drinksEdit";
+import Warehouses from "./pages/dashboard/warehouses/warehouses";
+import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
+import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
+import { Drinks } from "./pages/dashboard/drinks/drinks";
+import DrinksEdit from "./pages/dashboard/drinks/drinksEdit";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -82,6 +84,18 @@ export const routes = [
         path: "/warehouses",
         element: <Warehouses />,
       },
+      {
+        notOnSidebar: true,
+        path: "/warehouses/Add",
+        element: <WarehousesAdd />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/warehouses/:id",
+        element: <WarehousesEdit />,
+      },
+
+
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",

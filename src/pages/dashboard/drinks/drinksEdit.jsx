@@ -9,6 +9,7 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import UploadAndDisplayImage from "@/components/Upload";
 const options = [
   { id: "1", value: "Trà sữa" },
   { id: "2", value: "Cà phê" },
@@ -59,6 +60,15 @@ function DrinksEdit() {
                 <>
                   <Form>
                     <Grid container spacing={2}>
+                    <Grid container  justifyContent="center" >
+                        <FormGroup>
+                          <Field
+                            name="image"
+                            component={UploadAndDisplayImage}
+                            label="Image"
+                          />
+                        </FormGroup>
+                      </Grid> 
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
@@ -127,6 +137,9 @@ function DrinksEdit() {
                           />
                         </FormGroup>
                       </Grid>
+
+                      
+
                     </Grid>
                     <Button
                       variant={"gradient"}

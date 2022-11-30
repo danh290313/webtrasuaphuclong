@@ -27,7 +27,7 @@ const initialValues = {
   
 };
 const validationShema = Yup.object().shape({
-  phoneNumber: Yup.number().required("This field is required"),
+  phoneNumber: Yup.string().min(10, "Name must be at least 10 characters"),
   fullname: Yup.string()
     .min(2, "Name must be at least 2 characters")
     .required("This field is required"),
