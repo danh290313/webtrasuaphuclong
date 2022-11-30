@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import styles from "./SelectMuiField.module.scss";
 import { Autocomplete, styled, TextField } from "@mui/material";
-SelectMuiField.propTypes = {
+SelectField.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
@@ -14,13 +14,13 @@ SelectMuiField.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-SelectMuiField.defaultProps = {
+SelectField.defaultProps = {
   type: "text",
   label: "",
   placeholder: "",
   disabled: false,
 };
-function SelectMuiField(props) {
+function SelectField(props) {
   const {
     field,
     form,
@@ -51,7 +51,7 @@ function SelectMuiField(props) {
         <option value="">--{defaultOp}--</option>
         {options
           ? options.map((option, i) => (
-              <option value={option.id} selected={!!findOp}>
+              <option value={option.id} selected={!!findOp} key={i}>
                 {option.value}
               </option>
             ))
@@ -62,4 +62,4 @@ function SelectMuiField(props) {
   );
 }
 
-export default SelectMuiField;
+export default SelectField;

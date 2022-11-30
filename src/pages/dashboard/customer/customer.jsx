@@ -85,9 +85,7 @@ export function Customer() {
             <input
               type="search"
               id="default-search"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900
-               focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white
-                dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              class="primary-search"
               placeholder="Search customer"
               required
             />
@@ -129,7 +127,9 @@ export function Customer() {
             <tbody>
               {customer.map(({ id, name, gender, phone, dob, active }, key) => {
                 const className = `py-3 px-5 whitespace-nowrap ${
-                  key === customer.length - 1 ? "" : "border-b border-blue-gray-50"
+                  key === customer.length - 1
+                    ? ""
+                    : "border-b border-blue-gray-50"
                 }`;
 
                 return (
@@ -149,27 +149,23 @@ export function Customer() {
                     <td className={className}>
                       <div>{String(active)}</div>
                     </td>
-                   
-
-                    
 
                     <td className={className}>
                       <div className="flex space-x-3">
-
-                      <Link to={`delete/${id}`}>
-                      <Button
-                        variant={"gradient"}
-                        color={"blue"}
-                        className="flex items-center px-3 py-1 capitalize"
-                      >
-                        <Typography
-                          color="inherit"
-                          className="font-medium capitalize"
-                        >
-                          Delete
-                        </Typography>
-                      </Button>
-                    </Link>
+                        <Link to={`delete/${id}`}>
+                          <Button
+                            variant={"gradient"}
+                            color={"blue"}
+                            className="flex items-center px-3 py-1 capitalize"
+                          >
+                            <Typography
+                              color="inherit"
+                              className="font-medium capitalize"
+                            >
+                              Delete
+                            </Typography>
+                          </Button>
+                        </Link>
 
                         <Link to={id}>
                           <Tooltip content="Edit">
@@ -183,9 +179,6 @@ export function Customer() {
                         </button>
                       </div>
                     </td>
-                  
-                  
-                    
                   </tr>
                 );
               })}

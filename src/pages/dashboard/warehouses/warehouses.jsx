@@ -23,6 +23,7 @@ const warehouses = [
     phone_number: "0922222222",
     date_opend: "11/11/1111",
     active: "true",
+    address: "97 man thien, hiep phu, quan 9",
   },
 ];
 export function Warehouses() {
@@ -70,26 +71,34 @@ export function Warehouses() {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {["name", "address", "phone_number", "date opend", "active", ""].map(
-                  (el) => (
-                    <th
-                      key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                {[
+                  "name",
+                  "phone_number",
+                  "date opend",
+                  "address",
+                  "active",
+                  "",
+                ].map((el) => (
+                  <th
+                    key={el}
+                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                  >
+                    <Typography
+                      variant="small"
+                      className="text-[11px] font-bold uppercase text-blue-gray-400"
                     >
-                      <Typography
-                        variant="small"
-                        className="text-[11px] font-bold uppercase text-blue-gray-400"
-                      >
-                        {el}
-                      </Typography>
-                    </th>
-                  )
-                )}
+                      {el}
+                    </Typography>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {warehouses.map(
-                ({ active, date_opend, id, name, phone_number, address }, key) => {
+                (
+                  { active, date_opend, id, name, phone_number, address },
+                  key
+                ) => {
                   const className = `py-3 px-5 ${
                     key === warehouses.length - 1
                       ? ""
@@ -111,15 +120,20 @@ export function Warehouses() {
                         <div>{date_opend}</div>
                       </td>
                       <td className={className}>
+                        <div className="max-w-[250px] truncate">
+                          <Tooltip content={address}>{address}</Tooltip>
+                        </div>
+                      </td>
+                      <td className={className}>
                         <div>{String(active)}</div>
                       </td>
                       <td className={className}>
                         <div className="flex space-x-2">
-                        <Link to={id}>
-                          <Tooltip content="Edit">
-                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
-                          </Tooltip>
-                        </Link>
+                          <Link to={id}>
+                            <Tooltip content="Edit">
+                              <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                            </Tooltip>
+                          </Link>
                         </div>
                       </td>
                     </tr>

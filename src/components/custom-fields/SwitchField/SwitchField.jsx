@@ -8,22 +8,21 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 function SwitchField(props) {
-  const { field, form, label, disabled, checked, confirm } = props;
+  const { field, form, label, disabled, confirm, setNeedValidate } = props;
   const { name } = field;
   const { errors, touched, setFieldValue } = form;
   const showError = errors[name] && touched[name];
-  // console.log(form);
+  field.value === true && setNeedValidate && setNeedValidate(true);
   const handleOnChange = (e) => {
     e.preventDefault();
     handleOpen();
-    field.onChange();
   };
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const handleConfirm = () => {
     setOpen(!open);
-    // field.value = !field.value;
-    setFieldValue("active", false);
+    setNeedValidate && setNeedValidate(false);
+    setFieldValue(name, false);
   };
   return (
     <>

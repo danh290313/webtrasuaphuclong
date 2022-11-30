@@ -19,6 +19,7 @@ import {
 import {
   ArrowPathIcon,
   EllipsisVerticalIcon,
+  InformationCircleIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
   XMarkIcon,
@@ -28,6 +29,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Grid } from "@mui/material";
+import DrinkCard from "@/components/card/DrinkCard";
 const drinks = [
   {
     id: "123",
@@ -66,7 +69,7 @@ export function Drinks() {
   const [idChoosing, setIdChoosing] = useState(null);
 
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-8">
+    <div className="mt-12 mb-8 flex  flex-col gap-8">
       <div className="flex justify-between">
         <div>
           <label
@@ -91,7 +94,7 @@ export function Drinks() {
         <Link to="add" className="">
           <Button
             variant={"gradient"}
-            color={"blue"}
+            color={"orange"}
             className="flex items-center px-3 py-1 capitalize"
           >
             <Typography color="inherit" className="font-medium capitalize">
@@ -100,7 +103,24 @@ export function Drinks() {
           </Button>
         </Link>
       </div>
-      <Card>
+      <Grid container spacing={2}>
+        <Grid item md={6} sm={12}>
+          <DrinkCard />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <DrinkCard />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <DrinkCard />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <DrinkCard />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <DrinkCard />
+        </Grid>
+      </Grid>
+      {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
@@ -178,9 +198,7 @@ export function Drinks() {
                       <td className={className}>
                         <div>{String(active)}</div>
                       </td>
-                      {/* <td className={className}>
-                        <div>{String(active)}</div>
-                      </td> */}
+                 
                       <td className={className}>
                         <div className="flex space-x-3">
                           <Link to={id}>
@@ -188,16 +206,15 @@ export function Drinks() {
                               <PencilSquareIcon className="h-5 w-5 cursor-pointer text-light-blue-600" />
                             </Tooltip>
                           </Link>
-                          {/* <button onClick={}>
-                            <Tooltip content="Reset password">
-                              <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
+                          <Link to={`info/${id}`}>
+                            <Tooltip content="see receipt and topping">
+                              <InformationCircleIcon className="h-5 w-5 cursor-pointer text-light-blue-600" />
                             </Tooltip>
-                          </button> */}
+                          </Link>
+                         
                         </div>
                       </td>
-
-
-                      {/* diaglog reset pass */}
+      
                     </tr>
                   );
                 }
@@ -205,30 +222,7 @@ export function Drinks() {
             </tbody>
           </table>
         </CardBody>
-      </Card>
-      {/* <Dialog open={open} handler={handleOpen}>
-        <DialogBody divider>
-          <Typography color="inherit" className=" font-medium capitalize">
-          </Typography>
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button
-            variant="gradient"
-            color="green"
-            onClick={() => handleResetPass()}
-          >
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog> */}
+      </Card> */}
     </div>
   );
 }

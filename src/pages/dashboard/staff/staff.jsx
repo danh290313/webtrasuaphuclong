@@ -4,14 +4,8 @@ import {
   CardBody,
   Typography,
   Avatar,
-  Chip,
   Tooltip,
-  Progress,
   Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
   Dialog,
   DialogBody,
   DialogFooter,
@@ -179,29 +173,25 @@ export function Staff() {
                     </td>
 
                     <td className={className}>
-                        <div>{String(active)}</div>
-                      </td>
+                      <div>{String(active)}</div>
+                    </td>
 
-                   
-                    
-                   
                     <td className={className}>
                       <div className="flex space-x-3">
-
-                      <Link to={`delete/${id}`}>
-                      <Button
-                        variant={"gradient"}
-                        color={"blue"}
-                        className="flex items-center px-3 py-1 capitalize"
-                      >
-                        <Typography
-                          color="inherit"
-                          className="font-medium capitalize"
-                        >
-                          Delete
-                        </Typography>
-                      </Button>
-                    </Link>
+                        <Link to={`delete/${id}`}>
+                          <Button
+                            variant={"gradient"}
+                            color={"blue"}
+                            className="flex items-center px-3 py-1 capitalize"
+                          >
+                            <Typography
+                              color="inherit"
+                              className="font-medium capitalize"
+                            >
+                              Delete
+                            </Typography>
+                          </Button>
+                        </Link>
 
                         <Link to={id}>
                           <Tooltip content="Edit">
@@ -219,7 +209,6 @@ export function Staff() {
                   </tr>
                 );
               })}
-            
             </tbody>
           </table>
         </CardBody>

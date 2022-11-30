@@ -17,10 +17,12 @@ import CustomerAdd from "./pages/dashboard/customer/customerAdd";
 import CustomerEdit from "./pages/dashboard/customer/customerEdit";
 
 import Warehouses from "./pages/dashboard/warehouses/warehouses";
-import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
-import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
 import { Drinks } from "./pages/dashboard/drinks/drinks";
 import DrinksEdit from "./pages/dashboard/drinks/drinksEdit";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
+import DrinksRecipesTopping from "./pages/dashboard/drinksRecipesTopping";
+import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
+import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -67,6 +69,12 @@ export const routes = [
         path: "/customer",
         element: <Customer />,
       },
+
+      {
+        notOnSidebar: true,
+        path: "/drinks/info/:id",
+        element: <DrinksRecipesTopping />,
+      },
       {
         notOnSidebar: true,
         path: "/drinks/:id",
@@ -79,7 +87,7 @@ export const routes = [
         element: <Drinks />,
       },
       {
-        icon: <UserGroupIcon {...icon} />,
+        icon: <BuildingStorefrontIcon {...icon} />,
         name: "warehouses",
         path: "/warehouses",
         element: <Warehouses />,
@@ -94,7 +102,6 @@ export const routes = [
         path: "/warehouses/:id",
         element: <WarehousesEdit />,
       },
-
 
       {
         icon: <UserCircleIcon {...icon} />,

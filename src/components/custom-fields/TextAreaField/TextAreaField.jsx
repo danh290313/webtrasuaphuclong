@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import styles from "./InputField.module.scss";
+import styles from "./TextAreaField.module.scss";
 import { Input } from "@material-tailwind/react";
-InputField.propTypes = {
+TextAreaField.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
 
@@ -12,14 +12,14 @@ InputField.propTypes = {
   disabled: PropTypes.bool,
 };
 
-InputField.defaultProps = {
+TextAreaField.defaultProps = {
   type: "text",
   label: "",
   placeholder: "",
   disabled: false,
 };
 
-function InputField(props) {
+function TextAreaField(props) {
   const { field, form, type, label, placeholder, disabled, autoFocus } = props;
   const { name } = field;
   const { errors, touched } = form;
@@ -27,15 +27,15 @@ function InputField(props) {
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
-      <input
+      <textarea
         id={name}
         {...field} // field có 4 thuộc tính là name , value, onChange,onBlur
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
+        className={`form-field h-[100px] ${disabled ? "bg-gray-200" : ""}  ${
           showError
-            ? "border-[2px] border-red-500 focus:border-red-500 focus:outline-none"
+            ? " border-[2px] border-red-500 focus:border-red-500 focus:outline-none"
             : ""
         }`}
         autoFocus={autoFocus}
@@ -46,4 +46,4 @@ function InputField(props) {
   );
 }
 
-export default InputField;
+export default TextAreaField;
