@@ -13,6 +13,7 @@ import UploadAndDisplayImage from "@/components/Upload";
 import { useState } from "react";
 import TextAreaField from "@/components/custom-fields/TextAreaField/TextAreaField";
 import { toast } from "react-toastify";
+import { drinksSchema } from "@/utils/schemas";
 const options = [
   { id: "1", value: "Trà sữa" },
   { id: "2", value: "Cà phê" },
@@ -29,24 +30,7 @@ const initialValues = {
   active: true,
   type: "2",
 };
-const validationShema = Yup.object().shape({
-  name: Yup.string()
-    .min(5, "Name must be at least 5 characters")
-    .required("This field is required"),
-  description: Yup.string().min(
-    15,
-    "Description must be at least 15 characters"
-  ),
-  "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  price: Yup.string()
-    .required("This field is required")
-    .matches(/^[0-9]+$/, "Number only"),
-  discount: Yup.string().matches(/^[0-9]+$/, "Number only"),
-  sale_on_days: Yup.string(),
-  image: Yup.string().required("This field is required"),
-  active: Yup.boolean(),
-  type: Yup.string().required("This field is required"),
-});
+const validationShema = drinksSchema;
 function DrinksEdit() {
   const [imgLink, setImgLink] = useState();
   const [needValidate, setNeedValidate] = useState(true);
@@ -131,15 +115,6 @@ function DrinksEdit() {
                               name="discount"
                               component={InputField}
                               label="Discount"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                          <FormGroup>
-                            <Field
-                              name="sale_on_days"
-                              component={DatePickerField}
-                              label="Sale on day"
                             />
                           </FormGroup>
                         </Grid>

@@ -9,16 +9,13 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
-function DrinkCard() {
+function DrinkCard({ data }) {
+  // console.log({ data });
   return (
     <Card className="w-full">
       <CardBody>
         <div className="flex justify-between">
-          <img
-            src="https://aeonmall-binhduongcanary.com.vn/wp-content/uploads/2020/05/tra-dao.png"
-            alt=""
-            className="mr-10 w-[50px]"
-          />
+          <img src={data.imageSource} alt="" className="mr-10 w-[50px]" />
           <div className="flex justify-between">
             <div>
               <Chip value="active" className="bg-green-400" />
@@ -27,7 +24,7 @@ function DrinkCard() {
         </div>
         <div className="mt-4 flex w-full items-center justify-between">
           <Typography variant="h5" className=" cursor-default">
-            Trà đào
+            {data.name}
           </Typography>
 
           <Chip value="40.0000 đ" />
@@ -36,25 +33,15 @@ function DrinkCard() {
           // variant="small"
           className="max-h-[100px] cursor-default  overflow-hidden"
         >
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It
-          has roots in a piece of classical Latin literature from 45 BC, making
-          it over 2000 years old. Richard McClintock, a Latin professor at
-          Hampden-Sydney College in Virginia, looked up one ofelief, Lorem Ipsum
-          is not simply random text. It has roots in a piece of classical Latin
-          literature from 45 BC, making it over 2000 years old. Richard
-          McClintock, a Latin professor at Hampden-Sydney College in Virginia,
-          looked up one ofelief, Lorem Ipsum is not simply random text. It has
-          roots in a piece of classical Latin literature from 45 BC, making it
-          over 2000 years old. Richard McClintock, a Latin professor at
-          Hampden-Sydney College in Virginia, looked up one of
+          {data.description}
         </p>
         <div className="flex">
           <div>
-            <span className="mr-10 cursor-default">Sale on day:11/11/1111</span>
-            <div className="text-bold">slug: /tradao</div>
+            {/* <span className="mr-10 cursor-default">Sale on day: 0</span> */}
+            <div className="text-bold">slug: /{data.slug}</div>
           </div>
-          <div className="flex items-center justify-between">
-            <Link to="recipes">
+          <div className="ml-auto flex items-center justify-between">
+            <Link to={`info/${data.id}`}>
               <Tooltip content="see recipes">
                 <InformationCircleIcon className="h-7 w-7 text-light-blue-500" />
               </Tooltip>

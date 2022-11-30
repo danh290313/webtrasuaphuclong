@@ -9,20 +9,21 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import { staffSchema } from "@/utils/schemas";
 const options = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
 ];
 
-const listBranchs =[
-  {id: "1", value: "Vung tau"},
-  {id: "2", value: "Ho chi minh"},
-  {id: "3", value: "Nha Trang"},
+const listBranchs = [
+  { id: "1", value: "Vung tau" },
+  { id: "2", value: "Ho chi minh" },
+  { id: "3", value: "Nha Trang" },
 ];
-const listPositions =[
-  {id: "1", value: "Giam doc"},
-  {id: "2", value: "Quan Ly"},
-  {id: "3", value: "Nhan Vien phuc vu"},
+const listPositions = [
+  { id: "1", value: "Giam doc" },
+  { id: "2", value: "Quan Ly" },
+  { id: "3", value: "Nhan Vien phuc vu" },
 ];
 
 const initialValues = {
@@ -35,30 +36,12 @@ const initialValues = {
   email: "",
   hometown: "",
   active: "",
-  
-  
 };
-const validationShema = Yup.object().shape({
-  phoneNumber: Yup.string().min(10, "Name must be at least 10 characters"),
-  fullname: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("This field is required"),
-  sex: Yup.string().required("This field is required"),
-  "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  birthday: Yup.string().required("This field is required"),
-  email: Yup.string()
-    .email("Email must included '@'")
-    .required("This field is required"),
-  
-  address: Yup.string().required("This field is required"),
-  hometown: Yup.string().required("This field is required"),
-  
-  
-});
+const validationShema = staffSchema;
 function StaffAdd() {
   const nav = useNavigate();
   const handleSubmit = (value) => {
-      console.log(value);
+    console.log(value);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -137,8 +120,7 @@ function StaffAdd() {
                           />
                         </FormGroup>
                       </Grid>
-                      
-                      
+
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
@@ -154,7 +136,6 @@ function StaffAdd() {
                             name="hometown"
                             component={InputField}
                             label="Hometown"
-                  
                           />
                         </FormGroup>
                       </Grid>
@@ -192,37 +173,36 @@ function StaffAdd() {
                           />
                         </FormGroup>
                       </Grid>
-
                     </Grid>
                     <div className="flex">
-                        <Button
-                          variant={"gradient"}
-                          color={"blue"}
-                          className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
-                          type="button"
-                          onClick={() => nav("/dashboard/staff")}
+                      <Button
+                        variant={"gradient"}
+                        color={"blue"}
+                        className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
+                        type="button"
+                        onClick={() => nav("/dashboard/staff")}
+                      >
+                        <Typography
+                          color="inherit"
+                          className=" font-medium capitalize"
                         >
-                          <Typography
-                            color="inherit"
-                            className=" font-medium capitalize"
-                          >
-                            Back
-                          </Typography>
-                        </Button>
-                        <Button
-                          variant={"gradient"}
-                          color={"red"}
-                          className="mt-4 flex items-center py-1 px-6 capitalize"
-                          type="submit"
+                          Back
+                        </Typography>
+                      </Button>
+                      <Button
+                        variant={"gradient"}
+                        color={"red"}
+                        className="mt-4 flex items-center py-1 px-6 capitalize"
+                        type="submit"
+                      >
+                        <Typography
+                          color="inherit"
+                          className=" font-medium capitalize"
                         >
-                          <Typography
-                            color="inherit"
-                            className=" font-medium capitalize"
-                          >
-                            Save
-                          </Typography>
-                        </Button>
-                      </div>
+                          Save
+                        </Typography>
+                      </Button>
+                    </div>
                   </Form>
                 </>
               );

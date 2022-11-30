@@ -9,6 +9,7 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { useNavigate } from "react-router-dom";
+import { staffSchema } from "@/utils/schemas";
 const options = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
@@ -24,32 +25,7 @@ const initialValues = {
   hometown: "",
   active: "",
 };
-const listBranchs =[
-  {id: "1", value: "Vung tau"},
-  {id: "2", value: "Ho chi minh"},
-  {id: "3", value: "Nha Trang"},
-];
-const listPositions =[
-  {id: "1", value: "Giam doc"},
-  {id: "2", value: "Quan Ly"},
-  {id: "3", value: "Nhan Vien phuc vu"},
-];
-
-const validationShema = Yup.object().shape({
-  phoneNumber: Yup.number().required("This field is required"),
-  fullname: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("This field is required"),
-  sex: Yup.string().required("This field is required"),
-  "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  birthday: Yup.string().required("This field is required"),
-  email: Yup.string()
-    .email("Email must included '@'")
-    .required("This field is required"),
-
-  address: Yup.string().required("This field is required"),
-  hometown: Yup.string().required("This field is required"),
-});
+const validationShema = staffSchema;
 function StaffEdit() {
   const nav = useNavigate();
   const handleSubmit = (value) => {
@@ -187,34 +163,34 @@ function StaffEdit() {
                       </Grid>
                     </Grid>
                     <div className="flex">
-                        <Button
-                          variant={"gradient"}
-                          color={"blue"}
-                          className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
-                          type="button"
-                          onClick={() => nav("/dashboard/staff")}
+                      <Button
+                        variant={"gradient"}
+                        color={"blue"}
+                        className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
+                        type="button"
+                        onClick={() => nav("/dashboard/staff")}
+                      >
+                        <Typography
+                          color="inherit"
+                          className=" font-medium capitalize"
                         >
-                          <Typography
-                            color="inherit"
-                            className=" font-medium capitalize"
-                          >
-                            Back
-                          </Typography>
-                        </Button>
-                        <Button
-                          variant={"gradient"}
-                          color={"red"}
-                          className="mt-4 flex items-center py-1 px-6 capitalize"
-                          type="submit"
+                          Back
+                        </Typography>
+                      </Button>
+                      <Button
+                        variant={"gradient"}
+                        color={"red"}
+                        className="mt-4 flex items-center py-1 px-6 capitalize"
+                        type="submit"
+                      >
+                        <Typography
+                          color="inherit"
+                          className=" font-medium capitalize"
                         >
-                          <Typography
-                            color="inherit"
-                            className=" font-medium capitalize"
-                          >
-                            Save
-                          </Typography>
-                        </Button>
-                      </div>
+                          Save
+                        </Typography>
+                      </Button>
+                    </div>
                   </Form>
                 </>
               );

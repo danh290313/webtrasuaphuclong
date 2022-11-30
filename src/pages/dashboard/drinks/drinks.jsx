@@ -26,11 +26,13 @@ import {
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Grid } from "@mui/material";
 import DrinkCard from "@/components/card/DrinkCard";
+import { get } from "@/utils/request";
+// import { get } from "@/utils/request";
 const drinks = [
   {
     id: "123",
@@ -67,17 +69,18 @@ const drinks = [
 ];
 export function Drinks() {
   const [idChoosing, setIdChoosing] = useState(null);
-
+  const [drinks, setDrinks] = useState([]);
+  useEffect(() => {
+    const getDrinks = async () => {
+      const { data } = await get("drinks");
+      setDrinks(data);
+    };
+    getDrinks();
+  }, []);
   return (
     <div className="mt-12 mb-8 flex  flex-col gap-8">
       <div className="flex justify-between">
         <div>
-          <label
-            htmlFor="default-search"
-            className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Search
-          </label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5" />
@@ -104,21 +107,11 @@ export function Drinks() {
         </Link>
       </div>
       <Grid container spacing={2}>
-        <Grid item md={6} sm={12}>
-          <DrinkCard />
-        </Grid>
-        <Grid item md={6} sm={12}>
-          <DrinkCard />
-        </Grid>
-        <Grid item md={6} sm={12}>
-          <DrinkCard />
-        </Grid>
-        <Grid item md={6} sm={12}>
-          <DrinkCard />
-        </Grid>
-        <Grid item md={6} sm={12}>
-          <DrinkCard />
-        </Grid>
+        {drinks?.map((drink, i) => (
+          <Grid item md={6} sm={12}>
+            <DrinkCard data={drink} key={drink.id} />
+          </Grid>
+        ))}
       </Grid>
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">

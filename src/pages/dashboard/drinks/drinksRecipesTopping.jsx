@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DatePickerField from "@/components/custom-fields/DatePickerField/DatePickerField";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import TransferList from "@/components/mui/TransferList";
 const data = {
   img: "https://aeonmall-binhduongcanary.com.vn/wp-content/uploads/2020/05/tra-dao.png",
   name: "tra sua phuc long",
@@ -37,7 +38,7 @@ function DrinksRecipesTopping() {
       <Card>
         <CardBody>
           <div>
-            <img src="" alt="" className="" />
+            <TransferList />
           </div>
         </CardBody>
       </Card>

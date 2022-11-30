@@ -21,6 +21,7 @@ import {
   EllipsisVerticalIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
+  TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
@@ -78,8 +79,8 @@ export function Customer() {
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
         <div>
-          <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5" />
             </div>
             <input
@@ -108,15 +109,15 @@ export function Customer() {
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
-              <tr>
-                {["name", "gender", "phone", "dob", "active"].map((el) => (
+              <tr className="bg-orange-500 ">
+                {["name", "gender", "phone", "dob", "active", ""].map((el) => (
                   <th
                     key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                      className="text-[11px] font-bold uppercase text-white"
                     >
                       {el}
                     </Typography>
@@ -151,9 +152,9 @@ export function Customer() {
                     </td>
 
                     <td className={className}>
-                      <div className="flex space-x-3">
+                      <div className="flex items-center space-x-3">
                         <Link to={`delete/${id}`}>
-                          <Button
+                          {/* <Button
                             variant={"gradient"}
                             color={"blue"}
                             className="flex items-center px-3 py-1 capitalize"
@@ -164,7 +165,8 @@ export function Customer() {
                             >
                               Delete
                             </Typography>
-                          </Button>
+                          </Button> */}
+                          <TrashIcon className="h-5 w-5 text-red-500" />
                         </Link>
 
                         <Link to={id}>

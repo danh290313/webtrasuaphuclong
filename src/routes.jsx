@@ -20,7 +20,7 @@ import Warehouses from "./pages/dashboard/warehouses/warehouses";
 import { Drinks } from "./pages/dashboard/drinks/drinks";
 import DrinksEdit from "./pages/dashboard/drinks/drinksEdit";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
-import DrinksRecipesTopping from "./pages/dashboard/drinksRecipesTopping";
+import DrinksRecipesTopping from "./pages/dashboard/drinks/drinksRecipesTopping";
 import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
 import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
 

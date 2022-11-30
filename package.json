@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.15",
     "@mui/x-date-pickers": "^5.0.9",
     "apexcharts": "3.35.5",
+    "axios": "^1.2.0",
     "dayjs": "^1.11.6",
     "formik": "^2.2.9",
     "prop-types": "15.8.1",

@@ -9,6 +9,7 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import { customerSchema } from "@/utils/schemas";
 const options = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
@@ -16,22 +17,11 @@ const options = [
 const initialValues = {
   name: "tu",
   gender: "",
-  phone: "022222222", 
+  phone: "022222222",
   dob: "",
   active: "",
 };
-const validationShema = Yup.object().shape({
-  phone: Yup.number().required("This field is required"),
-  name: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("This field is required"),
-  gender: Yup.string().required("This field is required"),
-  "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  dob: Yup.string().required("This field is required"),
-
-  active: Yup.string().required("This field is required"),
-
-});
+const validationShema = customerSchema;
 function CustomerEdit() {
   const handleSubmit = (value) => {
     // console.log(value);
@@ -52,7 +42,7 @@ function CustomerEdit() {
               return (
                 <>
                   <Form>
-                  <Grid container spacing={2}>
+                    <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
@@ -105,7 +95,6 @@ function CustomerEdit() {
                           />
                         </FormGroup>
                       </Grid>
-
                     </Grid>
                     <Button
                       variant={"gradient"}

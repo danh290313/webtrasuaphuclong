@@ -74,14 +74,14 @@ export function Warehouses() {
               <tr>
                 {[
                   "name",
-                  "phone_number",
+                  "phone number",
                   "date opend",
                   "address",
                   "active",
                   "",
-                ].map((el) => (
+                ].map((el, i) => (
                   <th
-                    key={el}
+                    key={i}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
                   >
                     <Typography

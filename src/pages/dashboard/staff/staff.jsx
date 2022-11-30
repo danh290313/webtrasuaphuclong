@@ -1,26 +1,23 @@
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Tooltip,
+  ArrowPathIcon,
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import {
   Button,
+  Card,
+  CardBody,
   Dialog,
   DialogBody,
   DialogFooter,
+  Tooltip,
+  Typography,
 } from "@material-tailwind/react";
-import {
-  ArrowPathIcon,
-  EllipsisVerticalIcon,
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const staff = [
   {
@@ -105,14 +102,14 @@ export function Staff() {
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
         <div>
-          <div class="relative focus:outline-none">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <div className="relative focus:outline-none">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5" />
             </div>
             <input
               type="search"
               id="default-search"
-              class="primary-search"
+              className="primary-search"
               placeholder="Search staff"
               required
             />
@@ -133,7 +130,7 @@ export function Staff() {
       <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
-            <thead>
+            <thead className="bg-orange-500 ">
               <tr>
                 {["name", "gender", "phone", "dob", "active", ""].map((el) => (
                   <th
@@ -142,7 +139,7 @@ export function Staff() {
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                      className="text-[11px] font-bold uppercase text-white"
                     >
                       {el}
                     </Typography>
@@ -177,9 +174,9 @@ export function Staff() {
                     </td>
 
                     <td className={className}>
-                      <div className="flex space-x-3">
+                      <div className="flex items-center space-x-3">
                         <Link to={`delete/${id}`}>
-                          <Button
+                          {/* <Button
                             variant={"gradient"}
                             color={"blue"}
                             className="flex items-center px-3 py-1 capitalize"
@@ -190,7 +187,8 @@ export function Staff() {
                             >
                               Delete
                             </Typography>
-                          </Button>
+                          </Button> */}
+                          <TrashIcon className="h-5 w-5 text-red-500" />
                         </Link>
 
                         <Link to={id}>

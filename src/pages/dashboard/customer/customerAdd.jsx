@@ -9,6 +9,7 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import { customerSchema } from "@/utils/schemas";
 const options = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
@@ -22,21 +23,10 @@ const initialValues = {
   active: "",
 };
 
-const validationShema = Yup.object().shape({
-  phone: Yup.number().required("This field is required"),
-  name: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("This field is required"),
-  gender: Yup.string().required("This field is required"),
-  "identity-card-number": Yup.string().matches(/^[0-9]+$/, "Number only"),
-  bob: Yup.string().required("This field is required"),
-  active: Yup.string().required("This field is required"),
-
-  
-});
+const validationShema = customerSchema;
 function CustomerAdd() {
   const handleSubmit = (value) => {
-      console.log(value);
+    console.log(value);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -89,7 +79,7 @@ function CustomerAdd() {
                         <FormGroup>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Field
-                              name="bob"
+                              name="dob"
                               component={DatePickerField}
                               label="Day of birth"
                               inputFormat="DD/MM/YYYY"
@@ -107,7 +97,6 @@ function CustomerAdd() {
                           />
                         </FormGroup>
                       </Grid>
-
                     </Grid>
                     <Button
                       variant={"gradient"}

@@ -4,19 +4,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import React from "react";
 import styles from "./DatePickerField.module.scss";
-function convert1(str) {
-  var date = new Date(str),
-    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-    day = ("0" + date.getDate()).slice(-2);
-  return [day, mnth, date.getFullYear()].join("/");
-}
-function convert2(str) {
-  var date = new Date(str),
-    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-    day = ("0" + date.getDate()).slice(-2);
-  return dayjs([date.getFullYear(), mnth, day].join("-"));
-}
-
 function DatePickerField(props) {
   const { field, form, disabled, options, readOnly, label, inputFormat } =
     props;
@@ -24,7 +11,6 @@ function DatePickerField(props) {
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
   // console.log(showError);
-  const [valueDate, setValue] = React.useState(convert2(value));
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
