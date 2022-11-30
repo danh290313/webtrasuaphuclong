@@ -23,6 +23,11 @@ import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import DrinksRecipesTopping from "./pages/dashboard/drinksRecipesTopping";
 import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
 import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
+
+import Orders from "./pages/dashboard/orders/orders";
+import OrdersAdd from "./pages/dashboard/orders/ordersAdd";
+import OrdersEdit from "./pages/dashboard/orders/ordersEdit";
+
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -102,6 +107,26 @@ export const routes = [
         path: "/warehouses/:id",
         element: <WarehousesEdit />,
       },
+
+
+      //Orders
+      {
+        icon: <BuildingStorefrontIcon {...icon} />,
+        name: "Orders",
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/orders/Add",
+        element: <OrdersAdd />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/orders/:id",
+        element: <OrdersEdit />,
+      },
+
 
       {
         icon: <UserCircleIcon {...icon} />,

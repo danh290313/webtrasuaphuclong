@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DatePickerField from "@/components/custom-fields/DatePickerField/DatePickerField";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import { useNavigate } from "react-router-dom";
 const options = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
@@ -23,6 +24,17 @@ const initialValues = {
   hometown: "",
   active: "",
 };
+const listBranchs =[
+  {id: "1", value: "Vung tau"},
+  {id: "2", value: "Ho chi minh"},
+  {id: "3", value: "Nha Trang"},
+];
+const listPositions =[
+  {id: "1", value: "Giam doc"},
+  {id: "2", value: "Quan Ly"},
+  {id: "3", value: "Nhan Vien phuc vu"},
+];
+
 const validationShema = Yup.object().shape({
   phoneNumber: Yup.number().required("This field is required"),
   fullname: Yup.string()
@@ -39,6 +51,7 @@ const validationShema = Yup.object().shape({
   hometown: Yup.string().required("This field is required"),
 });
 function StaffEdit() {
+  const nav = useNavigate();
   const handleSubmit = (value) => {
     // console.log(value);
   };
@@ -140,6 +153,31 @@ function StaffEdit() {
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
+                            name="branch"
+                            component={SelectField}
+                            value="value"
+                            label="Branch"
+                            options={listBranchs}
+                            defaultOp="Choose branch"
+                          />
+                        </FormGroup>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormGroup>
+                          <Field
+                            name="position"
+                            component={SelectField}
+                            value="value"
+                            label="Position"
+                            options={listPositions}
+                            defaultOp="Choose position"
+                          />
+                        </FormGroup>
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <FormGroup>
+                          <Field
                             name="active"
                             component={SwitchField}
                             label="active"
@@ -148,19 +186,35 @@ function StaffEdit() {
                         </FormGroup>
                       </Grid>
                     </Grid>
-                    <Button
-                      variant={"gradient"}
-                      type="submit"
-                      color={"blue"}
-                      className="mt-4 flex items-center py-1 px-6 capitalize"
-                    >
-                      <Typography
-                        color="inherit"
-                        className=" font-medium capitalize"
-                      >
-                        Save
-                      </Typography>
-                    </Button>
+                    <div className="flex">
+                        <Button
+                          variant={"gradient"}
+                          color={"blue"}
+                          className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
+                          type="button"
+                          onClick={() => nav("/dashboard/staff")}
+                        >
+                          <Typography
+                            color="inherit"
+                            className=" font-medium capitalize"
+                          >
+                            Back
+                          </Typography>
+                        </Button>
+                        <Button
+                          variant={"gradient"}
+                          color={"red"}
+                          className="mt-4 flex items-center py-1 px-6 capitalize"
+                          type="submit"
+                        >
+                          <Typography
+                            color="inherit"
+                            className=" font-medium capitalize"
+                          >
+                            Save
+                          </Typography>
+                        </Button>
+                      </div>
                   </Form>
                 </>
               );

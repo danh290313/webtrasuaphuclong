@@ -12,6 +12,7 @@ import {
 import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
+  TrashIcon
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
@@ -23,7 +24,7 @@ const warehouses = [
     phone_number: "0922222222",
     date_opend: "11/11/1111",
     active: "true",
-    address: "97 man thien, hiep phu, quan 9",
+    
   },
 ];
 export function Warehouses() {
@@ -111,19 +112,15 @@ export function Warehouses() {
                         <div>{name}</div>
                       </td>
                       <td className={className}>
-                        <div>{address}</div>
-                      </td>
-                      <td className={className}>
                         <div>{phone_number}</div>
                       </td>
                       <td className={className}>
                         <div>{date_opend}</div>
                       </td>
                       <td className={className}>
-                        <div className="max-w-[250px] truncate">
-                          <Tooltip content={address}>{address}</Tooltip>
-                        </div>
+                        <div>{address}</div>
                       </td>
+                      
                       <td className={className}>
                         <div>{String(active)}</div>
                       </td>
@@ -134,6 +131,23 @@ export function Warehouses() {
                               <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
                             </Tooltip>
                           </Link>
+
+                          <Link to={`delete/${id}`}>
+                          <Button
+                            variant={"gradient"}
+                            color={"blue"}
+                            className="flex items-center px-3 py-1 capitalize"
+                          >
+                            <Typography
+                              color="inherit"
+                              className="font-medium capitalize"
+                            >
+                              Delete
+                            </Typography>
+                          </Button>
+                        </Link>
+
+
                         </div>
                       </td>
                     </tr>
