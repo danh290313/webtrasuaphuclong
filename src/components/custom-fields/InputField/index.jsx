@@ -20,12 +20,21 @@ InputField.defaultProps = {
 };
 
 function InputField(props) {
-  const { field, form, type, label, placeholder, disabled, autoFocus } = props;
+  const {
+    field,
+    form,
+    type,
+    label,
+    placeholder,
+    disabled,
+    autoFocus,
+    leftLabel,
+  } = props;
   const { name } = field;
   const { errors, touched } = form;
   const showError = touched[name] && errors[name];
   return (
-    <>
+    <div className="relative">
       {label && <label htmlFor={name}>{label}</label>}
       <input
         id={name}
@@ -33,16 +42,20 @@ function InputField(props) {
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
+        className={`form-field w-full ${disabled ? "bg-gray-200" : ""}  ${
           showError
             ? "border-[2px] border-red-500 focus:border-red-500 focus:outline-none"
             : ""
         }`}
         autoFocus={autoFocus}
       />
-
+      {leftLabel && (
+        <label htmlFor={name} className="absolute right-3 top-9">
+          {leftLabel}
+        </label>
+      )}
       {showError && <span className="text-red-500">{errors[name]}</span>}
-    </>
+    </div>
   );
 }
 

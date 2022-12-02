@@ -12,14 +12,21 @@ export function Drinks() {
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
     setLoading(true);
     const getDrinks = async () => {
-      const { data } = await getAllDrinks();
-      console.log(data);
-      setDrinks(data);
-      setLoading(false);
+      try {
+        const { data } = await getAllDrinks(signal);
+        console.log(data);
+        setDrinks(data);
+        setLoading(false);
+      } catch (err) {}
     };
     getDrinks();
+    return () => {
+      abortController.abort();
+    };
   }, []);
   return (
     <div className="mt-12 mb-8 flex  flex-col gap-8">

@@ -1,4 +1,8 @@
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentIcon,
+  DocumentTextIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/outline";
 import {
   Card,
   CardBody,
@@ -8,7 +12,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-
+import { RecipesIcon } from "@/assets/icon";
 function DrinkCard({ data }) {
   // console.log({ data });
   return (
@@ -40,10 +44,15 @@ function DrinkCard({ data }) {
             {/* <span className="mr-10 cursor-default">Sale on day: 0</span> */}
             <div className="text-bold">slug: /{data.slug}</div>
           </div>
-          <div className="ml-auto flex items-center justify-between">
+          <div className="ml-auto flex items-center justify-between space-x-3">
+            <Link to={`${data.id}`}>
+              <Tooltip content="see info">
+                <InformationCircleIcon className="h-7 w-7 text-light-blue-500" />
+              </Tooltip>
+            </Link>
             <Link to={`info/${data.id}`}>
               <Tooltip content="see recipes">
-                <InformationCircleIcon className="h-7 w-7 text-light-blue-500" />
+                <DocumentTextIcon className="h-6 w-6 text-light-blue-500" />
               </Tooltip>
             </Link>
           </div>
