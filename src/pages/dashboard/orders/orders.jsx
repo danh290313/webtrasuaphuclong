@@ -16,49 +16,50 @@ import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
   XMarkIcon,
-  TrashIcon
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import OrderCard from "@/components/card/OrderCard";
+import { Grid } from "@mui/material";
 const Order = [
   {
     id: "123",
     created_at: "11/11/1111",
     paid: "True",
     note: "description",
-    status : { id: 18, value: "shipping" }
-   
+    status: { id: 18, value: "shipping" },
   },
   {
     id: "123",
     created_at: "11/11/1111",
     paid: "True",
     note: "description",
-    status : { id: 18, value: "delivery" }
+    status: { id: 18, value: "delivery" },
   },
   {
     id: "123",
     created_at: "11/11/1111",
     paid: "True",
     note: "description",
-    status : { id: 8, value: "delivered" }
+    status: { id: 8, value: "delivered" },
   },
   {
     id: "123",
     created_at: "11/11/1111",
     paid: "True",
     note: "description",
-    status : { id: 12, value: "not delivery" }
+    status: { id: 12, value: "not delivery" },
   },
   {
     id: "123",
     created_at: "11/11/1111",
     paid: "",
     note: "description",
-    status : { id: 18, value: "shipping" }
+    status: { id: 18, value: "shipping" },
   },
 ];
 export function Orders() {
@@ -112,8 +113,21 @@ export function Orders() {
           </Button>
         </Link>
       </div>
-
-      <Card>
+      <Grid container spacing={2}>
+        <Grid item md={6}>
+          <OrderCard />
+        </Grid>
+        <Grid item md={6}>
+          <OrderCard />
+        </Grid>
+        <Grid item md={6}>
+          <OrderCard />
+        </Grid>
+        <Grid item md={6}>
+          <OrderCard />
+        </Grid>
+      </Grid>
+      {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
@@ -177,40 +191,40 @@ export function Orders() {
                         
                       </div>
                     </td>
-                    {/* diaglog reset pass */}
+             
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </CardBody>
-      </Card>
-      <Dialog open={open} handler={handleOpen} size="xl">
-        <DialogBody>
-          <Typography color="inherit" className=" font-medium capitalize">
-            Do you delete the order?
-          </Typography>
-        </DialogBody>
-        <DialogFooter>
-          <div className="flex">
-            <Button
-              variant="text"
-              color="red"
-              onClick={handleOpen}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button
-              variant="gradient"
-              color="green"
-              onClick={() => handleResetPass()}
-            >
-              <span>Confirm</span>
-            </Button>
-          </div>
-        </DialogFooter>
-      </Dialog>
+      </Card>  */}
+      {/* // <Dialog open={open} handler={handleOpen} size="xl">
+      //   <DialogBody>
+      //     <Typography color="inherit" className=" font-medium capitalize">
+      //       Do you delete the order?
+      //     </Typography>
+      //   </DialogBody>
+      //   <DialogFooter>
+      //     <div className="flex">
+      //       <Button
+      //         variant="text"
+      //         color="red"
+      //         onClick={handleOpen}
+      //         className="mr-1"
+      //       >
+      //         <span>Cancel</span>
+      //       </Button>
+      //       <Button
+      //         variant="gradient"
+      //         color="green"
+      //         onClick={() => handleResetPass()}
+      //       >
+      //         <span>Confirm</span>
+      //       </Button>
+      //     </div>
+      //   </DialogFooter>
+      // </Dialog> */}
     </div>
   );
 }

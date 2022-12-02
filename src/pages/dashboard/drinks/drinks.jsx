@@ -1,79 +1,23 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
-import {
-  ArrowPathIcon,
-  EllipsisVerticalIcon,
-  InformationCircleIcon,
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-// import { authorsTableData, projectsTableData } from "@/data";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Grid } from "@mui/material";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Button, Typography } from "@material-tailwind/react";
 import DrinkCard from "@/components/card/DrinkCard";
-import { get } from "@/utils/request";
-// import { get } from "@/utils/request";
-const drinks = [
-  {
-    id: "123",
-    name: "do uong",
-    description: "des",
-    price: "40000",
-    discount: "24",
-    sale_on_days: "",
-    image: "",
-    active: "",
-    type: "tra",
-  },
-  {
-    id: "123",
-    name: "do uong do uongdo uongdo uong",
-    description:
-      "des aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    price: "40000",
-    discount: "24",
-    sale_on_days: "11/11/1111",
-    image: "",
-    active: true,
-  },
-  {
-    id: "123",
-    name: "do uong",
-    description: "des",
-    price: "40000",
-    discount: "24",
-    sale_on_days: "",
-    image: "",
-    active: "",
-  },
-];
+import { getAllDrinks } from "@/services/drinksApi";
+import { Grid } from "@mui/material";
+import { Suspense, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import DrinkCardSkeleton from "@/components/card/DrinkCardSkeleton";
 export function Drinks() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [drinks, setDrinks] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     const getDrinks = async () => {
-      const { data } = await get("drinks");
+      const { data } = await getAllDrinks();
+      console.log(data);
       setDrinks(data);
+      setLoading(false);
     };
     getDrinks();
   }, []);
@@ -107,11 +51,19 @@ export function Drinks() {
         </Link>
       </div>
       <Grid container spacing={2}>
-        {drinks?.map((drink, i) => (
-          <Grid item md={6} sm={12}>
-            <DrinkCard data={drink} key={drink.id} />
-          </Grid>
-        ))}
+        {loading
+          ? [1, 2, 3, 4].map(() => {
+              return (
+                <Grid item md={6} sm={12}>
+                  <DrinkCardSkeleton />
+                </Grid>
+              );
+            })
+          : drinks?.map((drink, i) => (
+              <Grid item md={6} sm={12}>
+                <DrinkCard data={drink} key={drink.id} />
+              </Grid>
+            ))}
       </Grid>
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -220,4 +172,4 @@ export function Drinks() {
   );
 }
 
-export default drinks;
+export default Drinks;

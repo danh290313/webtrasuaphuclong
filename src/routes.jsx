@@ -27,6 +27,7 @@ import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
 import Orders from "./pages/dashboard/orders/orders";
 import OrdersAdd from "./pages/dashboard/orders/ordersAdd";
 import OrdersEdit from "./pages/dashboard/orders/ordersEdit";
+import OrderDetails from "./pages/dashboard/orders/oderDetails";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -108,7 +109,6 @@ export const routes = [
         element: <WarehousesEdit />,
       },
 
-
       //Orders
       {
         icon: <BuildingStorefrontIcon {...icon} />,
@@ -124,9 +124,8 @@ export const routes = [
       {
         notOnSidebar: true,
         path: "/orders/:id",
-        element: <OrdersEdit />,
+        element: <OrderDetails />,
       },
-
 
       {
         icon: <UserCircleIcon {...icon} />,
