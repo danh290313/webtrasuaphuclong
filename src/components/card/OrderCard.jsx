@@ -76,7 +76,7 @@ function OrderCard() {
                   <InformationCircleIcon className=" h-5 w-5 text-blue-500" />
                 </Tooltip>
               </Link>
-              <Link to={"123"}>
+              <Link to={"edit/123"}>
                 <Tooltip content="edit">
                   <PencilSquareIcon className=" h-5 w-5 text-red-500" />
                 </Tooltip>

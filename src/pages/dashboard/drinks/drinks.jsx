@@ -7,6 +7,8 @@ import { Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import DrinkCardSkeleton from "@/components/card/DrinkCardSkeleton";
+import { toast } from "react-toastify";
+import { toastError } from "@/utils/toast";
 export function Drinks() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [drinks, setDrinks] = useState([]);
@@ -16,12 +18,13 @@ export function Drinks() {
     const { signal } = abortController;
     setLoading(true);
     const getDrinks = async () => {
-      try {
-        const { data } = await getAllDrinks(signal);
-        console.log(data);
-        setDrinks(data);
-        setLoading(false);
-      } catch (err) {}
+      // try {
+      //   const { data } = await getAllDrinks(signal);
+      //   setDrinks(data);
+      //   setLoading(false);
+      // } catch (err) {
+      //   toastError(err.message);
+      // }
     };
     getDrinks();
     return () => {

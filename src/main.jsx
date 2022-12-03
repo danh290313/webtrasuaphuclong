@@ -17,13 +17,19 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { MaterialTailwindControllerProvider } from "@/context";
 import "../public/css/tailwind.css";
 import { ToastContainer } from "react-toastify";
-
+import { Provider } from "react-redux";
+import store, { persistor } from "@/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <MaterialTailwindControllerProvider>
-          <App />
+          <Provider store={store}>
+            <PersistGate loading={<>loading</>} persistor={persistor}>
+              <App />
+            </PersistGate>
+          </Provider>
           <ToastContainer />
         </MaterialTailwindControllerProvider>
       </ThemeProvider>

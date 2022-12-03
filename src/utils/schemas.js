@@ -11,7 +11,7 @@ const sex = Yup.string().required("This field is required");
 const identityCardNumber = Yup.string().matches(/^[0-9]+$/, "Number only");
 const birthday = Yup.string().required("This field is required");
 const email = Yup.string()
-  .email("Email must included '@'")
+  // .email("Email is invalid")
   .required("This field is required");
 const address = Yup.string().required("This field is required");
 const hometown = Yup.string().required("This field is required");
@@ -30,6 +30,7 @@ const active = Yup.boolean();
 const type = Yup.string().required("This field is required");
 const dob = Yup.string().required("This field is required");
 const gender = Yup.string().required("This field is required");
+const password = Yup.string().required("This field is required");
 export const staffSchema = Yup.object().shape({
   phoneNumber,
   fullname,
@@ -62,4 +63,8 @@ export const customerSchema = Yup.object().shape({
   gender,
   dob,
   active,
+});
+export const signinSchema = Yup.object().shape({
+  email,
+  password,
 });

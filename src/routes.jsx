@@ -118,8 +118,13 @@ export const routes = [
       },
       {
         notOnSidebar: true,
-        path: "/orders/Add",
+        path: "/orders/add",
         element: <OrdersAdd />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/orders/edit/:id",
+        element: <OrdersEdit />,
       },
       {
         notOnSidebar: true,

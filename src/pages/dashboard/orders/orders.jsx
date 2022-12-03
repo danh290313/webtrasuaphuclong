@@ -18,6 +18,14 @@ import {
   XMarkIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -60,6 +68,20 @@ const Order = [
     paid: "",
     note: "description",
     status: { id: 18, value: "shipping" },
+  },
+];
+const filter = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Online",
+    value: "online",
+  },
+  {
+    label: "Offline",
+    value: "offline",
   },
 ];
 export function Orders() {
@@ -113,20 +135,41 @@ export function Orders() {
           </Button>
         </Link>
       </div>
-      <Grid container spacing={2}>
-        <Grid item md={6}>
-          <OrderCard />
-        </Grid>
-        <Grid item md={6}>
-          <OrderCard />
-        </Grid>
-        <Grid item md={6}>
-          <OrderCard />
-        </Grid>
-        <Grid item md={6}>
-          <OrderCard />
-        </Grid>
-      </Grid>
+      <div>
+        <Tabs value="all">
+          <TabsHeader className="ml-4 max-w-[300px]">
+            {filter.map(({ label, value }) => (
+              <Tab key={value} value={value}>
+                {label}
+              </Tab>
+            ))}
+          </TabsHeader>
+          <TabsBody
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 250 },
+            }}
+          >
+            {filter.map(({ value, desc }) => (
+              <TabPanel key={value} value={value}>
+                {value === "online" || value === "all" ? (
+                  <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                  </div>
+                ) : (
+                  "123"
+                )}
+              </TabPanel>
+            ))}
+          </TabsBody>
+        </Tabs>
+      </div>
+
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
