@@ -13,34 +13,22 @@ function SwitchField(props) {
   const { errors, touched, setFieldValue } = form;
   const showError = errors[name] && touched[name];
   field.value === true && setNeedValidate && setNeedValidate(true);
-  const handleOnChange = (e) => {
-    e.preventDefault();
-    handleOpen();
-  };
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
-  const handleConfirm = () => {
-    setOpen(!open);
-    setNeedValidate && setNeedValidate(false);
-    setFieldValue(name, false);
-  };
+  const handleOnChange = () => setFieldValue(name, !field.value);
   return (
     <>
       <Switch
         id={name}
-        checked={field.value}
+        checked={!!field.value}
         {...field}
-        onChange={
-          confirm && field.value === true ? handleOnChange : field.onChange
-        }
+        onChange={handleOnChange}
         onBlur={() => {}}
-        disabled={!!disabled}
+        // disabled={!!disabled}
         label={label}
         labelProps={{
           className: "text-lg font-normal text-gray-700",
         }}
       />
-      <Dialog open={open} handler={handleOpen}>
+      {/* <Dialog open={open} handler={handleOpen}>
         <DialogBody divider>
           <Typography color="inherit" className="font-medium capitalize">
             {confirm}
@@ -59,7 +47,7 @@ function SwitchField(props) {
             <span>Confirm</span>
           </Button>
         </DialogFooter>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }

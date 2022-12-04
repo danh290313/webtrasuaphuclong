@@ -8,95 +8,32 @@ import {
   Button,
   Card,
   CardBody,
-  Dialog,
-  DialogBody,
-  DialogFooter,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
 // import { authorsTableData, projectsTableData } from "@/data";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import useStaff from "@/hooks/useStaff";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const staff = [
-  {
-    id: "123",
-    name: "tu nguyen",
-    gender: "male",
-    address: "ho chi minh",
-    dob: "11/11/1111",
-    hometown: "Binh Thuan",
-    active: "true",
-    phone: "092222222",
-  },
-  {
-    id: "123",
-    name: "tu nguyen",
-    gender: "male",
-    address: "ho chi minh",
-    dob: "11/11/1111",
-    hometown: "Binh Thuan",
-    active: "true",
-    phone: "092222222",
-  },
-  {
-    id: "123",
-    name: "tu nguyen",
-    gender: "male",
-    address: "ho chi minh",
-    dob: "11/11/1111",
-    hometown: "Binh Thuan",
-    active: "true",
-    phone: "092222222",
-    branch: {
-      id: 123,
-      name: "Binh Thuan",
-    },
-  },
-  {
-    id: "123",
-    name: "tu nguyen",
-    gender: "male",
-    address: "ho chi minh",
-    dob: "11/11/1111",
-    hometown: "Binh Thuan",
-    active: "true",
-    phone: "092222222",
-  },
-  {
-    id: "123",
-    name: "tu nguyen",
-    gender: "male",
-    address: "ho chi minh",
-    "identity-card-number": "",
-    dob: "11/11/1111",
-    hometown: "Binh Thuan",
-    active: "true",
-    phone: "092222222",
-  },
-];
 export function Staff() {
   const [idChoosing, setIdChoosing] = useState(null);
-
-  const handleResetPass = () => {
-    console.log({ idChoosing });
-    setOpen(!open);
-    toast.success("🦄 Change success!", {
-      position: "bottom-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
   const [open, setOpen] = useState(false);
-  const handleOpen = (id) => {
+  const [type, setType] = useState(false);
+  const { deleteStaff, staffs, resetPassStaff } = useStaff();
+  // const [staffs, setStaffs] = useState([]);
+  const handleOpen = (id, type) => {
+    setType(type);
     setOpen(!open);
     setIdChoosing(id);
+  };
+  const handleOK = () => {
+    type === "resetpass" ? resetPassStaff(idChoosing) : deleteStaff(idChoosing);
+    setOpen(false);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
@@ -132,111 +69,100 @@ export function Staff() {
           <table className="w-full min-w-[640px] table-auto">
             <thead className="bg-orange-500 ">
               <tr>
-                {["name", "gender", "phone", "dob", "active", ""].map((el) => (
-                  <th
-                    key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
-                  >
-                    <Typography
-                      variant="small"
-                      className="text-[11px] font-bold uppercase text-white"
+                {["name", "gender", "phone", "dob", "active", "branch", ""].map(
+                  (el) => (
+                    <th
+                      key={el}
+                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
                     >
-                      {el}
-                    </Typography>
-                  </th>
-                ))}
+                      <Typography
+                        variant="small"
+                        className="text-[11px] font-bold uppercase text-white"
+                      >
+                        {el}
+                      </Typography>
+                    </th>
+                  )
+                )}
               </tr>
             </thead>
             <tbody>
-              {staff.map(({ active, dob, gender, id, name, phone }, key) => {
-                const className = `py-3 px-5 whitespace-nowrap ${
-                  key === staff.length - 1 ? "" : "border-b border-blue-gray-50"
-                }`;
+              {staffs?.data?.map(
+                (
+                  { active, dob, gender, id, name, phoneNumber, branch },
+                  key
+                ) => {
+                  const className = `py-3 px-5 whitespace-nowrap ${
+                    key === staffs.length - 1
+                      ? ""
+                      : "border-b border-blue-gray-50"
+                  }`;
 
-                return (
-                  <tr key={key}>
-                    <td className={className}>
-                      <div>{name}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{gender}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{phone}</div>
-                    </td>
+                  return (
+                    <tr key={key}>
+                      <td className={className}>
+                        <div>{name}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{gender === 1 ? "Nam" : "Nữ"}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{phoneNumber}</div>
+                      </td>
 
-                    <td className={className}>
-                      <div>{dob}</div>
-                    </td>
+                      <td className={className}>
+                        <div>{dob}</div>
+                      </td>
 
-                    <td className={className}>
-                      <div>{String(active)}</div>
-                    </td>
-
-                    <td className={className}>
-                      <div className="flex items-center space-x-3">
-                        <Link to={`delete/${id}`}>
-                          {/* <Button
-                            variant={"gradient"}
-                            color={"blue"}
-                            className="flex items-center px-3 py-1 capitalize"
-                          >
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
-                            >
-                              Delete
-                            </Typography>
-                          </Button> */}
-                          <TrashIcon className="h-5 w-5 text-red-500" />
-                        </Link>
-
-                        <Link to={id}>
+                      <td className={className}>
+                        <div>{String(active)}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{branch.name}</div>
+                      </td>
+                      <td className={className}>
+                        <div className="flex items-center space-x-3">
+                          {/* <Link to={`delete/${id}`}>
                           <Tooltip content="Edit">
-                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
-                          </Tooltip>
-                        </Link>
-                        <button onClick={() => handleOpen(id)}>
-                          <Tooltip content="Reset password">
-                            <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
-                          </Tooltip>
-                        </button>
-                      </div>
-                    </td>
-                    {/* diaglog reset pass */}
-                  </tr>
-                );
-              })}
+                            <TrashIcon className="h-5 w-5 text-red-500" />
+
+                          </Link> */}
+
+                          <Link to={`${id}`}>
+                            <Tooltip content="Edit">
+                              <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                            </Tooltip>
+                          </Link>
+                          <button onClick={() => handleOpen(id, "resetpass")}>
+                            <Tooltip content="Reset password">
+                              <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
+                            </Tooltip>
+                          </button>
+                          <button onClick={() => handleOpen(id, "delete")}>
+                            <Tooltip content="delete">
+                              <TrashIcon className="h-5 w-5 cursor-pointer text-red-500" />
+                            </Tooltip>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
         </CardBody>
       </Card>
-      <Dialog open={open} handler={handleOpen} size="xl">
-        <DialogBody>
-          <Typography color="inherit" className=" font-medium capitalize">
-            Reset this staff's password ?
-          </Typography>
-        </DialogBody>
-        <DialogFooter>
-          <div className="flex">
-            <Button
-              variant="text"
-              color="red"
-              onClick={handleOpen}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button
-              variant="gradient"
-              color="green"
-              onClick={() => handleResetPass()}
-            >
-              <span>Confirm</span>
-            </Button>
-          </div>
-        </DialogFooter>
-      </Dialog>
+      <ConfirmDialog
+        title={
+          type === "resetpass"
+            ? "Reset this staff's password ?"
+            : "Delete this staff ?"
+        }
+        handleClose={handleClose}
+        open={open}
+        handleOK={handleOK}
+      />
     </div>
   );
 }

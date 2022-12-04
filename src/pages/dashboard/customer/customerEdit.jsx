@@ -91,7 +91,7 @@ function CustomerEdit() {
                             name="active"
                             component={SwitchField}
                             label="active"
-                            confirm={"Deactive this staff ?"}
+                            confirm={"Deactive this customer ?"}
                           />
                         </FormGroup>
                       </Grid>

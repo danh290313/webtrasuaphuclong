@@ -21,22 +21,11 @@ SelectField.defaultProps = {
   disabled: false,
 };
 function SelectField(props) {
-  const {
-    field,
-    form,
-    label,
-    disabled,
-    options,
-    readOnly,
-    id,
-    value,
-    defaultOp,
-  } = props;
-  const { name } = field;
+  const { field, form, label, disabled, options, readOnly, id, defaultOp } =
+    props;
+  const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name]; // có message lỗi và touched=true thì trả ra true
-  const findOp = options.find((v) => v.id === field.value);
-
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
@@ -47,11 +36,12 @@ function SelectField(props) {
         className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
           showError ? "border-[2px] border-red-500 focus:outline-none" : ""
         }`}
+        value={options.find((v) => v.id === value)?.id}
       >
         <option value="">--{defaultOp}--</option>
         {options
           ? options.map((option, i) => (
-              <option value={option.id} selected={!!findOp} key={i}>
+              <option value={option.id} key={i}>
                 {option.value}
               </option>
             ))

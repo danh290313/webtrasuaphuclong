@@ -3,13 +3,11 @@ import * as Yup from "yup";
 const phoneNumber = Yup.string()
   .matches(/^[0-9]+$/, "Number only")
   .min(10, "Phone must be 10 characters")
-  .max(10, "Phone must be 10 characters");
-const fullname = Yup.string()
+  .max(10, "Phone must be 10 characters")
+  .required("This field is required");
+const name = Yup.string()
   .min(2, "Name must be at least 2 characters")
   .required("This field is required");
-const sex = Yup.string().required("This field is required");
-const identityCardNumber = Yup.string().matches(/^[0-9]+$/, "Number only");
-const birthday = Yup.string().required("This field is required");
 const email = Yup.string()
   // .email("Email is invalid")
   .required("This field is required");
@@ -31,24 +29,26 @@ const type = Yup.string().required("This field is required");
 const dob = Yup.string().required("This field is required");
 const gender = Yup.string().required("This field is required");
 const password = Yup.string().required("This field is required");
+const branch = Yup.string().required("This field is required");
+const position = Yup.string().required("This field is required");
 export const staffSchema = Yup.object().shape({
   phoneNumber,
-  fullname,
-  sex,
-  "identity-card-number": identityCardNumber,
-  birthday,
-  email,
+  name,
+  gender,
   address,
   hometown,
+  dob,
+  branch,
+  position,
 });
 export const warehousesSchema = Yup.object().shape({
   phoneNumber,
-  name: fullname,
+  name,
   address,
   date_opend,
 });
 export const drinksSchema = Yup.object().shape({
-  name: fullname,
+  name,
   description,
   price,
   discount,
@@ -59,7 +59,7 @@ export const drinksSchema = Yup.object().shape({
 });
 export const customerSchema = Yup.object().shape({
   phone: phoneNumber,
-  name: fullname,
+  name,
   gender,
   dob,
   active,

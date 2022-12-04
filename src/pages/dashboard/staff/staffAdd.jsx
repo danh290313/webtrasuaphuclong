@@ -10,207 +10,200 @@ import { useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { staffSchema } from "@/utils/schemas";
-const options = [
-  { id: "1", value: "Male" },
-  { id: "2", value: "Female" },
-];
-
-const listBranchs = [
-  { id: "1", value: "Vung tau" },
-  { id: "2", value: "Ho chi minh" },
-  { id: "3", value: "Nha Trang" },
-];
-const listPositions = [
-  { id: "1", value: "Giam doc" },
-  { id: "2", value: "Quan Ly" },
-  { id: "3", value: "Nhan Vien phuc vu" },
-];
-
+import useBrand from "@/hooks/useBrands";
+import useStaff from "@/hooks/useStaff";
 const initialValues = {
-  fullname: "tu",
-  sex: "",
-  phoneNumber: "022222222",
-  "identity-card-number": "",
+  name: "",
+  gender: "",
+  phoneNumber: "",
   address: "",
-  birthday: "",
-  email: "",
+  dob: "",
+  branch: "",
   hometown: "",
-  active: "",
+  position: "",
+  active: 0,
 };
 const validationShema = staffSchema;
 function StaffAdd() {
   const nav = useNavigate();
-  const handleSubmit = (value) => {
-    console.log(value);
+  const { brands } = useBrand();
+  const { positions, getStaff } = useStaff();
+  const { addStaff } = useStaff();
+  const handleSubmit = (valSubmit) => {
+    const reContructVal = {
+      name: valSubmit.name,
+      gender: valSubmit.gender,
+      phone_number: valSubmit.phoneNumber,
+      address: valSubmit.address,
+      hometown: valSubmit.hometown,
+      branch_id: valSubmit.branch,
+      position_id: valSubmit.position,
+      dob: valSubmit.dob,
+      active: valSubmit.active,
+    };
+    addStaff(reContructVal);
   };
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12">
-      <Card>
-        <CardBody>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationShema}
-            onSubmit={handleSubmit}
-            validateOnBlur={true}
-          >
-            {(props) => {
-              //do somthing here
-              // console.log(props);
-              return (
-                <>
-                  <Form>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <FastField
-                            name="fullname"
-                            component={InputField}
-                            label="Full name"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="phoneNumber"
-                            component={InputField}
-                            label="Phone"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="sex"
-                            component={SelectField}
-                            value="value"
-                            label="Gender"
-                            options={options}
-                            defaultOp="Choose gender"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="identity-card-number"
-                            component={InputField}
-                            label="CMND/CCCD"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <Field
-                              name="birthday"
-                              component={DatePickerField}
-                              label="Day of birth"
-                              inputFormat="DD/MM/YYYY"
+    brands &&
+    positions && (
+      <div className="mt-12 mb-8 flex flex-col gap-12">
+        <Card>
+          <CardBody>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationShema}
+              onSubmit={handleSubmit}
+              validateOnBlur={true}
+            >
+              {(props) => {
+                //do somthing here
+                // console.log(props);
+                return (
+                  <>
+                    <Form>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <FastField
+                              name="name"
+                              component={InputField}
+                              label="Full name"
                             />
-                          </LocalizationProvider>
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="email"
-                            component={InputField}
-                            label="Email"
-                          />
-                        </FormGroup>
-                      </Grid>
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="phoneNumber"
+                              component={InputField}
+                              label="Phone"
+                            />
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="gender"
+                              component={SelectField}
+                              label="Gender"
+                              options={[
+                                { id: 0, value: "Nam" },
+                                { id: 1, value: "Nữ" },
+                              ]}
+                              defaultOp="Choose gender"
+                            />
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="address"
+                              component={InputField}
+                              label="Address"
+                            />
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="hometown"
+                              component={InputField}
+                              label="Home Town"
+                            />
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <Field
+                                name="dob"
+                                component={DatePickerField}
+                                label="Day of birth"
+                              />
+                            </LocalizationProvider>
+                          </FormGroup>
+                        </Grid>
 
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="address"
-                            component={InputField}
-                            label="Address"
-                          />
-                        </FormGroup>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="branch"
+                              component={SelectField}
+                              value="value"
+                              label="Branch"
+                              options={brands.data.map((v) => ({
+                                id: v.id,
+                                value: v.name,
+                              }))}
+                              defaultOp="Choose branch"
+                            />
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="position"
+                              component={SelectField}
+                              value="value"
+                              label="Position"
+                              options={positions.map((v) => ({
+                                id: v.id,
+                                value: v.name,
+                              }))}
+                              defaultOp="Choose position"
+                            />
+                          </FormGroup>
+                        </Grid>
+
+                        <Grid item xs={12} md={6}>
+                          <FormGroup>
+                            <Field
+                              name="active"
+                              component={SwitchField}
+                              label="active"
+                              // confirm={"Deactive this staff ?"}
+                            />
+                          </FormGroup>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="hometown"
-                            component={InputField}
-                            label="Hometown"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="branch"
-                            component={SelectField}
-                            value="value"
-                            label="Branch"
-                            options={listBranchs}
-                            defaultOp="Choose branch"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="position"
-                            component={SelectField}
-                            value="value"
-                            label="Position"
-                            options={listPositions}
-                            defaultOp="Choose position"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="active"
-                            component={SwitchField}
-                            label="active"
-                            confirm={"Deactive this staff ?"}
-                          />
-                        </FormGroup>
-                      </Grid>
-                    </Grid>
-                    <div className="flex">
-                      <Button
-                        variant={"gradient"}
-                        color={"blue"}
-                        className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
-                        type="button"
-                        onClick={() => nav("/dashboard/staff")}
-                      >
-                        <Typography
-                          color="inherit"
-                          className=" font-medium capitalize"
+                      <div className="flex">
+                        <Button
+                          variant={"gradient"}
+                          color={"blue"}
+                          className="mt-4 mr-6 flex items-center py-1 px-6 capitalize"
+                          type="button"
+                          onClick={() => nav("/dashboard/staff")}
                         >
-                          Back
-                        </Typography>
-                      </Button>
-                      <Button
-                        variant={"gradient"}
-                        color={"red"}
-                        className="mt-4 flex items-center py-1 px-6 capitalize"
-                        type="submit"
-                      >
-                        <Typography
-                          color="inherit"
-                          className=" font-medium capitalize"
+                          <Typography
+                            color="inherit"
+                            className=" font-medium capitalize"
+                          >
+                            Back
+                          </Typography>
+                        </Button>
+                        <Button
+                          variant={"gradient"}
+                          color={"red"}
+                          className="mt-4 flex items-center py-1 px-6 capitalize"
+                          type="submit"
                         >
-                          Save
-                        </Typography>
-                      </Button>
-                    </div>
-                  </Form>
-                </>
-              );
-            }}
-          </Formik>
-        </CardBody>
-      </Card>
-    </div>
+                          <Typography
+                            color="inherit"
+                            className=" font-medium capitalize"
+                          >
+                            Save
+                          </Typography>
+                        </Button>
+                      </div>
+                    </Form>
+                  </>
+                );
+              }}
+            </Formik>
+          </CardBody>
+        </Card>
+      </div>
+    )
   );
 }
 
