@@ -9,25 +9,13 @@ import {
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Staff } from "./pages/dashboard/staff/staff";
-import StaffEdit from "./pages/dashboard/staff/staffEdit";
-import StaffAdd from "./pages/dashboard/staff/staffAdd";
-import Customer from "./pages/dashboard/customer/customer";
-import CustomerAdd from "./pages/dashboard/customer/customerAdd";
-import CustomerEdit from "./pages/dashboard/customer/customerEdit";
+import { Staff, StaffEdit, StaffAdd } from "./pages/dashboard/staff";
+import {Customer, CustomerAdd, CustomerEdit} from "@/pages/dashboard/customer";
+import {Warehouses, WarehousesAdd, WarehousesEdit} from "@/pages/dashboard/warehouses";
+import { Drinks, DrinksEdit, DrinksRecipesTopping } from "./pages/dashboard/drinks";
 
-import Warehouses from "./pages/dashboard/warehouses/warehouses";
-import { Drinks } from "./pages/dashboard/drinks/drinks";
-import DrinksEdit from "./pages/dashboard/drinks/drinksEdit";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
-import DrinksRecipesTopping from "./pages/dashboard/drinks/drinksRecipesTopping";
-import WarehousesAdd from "./pages/dashboard/warehouses/warehousesAdd";
-import WarehousesEdit from "./pages/dashboard/warehouses/warehousesEdit";
-
-import Orders from "./pages/dashboard/orders/orders";
-import OrdersAdd from "./pages/dashboard/orders/ordersAdd";
-import OrdersEdit from "./pages/dashboard/orders/ordersEdit";
-import OrderDetails from "./pages/dashboard/orders/oderDetails";
+import {Orders, OrdersAdd, OrderDetails, OrdersEdit} from "./pages/dashboard/orders";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
