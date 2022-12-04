@@ -58,7 +58,7 @@ export const drinksSchema = Yup.object().shape({
   type,
 });
 export const customerSchema = Yup.object().shape({
-  phone: phoneNumber,
+  phone_number: phoneNumber,
   name,
   gender,
   dob,

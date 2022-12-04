@@ -17,12 +17,14 @@ import useStaff from "@/hooks/useStaff";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { Pagination } from "@mui/material";
+import { positions } from "@mui/system";
 export function Staff() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
   const { deleteStaff, staffs, resetPassStaff } = useStaff();
-  // const [staffs, setStaffs] = useState([]);
+  const [page, setPage] = useState(staffs?.meta?.current_page);
   const handleOpen = (id, type) => {
     setType(type);
     setOpen(!open);
@@ -34,6 +36,9 @@ export function Staff() {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleChangePage = (e, npage) => {
+    setPage(npage);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
@@ -69,27 +74,43 @@ export function Staff() {
           <table className="w-full min-w-[640px] table-auto">
             <thead className="bg-orange-500 ">
               <tr>
-                {["name", "gender", "phone", "dob", "active", "branch", ""].map(
-                  (el) => (
-                    <th
-                      key={el}
-                      className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                {[
+                  "name",
+                  "gender",
+                  "phone",
+                  "dob",
+                  "active",
+                  "branch",
+                  "position",
+                  "",
+                ].map((el) => (
+                  <th
+                    key={el}
+                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                  >
+                    <Typography
+                      variant="small"
+                      className="text-[11px] font-bold uppercase text-white"
                     >
-                      <Typography
-                        variant="small"
-                        className="text-[11px] font-bold uppercase text-white"
-                      >
-                        {el}
-                      </Typography>
-                    </th>
-                  )
-                )}
+                      {el}
+                    </Typography>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {staffs?.data?.map(
                 (
-                  { active, dob, gender, id, name, phoneNumber, branch },
+                  {
+                    active,
+                    dob,
+                    gender,
+                    id,
+                    name,
+                    phoneNumber,
+                    branch,
+                    positionId,
+                  },
                   key
                 ) => {
                   const className = `py-3 px-5 whitespace-nowrap ${
@@ -119,6 +140,9 @@ export function Staff() {
                       </td>
                       <td className={className}>
                         <div>{branch.name}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{positionId.name}</div>
                       </td>
                       <td className={className}>
                         <div className="flex items-center space-x-3">
@@ -153,6 +177,13 @@ export function Staff() {
           </table>
         </CardBody>
       </Card>
+      <div className="m-auto w-fit">
+        <Pagination
+          count={Math.ceil(staffs?.meta?.total / staffs?.meta?.per_page)}
+          page={page}
+          onChange={handleChangePage}
+        />
+      </div>
       <ConfirmDialog
         title={
           type === "resetpass"

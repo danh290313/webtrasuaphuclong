@@ -25,13 +25,13 @@ function SelectField(props) {
     props;
   const { name, value } = field;
   const { errors, touched } = form;
-  const showError = errors[name] && touched[name]; // có message lỗi và touched=true thì trả ra true
+  const showError = errors[name] && touched[name];
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
       <select
         id={name}
-        {...field} // field có 4 thuộc tính là name , value, onChange,onBlur
+        {...field}
         disabled={disabled}
         className={`form-field ${disabled ? "bg-gray-200" : ""}  ${
           showError ? "border-[2px] border-red-500 focus:outline-none" : ""

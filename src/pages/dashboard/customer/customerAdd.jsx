@@ -6,35 +6,41 @@ import SelectField from "@/components/custom-fields/SelectField/SelectField";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DatePickerField from "@/components/custom-fields/DatePickerField/DatePickerField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { customerSchema } from "@/utils/schemas";
+import useCus from "@/hooks/useCus";
+import BackBtn from "@/components/BackBtn";
 const options = [
-  { id: "1", value: "Male" },
-  { id: "2", value: "Female" },
+  { id: 1, value: "Male" },
+  { id: 2, value: "Female" },
 ];
 
 const initialValues = {
-  name: "tu",
+  name: "",
   gender: "",
-  phone: "022222222",
+  phone_number: "",
   dob: "",
-  active: "",
+  active: 1,
 };
 
-const validationShema = customerSchema;
 function CustomerAdd() {
+  const { addCus } = useCus();
+  const nav = useNavigate();
   const handleSubmit = (value) => {
-    console.log(value);
+    console.log({ value });
+    addCus(value);
+    nav("/dashboard/customer");
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
+      <BackBtn to="/dashboard/customer" />
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationShema}
+            validationSchema={customerSchema}
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -57,7 +63,7 @@ function CustomerAdd() {
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="phone"
+                            name="phone_number"
                             component={InputField}
                             label="Phone"
                           />
@@ -68,9 +74,11 @@ function CustomerAdd() {
                           <Field
                             name="gender"
                             component={SelectField}
-                            value="value"
                             label="Gender"
-                            options={options}
+                            options={[
+                              { id: 0, value: "Nam" },
+                              { id: 1, value: "Nữ" },
+                            ]}
                             defaultOp="Choose Gender"
                           />
                         </FormGroup>
@@ -93,15 +101,15 @@ function CustomerAdd() {
                             name="active"
                             component={SwitchField}
                             label="active"
-                            confirm={"Deactive this staff ?"}
                           />
                         </FormGroup>
                       </Grid>
                     </Grid>
+
                     <Button
                       variant={"gradient"}
                       type="submit"
-                      color={"blue"}
+                      color={"red"}
                       className="mt-4 flex items-center py-1 px-6 capitalize"
                     >
                       <Typography

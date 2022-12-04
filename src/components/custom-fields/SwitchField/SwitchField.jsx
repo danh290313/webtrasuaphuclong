@@ -13,7 +13,7 @@ function SwitchField(props) {
   const { errors, touched, setFieldValue } = form;
   const showError = errors[name] && touched[name];
   field.value === true && setNeedValidate && setNeedValidate(true);
-  const handleOnChange = () => setFieldValue(name, !field.value);
+  const handleOnChange = () => setFieldValue(name, field.value ? 0 : 1);
   return (
     <>
       <Switch

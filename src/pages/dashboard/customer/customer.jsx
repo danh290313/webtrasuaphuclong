@@ -71,9 +71,37 @@ const customer = [
     phone: "092222222",
   },
 ];
+import { useEffect } from "react";
+import { Pagination } from "@mui/material";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import useCus from "@/hooks/useCus";
 export function Customer() {
-  const handleResetPass = (id) => {
-    console.log(id);
+  const [idChoosing, setIdChoosing] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState(false);
+  const [customer, setCustomer] = useState();
+  const [page, setPage] = useState(customer?.meta?.current_page);
+  const { getAllCus, deleteCus } = useCus();
+  useEffect(() => {
+    (async () => {
+      const res = await getAllCus();
+      // console.log(data);
+      setCustomer(res);
+    })();
+  }, []);
+  const handleOpen = (id) => {
+    setOpen(true);
+    setIdChoosing(id);
+  };
+  const handleOK = () => {
+    setOpen(false);
+    deleteCus(idChoosing);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleChangePage = (e, npage) => {
+    setPage(npage);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
@@ -86,7 +114,7 @@ export function Customer() {
             <input
               type="search"
               id="default-search"
-              class="primary-search"
+              className="primary-search"
               placeholder="Search customer"
               required
             />
@@ -110,7 +138,15 @@ export function Customer() {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr className="bg-orange-500 ">
-                {["name", "gender", "phone", "dob", "active", ""].map((el) => (
+                {[
+                  "name",
+                  "gender",
+                  "phone",
+                  "dob",
+                  "address",
+                  "active",
+                  "",
+                ].map((el) => (
                   <th
                     key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -126,68 +162,75 @@ export function Customer() {
               </tr>
             </thead>
             <tbody>
-              {customer.map(({ id, name, gender, phone, dob, active }, key) => {
-                const className = `py-3 px-5 whitespace-nowrap ${
-                  key === customer.length - 1
-                    ? ""
-                    : "border-b border-blue-gray-50"
-                }`;
+              {customer?.data?.map(
+                (
+                  { id, name, gender, phoneNumber, dob, active, addresses },
+                  key
+                ) => {
+                  const className = `py-3 px-5 whitespace-nowrap ${
+                    key === customer.length - 1
+                      ? ""
+                      : "border-b border-blue-gray-50"
+                  }`;
+                  return (
+                    <tr key={key}>
+                      <td className={className}>
+                        <div>{name}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{gender === 0 ? "Nam" : "Nữ"}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{phoneNumber}</div>
+                      </td>
+                      <td className={className}>
+                        <div>{String(dob)}</div>
+                      </td>
+                      <td className={className}>
+                        <div className="max-w-[200px] truncate">
+                          {String(addresses[0]?.address)}
+                        </div>
+                      </td>
+                      <td className={className}>
+                        <div>{String(active)}</div>
+                      </td>
 
-                return (
-                  <tr key={key}>
-                    <td className={className}>
-                      <div>{name}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{gender}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{phone}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{dob}</div>
-                    </td>
-                    <td className={className}>
-                      <div>{String(active)}</div>
-                    </td>
+                      <td className={className}>
+                        <div className="flex items-center space-x-3">
+                          <button onClick={() => handleOpen(id)}>
+                            <Tooltip content="delete">
+                              <TrashIcon className="h-5 w-5 text-red-500" />
+                            </Tooltip>
+                          </button>
 
-                    <td className={className}>
-                      <div className="flex items-center space-x-3">
-                        <Link to={`delete/${id}`}>
-                          {/* <Button
-                            variant={"gradient"}
-                            color={"blue"}
-                            className="flex items-center px-3 py-1 capitalize"
-                          >
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
-                            >
-                              Delete
-                            </Typography>
-                          </Button> */}
-                          <TrashIcon className="h-5 w-5 text-red-500" />
-                        </Link>
-
-                        <Link to={id}>
-                          <Tooltip content="Edit">
-                            <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
-                          </Tooltip>
-                        </Link>
-                        <button onClick={() => handleOpen(id)}>
-                          <Tooltip content="Reset password">
-                            <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
-                          </Tooltip>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                          <Link to={`${String(id)}`}>
+                            <Tooltip content="Edit">
+                              <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                            </Tooltip>
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
         </CardBody>
       </Card>
+      <div className="m-auto w-fit">
+        <Pagination
+          count={Math.ceil(customer?.meta?.total / customer?.meta?.per_page)}
+          page={page}
+          onChange={handleChangePage}
+        />
+      </div>
+      <ConfirmDialog
+        title={"Delete this customer ?"}
+        handleClose={handleClose}
+        open={open}
+        handleOK={handleOK}
+      />
     </div>
   );
 }
