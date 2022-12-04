@@ -3,18 +3,11 @@ import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
 function useBrand() {
   const { token } = useAuth();
-  const [brands, setBrands] = useState();
-  useEffect(() => {
-    const contr = new AbortController();
-    const { signal } = contr;
-    (async () => {
-      const res = await getBrandsServices(signal, token);
-      setBrands(res.data);
-    })();
-
-    return () => contr.abort();
-  }, []);
-  return { brands };
+  const getAllBranchs = async () => {
+    const { data } = await getBrandsServices();
+    return data;
+  };
+  return { getAllBranchs };
 }
 
 export default useBrand;

@@ -12,6 +12,8 @@ import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { staffSchema } from "@/utils/schemas";
 import useBrand from "@/hooks/useBrands";
 import useStaff from "@/hooks/useStaff";
+import { useState } from "react";
+import { useEffect } from "react";
 const initialValues = {
   name: "",
   gender: "",
@@ -26,7 +28,8 @@ const initialValues = {
 const validationShema = staffSchema;
 function StaffAdd() {
   const nav = useNavigate();
-  const { brands } = useBrand();
+  const [branch, setBranch] = useState();
+  const { getAllBranchs } = useBrand();
   const { positions, getStaff } = useStaff();
   const { addStaff } = useStaff();
   const handleSubmit = (valSubmit) => {
@@ -43,8 +46,14 @@ function StaffAdd() {
     };
     addStaff(reContructVal);
   };
+  useEffect(() => {
+    (async () => {
+      const res = await getAllBranchs();
+      setBranch(res);
+    })();
+  }, []);
   return (
-    brands &&
+    branch &&
     positions && (
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
@@ -131,7 +140,7 @@ function StaffAdd() {
                               component={SelectField}
                               value="value"
                               label="Branch"
-                              options={brands.data.map((v) => ({
+                              options={branch.data.map((v) => ({
                                 id: v.id,
                                 value: v.name,
                               }))}

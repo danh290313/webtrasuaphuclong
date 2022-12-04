@@ -12,25 +12,44 @@ import {
 import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
-  TrashIcon
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 // import { authorsTableData, projectsTableData } from "@/data";
 import { Link } from "react-router-dom";
-const warehouses = [
-  {
-    id: "123",
-    name: "chi nhanh da nang",
-    address: "vung tau",
-    phone_number: "0922222222",
-    date_opend: "11/11/1111",
-    active: "true",
-    
-  },
-];
+import useWarehouse from "@/hooks/useWarehouse";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Pagination } from "@mui/material";
+import ConfirmDialog from "@/components/ConfirmDialog";
+
 export function Warehouses() {
-  const handleResetPass = (id) => {
-    console.log(id);
+  const [idChoosing, setIdChoosing] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [warehouses, setWarehouses] = useState();
+  const [page, setPage] = useState(warehouses?.meta?.current_page);
+
+  const { getAllWarehouses, deleteWarehouse } = useWarehouse();
+  useEffect(() => {
+    (async () => {
+      const res = await getAllWarehouses();
+      setWarehouses(res);
+    })();
+  }, []);
+  const handleOpen = (id, type) => {
+    setOpen(!open);
+    setIdChoosing(id);
   };
+  const handleOK = () => {
+    deleteWarehouse(idChoosing);
+    setOpen(false);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleChangePage = (e, npage) => {
+    setPage(npage);
+  };
+
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -95,9 +114,9 @@ export function Warehouses() {
               </tr>
             </thead>
             <tbody>
-              {warehouses.map(
+              {warehouses?.data?.map(
                 (
-                  { active, date_opend, id, name, phone_number, address },
+                  { active, dateOpened, id, name, phoneNumber, address },
                   key
                 ) => {
                   const className = `py-3 px-5 ${
@@ -112,42 +131,30 @@ export function Warehouses() {
                         <div>{name}</div>
                       </td>
                       <td className={className}>
-                        <div>{phone_number}</div>
+                        <div>{phoneNumber}</div>
                       </td>
                       <td className={className}>
-                        <div>{date_opend}</div>
+                        <div>{dateOpened}</div>
                       </td>
                       <td className={className}>
                         <div>{address}</div>
                       </td>
-                      
+
                       <td className={className}>
                         <div>{String(active)}</div>
                       </td>
                       <td className={className}>
                         <div className="flex space-x-2">
-                          <Link to={id}>
+                          <Link to={String(id)}>
                             <Tooltip content="Edit">
                               <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
                             </Tooltip>
                           </Link>
-
-                          <Link to={`delete/${id}`}>
-                          <Button
-                            variant={"gradient"}
-                            color={"blue"}
-                            className="flex items-center px-3 py-1 capitalize"
-                          >
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
-                            >
-                              Delete
-                            </Typography>
-                          </Button>
-                        </Link>
-
-
+                          <button onClick={() => handleOpen(id)}>
+                            <Tooltip content="delete">
+                              <TrashIcon className="h-5 w-5 cursor-pointer text-red-500" />
+                            </Tooltip>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -158,6 +165,21 @@ export function Warehouses() {
           </table>
         </CardBody>
       </Card>
+      <div className="m-auto w-fit">
+        <Pagination
+          count={Math.ceil(
+            warehouses?.meta?.total / warehouses?.meta?.per_page
+          )}
+          page={page}
+          onChange={handleChangePage}
+        />
+      </div>
+      <ConfirmDialog
+        title={"Delete this warehouse ?"}
+        handleClose={handleClose}
+        open={open}
+        handleOK={handleOK}
+      />
     </div>
   );
 }

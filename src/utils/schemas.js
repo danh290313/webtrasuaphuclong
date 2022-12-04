@@ -42,10 +42,11 @@ export const staffSchema = Yup.object().shape({
   position,
 });
 export const warehousesSchema = Yup.object().shape({
-  phoneNumber,
+  phone_number: phoneNumber,
   name,
   address,
   date_opend,
+  active,
 });
 export const drinksSchema = Yup.object().shape({
   name,

@@ -175,8 +175,8 @@ const brands = {
     total: 3,
   },
 };
-export const getBrands = async (signal, token) => {
-  //   const res = post("/admin/branches", {}, { signal, token });
+export const getBrands = async (token) => {
+  //   const res = post("/admin/branches", {}, { token });
   const res = {};
   res.data = brands;
   return res;

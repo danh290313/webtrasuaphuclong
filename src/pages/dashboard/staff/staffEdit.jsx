@@ -26,7 +26,8 @@ function StaffEdit() {
   const nav = useNavigate();
   const { id } = useParams();
   const [staff, setStaff] = useState();
-  const { brands } = useBrand();
+  const { getAllBranchs } = useBrand();
+  const [branch, setBranch] = useState();
   const { positions, getStaff, editStaff } = useStaff();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -67,9 +68,15 @@ function StaffEdit() {
     editStaff(value);
     nav("/dashboard/staff");
   };
+  useEffect(() => {
+    (async () => {
+      const res = await getAllBranchs();
+      setBranch(res);
+    })();
+  }, []);
   return (
     staff &&
-    brands &&
+    branch &&
     positions && (
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
@@ -154,7 +161,7 @@ function StaffEdit() {
                               component={SelectField}
                               value="value"
                               label="Branch"
-                              options={brands.data.map((v) => ({
+                              options={branch.data.map((v) => ({
                                 id: v.id,
                                 value: v.name,
                               }))}
