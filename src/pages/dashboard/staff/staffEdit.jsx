@@ -17,7 +17,7 @@ import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { useNavigate, useParams } from "react-router-dom";
 import { staffSchema } from "@/utils/schemas";
-import useBrand from "@/hooks/useBrands";
+import useBranch from "@/hooks/useBranch";
 import { forwardRef, useEffect, useState } from "react";
 import useStaff from "@/hooks/useStaff";
 import ConfirmDialog from "@/components/ConfirmDialog";
@@ -26,7 +26,7 @@ function StaffEdit() {
   const nav = useNavigate();
   const { id } = useParams();
   const [staff, setStaff] = useState();
-  const { getAllBranchs } = useBrand();
+  const { getBranches } = useBranch();
   const [branch, setBranch] = useState();
   const { positions, getStaff, editStaff } = useStaff();
   const [open, setOpen] = useState(false);
@@ -70,7 +70,7 @@ function StaffEdit() {
   };
   useEffect(() => {
     (async () => {
-      const res = await getAllBranchs();
+      const res = await getBranches();
       setBranch(res);
     })();
   }, []);

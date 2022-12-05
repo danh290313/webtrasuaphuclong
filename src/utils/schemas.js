@@ -3,7 +3,7 @@ import * as Yup from "yup";
 const phoneNumber = Yup.string()
   .matches(/^[0-9]+$/, "Number only")
   .min(10, "Phone must be 10 characters")
-  .max(10, "Phone must be 10 characters")
+  .max(20, "Phone must be 10 characters")
   .required("This field is required");
 const name = Yup.string()
   .min(2, "Name must be at least 2 characters")
@@ -65,6 +65,14 @@ export const customerSchema = Yup.object().shape({
   dob,
   active,
 });
+export const BranchSchema = Yup.object().shape({
+  phoneNumber,
+  name,
+  address,
+  dateOpened: date_opend,
+  active,
+});
+
 export const signinSchema = Yup.object().shape({
   email,
   password,

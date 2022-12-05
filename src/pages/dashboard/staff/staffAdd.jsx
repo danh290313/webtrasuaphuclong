@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { staffSchema } from "@/utils/schemas";
-import useBrand from "@/hooks/useBrands";
+import useBranch from "@/hooks/useBranch";
 import useStaff from "@/hooks/useStaff";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ const validationShema = staffSchema;
 function StaffAdd() {
   const nav = useNavigate();
   const [branch, setBranch] = useState();
-  const { getAllBranchs } = useBrand();
+  const { getBranches } = useBranch();
   const { positions, getStaff } = useStaff();
   const { addStaff } = useStaff();
   const handleSubmit = (valSubmit) => {
@@ -48,7 +48,7 @@ function StaffAdd() {
   };
   useEffect(() => {
     (async () => {
-      const res = await getAllBranchs();
+      const res = await getBranches();
       setBranch(res);
     })();
   }, []);

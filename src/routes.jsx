@@ -17,6 +17,7 @@ import { Drinks, DrinksEdit, DrinksRecipesTopping } from "./pages/dashboard/drin
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import {Orders, OrdersAdd, OrderDetails, OrdersEdit} from "./pages/dashboard/orders";
 
+import { Branch, BranchAdd, BranchEdit } from "./pages/dashboard/branch";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -131,6 +132,27 @@ export const routes = [
         name: "notifactions",
         path: "/notifactions",
         element: <Notifications />,
+      },
+
+
+      //Branch 
+      {
+        notOnSidebar: true,
+        path: "/branch/add",
+        element: <BranchAdd />,
+      },
+
+      {
+        notOnSidebar: true,
+        path: "/branch/:id",
+        element: <BranchEdit />,
+      },
+
+      {
+        icon: <UserGroupIcon {...icon} />,
+        name: "branch",
+        path: "/branch",
+        element: <Branch />,
       },
     ],
   },

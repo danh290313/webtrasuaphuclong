@@ -50,6 +50,7 @@ export function useStaff() {
       const res = await getStaffsServices(signal, token);
       setStaffs(res.data);
     })();
+    
     (async () => {
       const res = await getAllPositions(signal, token);
       setPositions(res?.data?.positions);
