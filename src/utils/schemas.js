@@ -72,6 +72,13 @@ export const BranchSchema = Yup.object().shape({
   dateOpened: date_opend,
   active,
 });
+export const ProviderSchema = Yup.object().shape({
+  phoneNumber,
+  name,
+  address,
+});
+
+
 
 export const signinSchema = Yup.object().shape({
   email,

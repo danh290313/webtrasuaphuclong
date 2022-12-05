@@ -6,6 +6,11 @@ import {
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
   UserGroupIcon,
+  HomeModernIcon,
+  ReceiptPercentIcon,
+  MapIcon,
+  TruckIcon,
+
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
@@ -18,6 +23,7 @@ import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import {Orders, OrdersAdd, OrderDetails, OrdersEdit} from "./pages/dashboard/orders";
 
 import { Branch, BranchAdd, BranchEdit } from "./pages/dashboard/branch";
+import { Provider, ProviderAdd, ProviderEdit  } from "./pages/dashboard/provider";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -82,7 +88,7 @@ export const routes = [
         element: <Drinks />,
       },
       {
-        icon: <BuildingStorefrontIcon {...icon} />,
+        icon: <HomeModernIcon {...icon} />,
         name: "warehouses",
         path: "/warehouses",
         element: <Warehouses />,
@@ -100,7 +106,7 @@ export const routes = [
 
       //Orders
       {
-        icon: <BuildingStorefrontIcon {...icon} />,
+        icon: <ReceiptPercentIcon {...icon} />,
         name: "Orders",
         path: "/orders",
         element: <Orders />,
@@ -121,18 +127,7 @@ export const routes = [
         element: <OrderDetails />,
       },
 
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "profile",
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
-        path: "/notifactions",
-        element: <Notifications />,
-      },
+     
 
 
       //Branch 
@@ -149,11 +144,49 @@ export const routes = [
       },
 
       {
-        icon: <UserGroupIcon {...icon} />,
+        icon: <MapIcon {...icon} />,
         name: "branch",
         path: "/branch",
         element: <Branch />,
       },
+
+      //provider 
+      {
+        icon: <TruckIcon {...icon} />,
+        name: "provider",
+        path: "/provider",
+        element: <Provider />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/provider/add",
+        element: <ProviderAdd />,
+      },
+
+      {
+        notOnSidebar: true,
+        path: "/provider/:id",
+        element: <ProviderEdit />,
+      },
+
+
+
+
+
+
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "profile",
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "notifactions",
+        path: "/notifactions",
+        element: <Notifications />,
+      },
+
     ],
   },
   {
