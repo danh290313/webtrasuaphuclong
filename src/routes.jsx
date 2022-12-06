@@ -10,20 +10,41 @@ import {
   ReceiptPercentIcon,
   MapIcon,
   TruckIcon,
-
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Staff, StaffEdit, StaffAdd } from "./pages/dashboard/staff";
-import {Customer, CustomerAdd, CustomerEdit} from "@/pages/dashboard/customer";
-import {Warehouses, WarehousesAdd, WarehousesEdit} from "@/pages/dashboard/warehouses";
-import { Drinks, DrinksEdit, DrinksRecipesTopping } from "./pages/dashboard/drinks";
+import {
+  Customer,
+  CustomerAdd,
+  CustomerEdit,
+} from "@/pages/dashboard/customer";
+import {
+  Warehouses,
+  WarehousesAdd,
+  WarehousesEdit,
+} from "@/pages/dashboard/warehouses";
+import {
+  Drinks,
+  DrinksEdit,
+  DrinksRecipesTopping,
+} from "./pages/dashboard/drinks";
 
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
-import {Orders, OrdersAdd, OrderDetails, OrdersEdit} from "./pages/dashboard/orders";
+import {
+  Orders,
+  OrdersAdd,
+  OrderDetails,
+  OrdersEdit,
+} from "./pages/dashboard/orders";
+import { Materials } from "./pages/dashboard/materials/materials";
 
 import { Branch, BranchAdd, BranchEdit } from "./pages/dashboard/branch";
-import { Provider, ProviderAdd, ProviderEdit  } from "./pages/dashboard/provider";
+import {
+  Provider,
+  ProviderAdd,
+  ProviderEdit,
+} from "./pages/dashboard/provider";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -127,10 +148,7 @@ export const routes = [
         element: <OrderDetails />,
       },
 
-     
-
-
-      //Branch 
+      //Branch
       {
         notOnSidebar: true,
         path: "/branch/add",
@@ -150,7 +168,7 @@ export const routes = [
         element: <Branch />,
       },
 
-      //provider 
+      //provider
       {
         icon: <TruckIcon {...icon} />,
         name: "provider",
@@ -168,12 +186,12 @@ export const routes = [
         path: "/provider/:id",
         element: <ProviderEdit />,
       },
-
-
-
-
-
-
+      {
+        icon: <BuildingStorefrontIcon {...icon} />,
+        name: "Materials",
+        path: "/materials",
+        element: <Materials />,
+      },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
@@ -186,7 +204,6 @@ export const routes = [
         path: "/notifactions",
         element: <Notifications />,
       },
-
     ],
   },
   {
