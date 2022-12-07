@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { toastError, toastSuccess } from "@/utils/toast";
 function useAuth() {
   const { currentUser, loading, error } = useSelector((state) => state.auth);
-  const token = currentUser.token;
+  const token = currentUser?.token;
   const dispatch = useDispatch();
   // const login = (email, password) => dispatch(loginUser(email, password));
   const login = async (email, password) => {
