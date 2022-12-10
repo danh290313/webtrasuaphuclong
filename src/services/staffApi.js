@@ -195,7 +195,7 @@ const staff = {
       active: 1,
     },
     position: {
-      id: 3,
+      id: 4,
       name: "Bếp",
     },
     active: 1,

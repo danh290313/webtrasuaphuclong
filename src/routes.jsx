@@ -10,10 +10,12 @@ import {
   ReceiptPercentIcon,
   MapIcon,
   TruckIcon,
+  BeakerIcon,
+  UserIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Staff, StaffEdit, StaffAdd } from "./pages/dashboard/staff";
+import { Staff, StaffEdit, StaffAdd, StaffUser } from "./pages/dashboard/staff";
 import {
   Customer,
   CustomerAdd,
@@ -45,6 +47,7 @@ import {
   ProviderAdd,
   ProviderEdit,
 } from "./pages/dashboard/provider";
+import { UserMinusIcon } from "@heroicons/react/24/outline";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -67,7 +70,13 @@ export const routes = [
       },
 
       {
-        icon: <UserGroupIcon {...icon} />,
+        notOnSidebar: true,
+        path: "/staff/edituser/:id",
+        element: <StaffUser />,
+      },
+
+      {
+        icon: <UserIcon {...icon} />,
         name: "staff",
         path: "/staff",
         element: <Staff />,
@@ -103,7 +112,7 @@ export const routes = [
         element: <DrinksEdit />,
       },
       {
-        icon: <UserGroupIcon {...icon} />,
+        icon: <BeakerIcon {...icon} />,
         name: "drinks",
         path: "/drinks",
         element: <Drinks />,

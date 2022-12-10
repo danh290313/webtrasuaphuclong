@@ -3,6 +3,7 @@ import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
   TrashIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -151,6 +152,12 @@ export function Staff() {
                             <TrashIcon className="h-5 w-5 text-red-500" />
 
                           </Link> */}
+
+                          <Link to={`edituser/${id}`}>
+                            <Tooltip content="EditUser">
+                              <UserIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
+                            </Tooltip>
+                          </Link>
 
                           <Link to={`${id}`}>
                             <Tooltip content="Edit">
