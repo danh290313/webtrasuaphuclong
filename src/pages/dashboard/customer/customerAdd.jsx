@@ -12,11 +12,6 @@ import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { customerSchema } from "@/utils/schemas";
 import useCus from "@/hooks/useCus";
 import BackBtn from "@/components/BackBtn";
-const options = [
-  { id: 1, value: "Male" },
-  { id: 2, value: "Female" },
-];
-
 const initialValues = {
   name: "",
   gender: "",

@@ -6,8 +6,8 @@ function useMaterial() {
   const nav = useNavigate();
   const { token } = useAuth();
   const getAllMaterial = async () => {
-    const { data } = await getAllMaterialService(token);
-    return data;
+    const res = await getAllMaterialService(token);
+    return res;
   };
   // const deleteWarehouse = async (id) => {
   //   const { data } = await deleteWarehouseService(id, token);

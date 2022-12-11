@@ -18,24 +18,23 @@ export function useCus() {
   const getCus = async (id) => await getCusService(id, token);
   const editCus = async (id, value) => {
     const res = await editCusService(id, value, token);
-    console.log("EDIT CUS :", { res });
-    if (res?.data?.status === "success") {
-      toastSuccess(res.data.msg);
+    if (res?.status === "success") {
+      toastSuccess(res.msg);
       nav("/dashboard/customer");
-    } else toastError(res?.data?.msg);
+    } else toastError(res?.msg);
   };
-  const getAllCus = async () => {
-    const res = await getAllCusService(token);
+  const getAllCus = async (page) => {
+    const res = await getAllCusService(page, token);
     return res;
   };
   const deleteCus = async (id) => {
-    const { data } = await deleteCusService(id, token);
-    if (data?.status === "success") {
-      toastSuccess(data?.msg);
-      return data;
+    const res = await deleteCusService(id, token);
+    if (res?.status === "success") {
+      toastSuccess(res?.msg);
+      return res;
     } else {
-      toastError(data?.msg);
-      return data;
+      toastError(res?.msg);
+      return res;
     }
   };
   const addCus = async (value) => {

@@ -1,7 +1,8 @@
 import * as Yup from "yup";
 
 const phoneNumber = Yup.string()
-  .matches(/^[0-9]+$/, "Number only")
+  // .matches(/^[0-9]+$/, "Number only")
+  .matches(/(0[3|5|7|8|9])+([0-9]{8})\b/, "Phone number is invalid")
   .min(10, "Phone must be 10 characters")
   .max(10, "Phone must be 10 characters")
   .required("This field is required");
@@ -9,7 +10,7 @@ const name = Yup.string()
   .min(2, "Name must be at least 2 characters")
   .required("This field is required");
 const email = Yup.string()
-  // .email("Email is invalid")
+  .email("Email is invalid")
   .required("This field is required");
 const address = Yup.string().required("This field is required");
 const hometown = Yup.string().required("This field is required");

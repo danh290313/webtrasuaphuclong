@@ -39,14 +39,15 @@ export function Customer() {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
   const [customer, setCustomer] = useState();
-  const [page, setPage] = useState(customer?.meta?.current_page);
+  const [page, setPage] = useState(1);
   const { getAllCus, deleteCus } = useCus();
   useEffect(() => {
     (async () => {
-      const res = await getAllCus();
+      const res = await getAllCus(page);
+      console.log({ res });
       setCustomer(res);
     })();
-  }, []);
+  }, [page]);
   const handleOpen = (id) => {
     setOpen(true);
     setIdChoosing(id);
@@ -54,6 +55,14 @@ export function Customer() {
   const handleOK = () => {
     setOpen(false);
     deleteCus(idChoosing);
+    (async () => {
+      let npage;
+      if (customer?.data?.length === 1) npage = page - 1;
+      else npage = page;
+      const res = await getAllCus(npage);
+      setCustomer(res);
+      setPage((prev) => prev - 1);
+    })();
   };
   const handleClose = () => {
     setOpen(false);

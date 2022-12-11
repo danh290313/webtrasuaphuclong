@@ -9,27 +9,24 @@ import "react-toastify/dist/ReactToastify.css";
 import DrinkCardSkeleton from "@/components/card/DrinkCardSkeleton";
 import { toast } from "react-toastify";
 import { toastError } from "@/utils/toast";
+import useDrink from "@/hooks/useDrink";
 export function Drinks() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { getAllDrinks } = useDrink();
   useEffect(() => {
-    const abortController = new AbortController();
-    const { signal } = abortController;
     setLoading(true);
     const getDrinks = async () => {
-      // try {
-      //   const { data } = await getAllDrinks(signal);
-      //   setDrinks(data);
-      //   setLoading(false);
-      // } catch (err) {
-      //   toastError(err.message);
-      // }
+      try {
+        const res = await getAllDrinks();
+        setDrinks(res);
+        setLoading(false);
+      } catch (err) {
+        toastError(err.message);
+      }
     };
     getDrinks();
-    return () => {
-      abortController.abort();
-    };
   }, []);
   return (
     <div className="mt-12 mb-8 flex  flex-col gap-8">
@@ -69,7 +66,7 @@ export function Drinks() {
                 </Grid>
               );
             })
-          : drinks?.map((drink, i) => (
+          : drinks?.data?.map((drink, i) => (
               <Grid item md={6} sm={12}>
                 <DrinkCard data={drink} key={drink.id} />
               </Grid>
