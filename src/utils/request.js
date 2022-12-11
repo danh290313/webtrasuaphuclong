@@ -27,7 +27,8 @@ export const put = async (path, data = {}, config = {}) => {
 export const deletereq = async (path, data = {}, config = {}) => {
   const { token, ...rest } = config;
   const nconfig = { headers: { Authorization: `Bearer ${token}` }, ...rest };
-  const response = await request.delete(path, data, nconfig);
+  console.log({ path, data, nconfig });
+  const response = await request.delete(path, nconfig);
   return response.data;
 };
 export default request;

@@ -201,8 +201,8 @@ const staff = {
     active: 1,
   },
 };
-export const getStaffs = async (signal, token) => {
-  const res = await get("/admin/staffs", { signal, token });
+export const getStaffs = async (page, token) => {
+  const res = await get("/admin/staffs?page=" + page, { token });
   return res;
 };
 export const addStaff = async (val, token) => {
@@ -215,8 +215,8 @@ export const getStaff = async (id, token) => {
   // res.data = staff;
   return res;
 };
-export const getAllPositions = async (signal, token) => {
-  const res = await get("/admin/positions", { signal, token });
+export const getAllPositions = async (token) => {
+  const res = await get("/admin/positions", { token });
   return res;
 };
 
@@ -226,12 +226,8 @@ export const editStaff = async (id, data, token) => {
   return res;
 };
 export const deleteStaff = async (id, token) => {
-  //   const res = await delete(`/admin/staffs/${id}`, data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Xoa nhân viên thành công",
-  };
+  console.log({ token, id });
+  const res = await deletereq(`/admin/staffs/${id}`, {}, { token });
   return res;
 };
 

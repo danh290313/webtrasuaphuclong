@@ -28,7 +28,8 @@ function StaffEdit() {
   const [staff, setStaff] = useState();
   const { getBranches } = useBranch();
   const [branch, setBranch] = useState();
-  const { positions, getStaff, editStaff } = useStaff();
+  const [positions, setPositions] = useState();
+  const { getPositions, getStaff, editStaff } = useStaff();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   console.log({ staff, branch, positions });
@@ -37,6 +38,14 @@ function StaffEdit() {
     (async () => {
       const res = await getStaff(id);
       setStaff(res);
+    })();
+    (async () => {
+      const res = await getPositions();
+      setPositions(res.positions);
+    })();
+    (async () => {
+      const res = await getBranches();
+      setBranch(res);
     })();
   }, []);
   const initialValues = {
@@ -77,12 +86,7 @@ function StaffEdit() {
     })();
     nav("/dashboard/staff");
   };
-  useEffect(() => {
-    (async () => {
-      const res = await getBranches();
-      setBranch(res);
-    })();
-  }, []);
+
   return (
     staff &&
     branch &&

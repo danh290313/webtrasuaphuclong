@@ -15,7 +15,7 @@ import useAuth from "./useAuth";
 export function useStaff() {
   const nav = useNavigate();
   const { token } = useAuth();
-  const [staffs, setStaffs] = useState([]);
+  // const [staffs, setStaffs] = useState([]);
   const [positions, setPositions] = useState([]);
   const getStaff = async (id) => await getStaffServices(id, token);
   const editStaff = async (id, value) => {
@@ -37,29 +37,29 @@ export function useStaff() {
       nav("/dashboard/staff");
     } else toastError(res.msg);
   };
-  useEffect(() => {
-    const contr = new AbortController();
-    const { signal } = contr;
-    console.log({ token });
-    try {
-      (async () => {
-        const res = await getStaffsServices(signal, token);
-        setStaffs(res);
-      })();
-    } catch (err) {
-      console.log(err);
-    }
+  const getStaffs = async (page) => {
+    const res = await getStaffsServices(page, token);
+    return res;
+  };
+  const getPositions = async () => {
+    const res = await getAllPositions(token);
+    return res;
+  };
 
-    (async () => {
-      const res = await getAllPositions(signal, token);
-      setPositions(res?.positions);
-    })();
+  // useEffect(() => {
+  //   const contr = new AbortController();
+  //   const { signal } = contr;
 
-    return () => contr.abort();
-  }, [token]);
+  //   (async () => {
+  //     const res = await getAllPositions(signal, token);
+  //     setPositions(res?.positions);
+  //   })();
+
+  //   return () => contr.abort();
+  // }, [token]);
   return {
-    staffs,
-    positions,
+    getStaffs,
+    getPositions,
     getStaff,
     editStaff,
     deleteStaff,

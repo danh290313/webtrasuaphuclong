@@ -29,27 +29,33 @@ const validationShema = staffSchema;
 function StaffAdd() {
   const nav = useNavigate();
   const [branch, setBranch] = useState();
+  const [positions, setPositions] = useState();
   const { getBranches } = useBranch();
-  const { positions, getStaff } = useStaff();
+  const { getPositions } = useStaff();
   const { addStaff } = useStaff();
   const handleSubmit = (valSubmit) => {
     const reContructVal = {
       name: valSubmit.name,
-      gender: valSubmit.gender,
+      gender: +valSubmit.gender,
       phone_number: valSubmit.phoneNumber,
       address: valSubmit.address,
       hometown: valSubmit.hometown,
-      branch_id: valSubmit.branch,
-      position_id: valSubmit.position,
+      branch_id: +valSubmit.branch,
+      position_id: +valSubmit.position,
       dob: valSubmit.dob,
       active: valSubmit.active,
     };
+    console.log({ reContructVal });
     addStaff(reContructVal);
   };
   useEffect(() => {
     (async () => {
       const res = await getBranches();
       setBranch(res);
+    })();
+    (async () => {
+      const res = await getPositions();
+      setPositions(res.positions);
     })();
   }, []);
   return (

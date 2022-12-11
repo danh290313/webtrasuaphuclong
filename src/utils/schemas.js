@@ -26,7 +26,7 @@ const sale_on_days = Yup.string().matches(/^[0-9]+$/, "Number only");
 const image = Yup.string().required("This field is required");
 const active = Yup.boolean();
 const type = Yup.string().required("This field is required");
-const dob = Yup.string().required("This field is required");
+const dob = Yup.string().required("This field is required").nullable();
 const gender = Yup.string().required("This field is required");
 const password = Yup.string().required("This field is required");
 const branch = Yup.string().required("This field is required");
@@ -82,7 +82,3 @@ export const signinSchema = Yup.object().shape({
   email,
   password,
 });
-
-
-
-

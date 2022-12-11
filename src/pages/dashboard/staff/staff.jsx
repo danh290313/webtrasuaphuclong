@@ -15,7 +15,7 @@ import {
 // import { authorsTableData, projectsTableData } from "@/data";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import useStaff from "@/hooks/useStaff";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Pagination } from "@mui/material";
@@ -24,16 +24,28 @@ export function Staff() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
-  const { deleteStaff, staffs, resetPassStaff } = useStaff();
-  const [page, setPage] = useState(staffs?.meta?.current_page);
+  const { deleteStaff, getStaffs, resetPassStaff } = useStaff();
+  const [staffs, setStaffs] = useState();
+  const [page, setPage] = useState(1);
   const handleOpen = (id, type) => {
     setType(type);
     setOpen(!open);
     setIdChoosing(id);
   };
   const handleOK = () => {
-    type === "resetpass" ? resetPassStaff(idChoosing) : deleteStaff(idChoosing);
     setOpen(false);
+    if (type === "resetpass") resetPassStaff(idChoosing);
+    else {
+      deleteStaff(idChoosing);
+      (async () => {
+        let npage;
+        if (staffs?.data?.length === 1) npage = page - 1;
+        else npage = page;
+        const res = await getStaffs(npage);
+        setStaffs(res);
+        setPage((prev) => prev - 1);
+      })();
+    }
   };
   const handleClose = () => {
     setOpen(false);
@@ -41,6 +53,12 @@ export function Staff() {
   const handleChangePage = (e, npage) => {
     setPage(npage);
   };
+  useEffect(() => {
+    (async () => {
+      const res = await getStaffs(page);
+      setStaffs(res);
+    })();
+  }, [page]);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -126,7 +144,7 @@ export function Staff() {
                         <div>{name}</div>
                       </td>
                       <td className={className}>
-                        <div>{gender === 1 ? "Nam" : "Nữ"}</div>
+                        <div>{gender === 0 ? "Nam" : "Nữ"}</div>
                       </td>
                       <td className={className}>
                         <div>{phoneNumber}</div>

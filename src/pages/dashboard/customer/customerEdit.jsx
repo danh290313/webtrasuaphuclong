@@ -15,15 +15,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CubeTransparentIcon } from "@heroicons/react/24/solid";
 import BackBtn from "@/components/BackBtn";
-const options = [
-  { id: "1", value: "Male" },
-  { id: "2", value: "Female" },
-];
-
 function CustomerEdit() {
   const [cus, setCus] = useState(null);
-  const {} = useCus();
-
   let { id } = useParams();
   id = +id;
   const { getCus, editCus } = useCus();
@@ -35,12 +28,10 @@ function CustomerEdit() {
     dob: cus?.dob,
     active: cus?.active,
   };
-  console.log({ initialValues });
   useEffect(() => {
     (async () => {
       const res = await getCus(id);
-      // console.log({ res });
-      setCus(res?.data?.data);
+      setCus(res?.data);
     })();
   }, []);
   const handleSubmit = (value) => {
