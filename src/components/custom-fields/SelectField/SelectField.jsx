@@ -26,6 +26,7 @@ function SelectField(props) {
   const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
+  console.log({ name, value });
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}

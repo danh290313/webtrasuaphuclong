@@ -202,41 +202,27 @@ const staff = {
   },
 };
 export const getStaffs = async (signal, token) => {
-  //   const res = await get("/admin/staffs", {}, { signal, token });
-  const res = {};
-  res.data = staffs;
+  const res = await get("/admin/staffs", { signal, token });
   return res;
 };
 export const addStaff = async (val, token) => {
-  //   const res = await post("/admin/staffs",val, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Thêm nhân viên thành công",
-  };
-
+  const res = await post("/admin/staffs", val, { token });
   return res;
 };
 export const getStaff = async (id, token) => {
-  //   const res = await post("/admin/staffs", {id}, {  token });
-  const res = {};
-  res.data = staff;
+  const res = await get("/admin/staffs/" + id, { token });
+  // const res = {};
+  // res.data = staff;
   return res;
 };
 export const getAllPositions = async (signal, token) => {
-  //   const res = await post("/admin/staffs", {}, { signal, token });
-  const res = {};
-  res.data = pos;
+  const res = await get("/admin/positions", { signal, token });
   return res;
 };
 
-export const editStaff = async (data, token) => {
-  //   const res = await put("/admin/staffs", data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Sửa thông tin nhân viên thành công.",
-  };
+export const editStaff = async (id, data, token) => {
+  console.log({ data });
+  const res = await put("/admin/staffs/" + id, data, { token });
   return res;
 };
 export const deleteStaff = async (id, token) => {

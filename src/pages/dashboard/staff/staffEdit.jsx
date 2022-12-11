@@ -31,17 +31,18 @@ function StaffEdit() {
   const { positions, getStaff, editStaff } = useStaff();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+  console.log({ staff, branch, positions });
   useEffect(() => {
     // setStaff(getStaff(id));
     (async () => {
       const res = await getStaff(id);
-      setStaff(res?.data?.data);
+      setStaff(res);
     })();
   }, []);
   const initialValues = {
-    ...staff,
-    branch: staff?.branch?.id,
-    position: staff?.position?.id,
+    ...staff?.staff_infomation,
+    branch: staff?.staff_infomation?.branch?.id,
+    position: staff?.staff_infomation?.position?.id,
   };
   const handleClose = () => setOpen(false);
   const handleSubmit = (valSubmit) => {
@@ -51,7 +52,7 @@ function StaffEdit() {
       phone_number: valSubmit.phoneNumber,
       address: valSubmit.address,
       hometown: valSubmit.hometown,
-      branch_id: valSubmit.branch,
+      branch_id: +valSubmit.branch,
       position_id: valSubmit.position,
       dob: valSubmit.dob,
       active: valSubmit.active,
@@ -60,12 +61,20 @@ function StaffEdit() {
     if (initialValues.active != reContructVal.active) {
       setOpen(true);
     } else {
-      editStaff(value);
+      editStaff(id, reContructVal);
+      (async () => {
+        const res = await getStaff(id);
+        setStaff(res);
+      })();
       nav("/dashboard/staff");
     }
   };
   const handleOK = () => {
-    editStaff(value);
+    editStaff(id, value);
+    (async () => {
+      const res = await getStaff(id);
+      setStaff(res);
+    })();
     nav("/dashboard/staff");
   };
   useEffect(() => {

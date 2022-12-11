@@ -5,6 +5,7 @@ import { login as loginService } from "@/services/authencation";
 import { loginSuccess, loginStart, loginFail } from "@/redux/authSlice";
 import { toast } from "react-toastify";
 import { toastError, toastSuccess } from "@/utils/toast";
+import axios from "axios";
 function useAuth() {
   const { currentUser, loading, error } = useSelector((state) => state.auth);
   const token = currentUser?.token;
@@ -15,20 +16,19 @@ function useAuth() {
       dispatch(loginStart());
       const abortController = new AbortController();
       const { signal } = abortController;
-      const { data } = await loginService(email, password, signal);
+      const data = await loginService(email, password, signal);
       console.log({ data });
-      if (data?.status === "error" || data?.status === "fail") {
-        toastError(data.msg);
-        return dispatch(loginFail(data));
-      } else {
+      if (data?.status === "success") {
         toastSuccess("Login success");
         return dispatch(loginSuccess(data));
+      } else {
+        toastError(data?.msg);
+        return dispatch(loginFail(data));
       }
     } catch (err) {
-      console.log(err);
-      if (err?.response?.data?.message) {
-        toastError(err.response.data.message);
-        return dispatch(loginFail(err.response.data.message));
+      if (err?.response?.data?.msg) {
+        toastError(err.response.data.msg);
+        return dispatch(loginFail(err.response.data.msg));
       } else {
         toastError(err.message);
         return dispatch(loginFail(err.message));

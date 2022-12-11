@@ -18,46 +18,45 @@ export function useStaff() {
   const [staffs, setStaffs] = useState([]);
   const [positions, setPositions] = useState([]);
   const getStaff = async (id) => await getStaffServices(id, token);
-  const editStaff = async (value) => {
-    const res = await editStaffServices(value, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+  const editStaff = async (id, value) => {
+    const res = await editStaffServices(id, value, token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const resetPassStaff = async (id) => {
     const res = await resetPassStaffServices(id, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const deleteStaff = async (id) => {
     const res = await deleteStaffServices(id, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const addStaff = async (val) => {
     const res = await addStaffServices(val, token);
-    if (res.data.status === "success") {
-      toastSuccess(res.data.msg);
+    if (res.status === "success") {
+      toastSuccess(res.msg);
       nav("/dashboard/staff");
-    } else toastError(res.data.msg);
+    } else toastError(res.msg);
   };
   useEffect(() => {
     const contr = new AbortController();
     const { signal } = contr;
-    (async () => {
-      const res = await getStaffsServices(signal, token);
-      setStaffs(res.data);
-    })();
-    
+    console.log({ token });
+    try {
+      (async () => {
+        const res = await getStaffsServices(signal, token);
+        setStaffs(res);
+      })();
+    } catch (err) {
+      console.log(err);
+    }
+
     (async () => {
       const res = await getAllPositions(signal, token);
-      setPositions(res?.data?.positions);
+      setPositions(res?.positions);
     })();
 
     return () => contr.abort();
-  }, []);
+  }, [token]);
   return {
     staffs,
     positions,

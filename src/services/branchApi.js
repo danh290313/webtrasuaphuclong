@@ -183,9 +183,7 @@ export const getBranches = async (token) => {
 };
 
 export const getBranch = async (id, token) => {
-  //   const res = await post("/admin/staffs", {id}, {  token });
-  const res = {};
-  res.data = branches;
+  const res = await post("/admin/branches", {}, { token });
   return res;
 };
 
@@ -217,4 +215,3 @@ export const addBranch = async (val, token) => {
 
   return res;
 };
-

@@ -3,7 +3,7 @@ import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
   TrashIcon,
-  UserIcon
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -110,7 +110,7 @@ export function Staff() {
                     name,
                     phoneNumber,
                     branch,
-                    positionId,
+                    position,
                   },
                   key
                 ) => {
@@ -143,7 +143,7 @@ export function Staff() {
                         <div>{branch.name}</div>
                       </td>
                       <td className={className}>
-                        <div>{positionId.name}</div>
+                        <div>{position.name}</div>
                       </td>
                       <td className={className}>
                         <div className="flex items-center space-x-3">
