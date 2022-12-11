@@ -1,6 +1,10 @@
 import axios from "axios";
+const url = "https://backendwebtrasualaravel-production-6fb6.up.railway.app";
 const request = axios.create({
-  baseURL: "localhost:3000/api",
+  baseURL: url + "/api",
+  headers: {
+    "content-type": "application/json",
+  },
 });
 export const get = async (path, config = {}) => {
   const { token, ...rest } = config;

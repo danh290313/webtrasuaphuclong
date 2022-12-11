@@ -37,8 +37,9 @@ const errorUser = {
   msg: "Xác thực không thành công.",
 };
 export const login = async (email, password, signal) => {
-  // const res = await post("/admin/login", { email, password }, { signal });
-  const res = {};
-  res.data = user;
+  console.log({ email, password, signal });
+  const res = await post("/admin/login", { email, password }, { signal });
+  // const res = {};
+  // res.data = user;
   return res;
 };

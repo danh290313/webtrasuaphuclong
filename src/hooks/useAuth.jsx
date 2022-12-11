@@ -16,7 +16,8 @@ function useAuth() {
       const abortController = new AbortController();
       const { signal } = abortController;
       const { data } = await loginService(email, password, signal);
-      if (data.status === "error" || data.status === "fail") {
+      console.log({ data });
+      if (data?.status === "error" || data?.status === "fail") {
         toastError(data.msg);
         return dispatch(loginFail(data));
       } else {

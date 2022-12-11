@@ -26,7 +26,7 @@ export function SignIn() {
   const nav = useNavigate();
   currentUser?.information && nav("/dashboard/staff");
   const handleSubmit = async (val) => {
-    login(val);
+    login(val.email, val.password);
   };
   return (
     <>
