@@ -38,14 +38,15 @@ export function useCus() {
     }
   };
   const addCus = async (value) => {
-    const { data } = await addCusService(value, token);
-    console.log({ data });
-    if (data?.status === "success") {
-      toastSuccess(data?.msg);
-      return data;
-    } else {
-      toastError(data?.msg);
-      return data;
+    try {
+      const { data } = await addCusService(value, token);
+      if (data?.status === "success") {
+        toastSuccess(data?.msg);
+        nav("/dashboard/customer");
+      }
+    } catch (e) {
+      console.error(e);
+      toastError(e?.response?.data?.message || e.message);
     }
   };
   return {

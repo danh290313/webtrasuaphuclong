@@ -28,14 +28,13 @@ export function Materials() {
   const [materials, setMaterials] = useState();
   const [page, setPage] = useState(1);
 
-  const { getAllMaterial } = useMaterial();
+  const { getMaterials } = useMaterial();
   useEffect(() => {
     (async () => {
-      const res = await getAllMaterial();
-      console.log(res);
+      const res = await getMaterials(page);
       setMaterials(res);
     })();
-  }, []);
+  }, [page]);
   const handleOpen = (id) => {
     setOpen(!open);
     setIdChoosing(id);

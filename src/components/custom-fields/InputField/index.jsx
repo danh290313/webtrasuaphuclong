@@ -30,7 +30,7 @@ function InputField(props) {
     autoFocus,
     leftLabel,
   } = props;
-  const { name } = field;
+  const { name, value } = field;
   const { errors, touched } = form;
   const showError = touched[name] && errors[name];
   return (

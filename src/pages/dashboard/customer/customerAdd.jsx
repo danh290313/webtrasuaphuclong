@@ -24,9 +24,7 @@ function CustomerAdd() {
   const { addCus } = useCus();
   const nav = useNavigate();
   const handleSubmit = (value) => {
-    console.log({ value });
     addCus(value);
-    nav("/dashboard/customer");
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">

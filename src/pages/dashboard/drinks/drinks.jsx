@@ -39,7 +39,7 @@ export function Drinks() {
             <input
               type="search"
               id="default-search"
-              class="primary-search"
+              className="primary-search"
               placeholder="Search drink"
               required
             />
@@ -59,16 +59,16 @@ export function Drinks() {
       </div>
       <Grid container spacing={2}>
         {loading
-          ? [1, 2, 3, 4].map(() => {
+          ? [1, 2, 3, 4].map((v, i) => {
               return (
-                <Grid item md={6} sm={12}>
+                <Grid key={i} item md={6} sm={12}>
                   <DrinkCardSkeleton />
                 </Grid>
               );
             })
           : drinks?.data?.map((drink, i) => (
-              <Grid item md={6} sm={12}>
-                <DrinkCard data={drink} key={drink.id} />
+              <Grid key={i} item md={6} sm={12}>
+                <DrinkCard data={drink} />
               </Grid>
             ))}
       </Grid>

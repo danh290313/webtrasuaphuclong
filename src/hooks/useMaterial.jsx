@@ -1,4 +1,7 @@
-import { getAllMaterial as getAllMaterialService } from "@/services/materialApi";
+import {
+  getAllMaterial as getAllMaterialService,
+  getMaterials as getMaterialsService,
+} from "@/services/materialApi";
 import { toastError, toastSuccess } from "@/utils/toast";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
@@ -7,6 +10,10 @@ function useMaterial() {
   const { token } = useAuth();
   const getAllMaterial = async () => {
     const res = await getAllMaterialService(token);
+    return res;
+  };
+  const getMaterials = async (page) => {
+    const res = await getMaterialsService(page, token);
     return res;
   };
   // const deleteWarehouse = async (id) => {
@@ -23,7 +30,7 @@ function useMaterial() {
   //   !data && toastError("Error finding warehouse");
   //   return data;
   // };
-  return { getAllMaterial };
+  return { getAllMaterial, getMaterials };
 }
 
 export default useMaterial;

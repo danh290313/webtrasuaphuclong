@@ -54,14 +54,16 @@ export function Customer() {
   };
   const handleOK = () => {
     setOpen(false);
-    deleteCus(idChoosing);
     (async () => {
+      await deleteCus(idChoosing);
       let npage;
-      if (customer?.data?.length === 1) npage = page - 1;
-      else npage = page;
+      console.log({ customer });
+      if (customer?.data?.length === 1) {
+        npage = page - 1;
+      } else npage = page;
       const res = await getAllCus(npage);
       setCustomer(res);
-      setPage((prev) => prev - 1);
+      setPage(npage);
     })();
   };
   const handleClose = () => {

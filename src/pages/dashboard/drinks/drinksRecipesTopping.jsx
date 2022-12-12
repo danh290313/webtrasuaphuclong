@@ -14,10 +14,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useMaterial from "@/hooks/useMaterial";
 import useDrink from "@/hooks/useDrink";
+import BackBtn from "@/components/BackBtn";
+import Select from "react-select";
 function DrinksRecipesTopping() {
   let { id } = useParams();
   id = +id;
-  const [matsChoosed, setMatsChoosed] = useState([]);
+  const [matsChoosed, setMatsChoosed] = useState();
   const [initVals, setInitVals] = useState({});
   const [schema, setChema] = useState(null);
   const [mats, setMats] = useState();
@@ -28,8 +30,8 @@ function DrinksRecipesTopping() {
   const handleOnChangeMat = (e, mats) => {
     setInitVals(() => {
       const init = {};
-      mats.forEach((m) => {
-        init[m.id] = "";
+      mats.forEach((m, i) => {
+        init[m.id] = m.amount;
       });
       return init;
     });
@@ -38,40 +40,54 @@ function DrinksRecipesTopping() {
       const sche = {};
       mats.forEach((mat) => {
         sche[mat.id] = Yup.string()
-          .matches(/^[0-9]+$/, "Number only")
+          .matches(/^[0-9.]+$/, "amount is not valid")
           .required("This filed is required");
       });
       return sche;
     });
   };
-  // console.log({ matsChoosed });
-  // const handleOnchangeMatValue = (e) => {
-  //   const i = +e.target.dataset.id;
-  //   setMatsChoosed((prev) => {
-  //     prev[i].value = e.target.value;
-  //     console.log(prev);
-  //     return prev;
-  //   });
-  // };
   const handleSubmit = (val) => {
-    Object.keys(val).forEach((k) => val[k] === "" && delete val[k]);
-    console.log({ val });
+    const contructVal = {};
+    contructVal.materials = {};
+    matsChoosed.forEach((v, i) => {
+      contructVal.materials[v.id] = val[v.id];
+    });
+    contructVal.id = id;
+
+    console.log(contructVal);
   };
   useEffect(() => {
-    (async () => {
-      const res = await getAllMaterial();
-      setMats(res.data);
-    })();
     (async () => {
       const res = await getDrink(id);
       setDrink(res?.drinkInfo);
       setMatsChoosed(res?.drinkInfo?.recipes);
+      setInitVals(() => {
+        const init = {};
+        res?.drinkInfo?.recipes.forEach((m, i) => {
+          init[m.id] = m.amount;
+        });
+        return init;
+      });
+      setChema(() => {
+        const sche = {};
+        res?.drinkInfo?.recipes.forEach((mat) => {
+          sche[mat.id] = Yup.string()
+            .matches(/^[0-9.]+$/, "amount is not valid")
+            .required("This filed is required");
+        });
+        return sche;
+      });
+    })();
+    (async () => {
+      const res = await getAllMaterial();
+      setMats(res.data);
     })();
   }, []);
-  console.log({ drink, matsChoosed });
   return (
-    mats && (
-      <div className="mt-12 mb-8 flex flex-col gap-12">
+    mats &&
+    matsChoosed && (
+      <div className="mt-12  flex flex-col gap-10">
+        <BackBtn to={"/dashboard/drinks"} />
         <Card>
           <CardBody>
             <div>
@@ -81,7 +97,10 @@ function DrinksRecipesTopping() {
                 id="materials"
                 options={mats}
                 getOptionLabel={(option) => option.name}
-                defaultValue={matsChoosed}
+                defaultValue={matsChoosed.map((m, i) =>
+                  mats.find((v) => m.id === v.id)
+                )}
+                isOptionEqualToValue={(o, v) => o.id === v.id}
                 filterSelectedOptions
                 onChange={handleOnChangeMat}
                 renderInput={(params) => (

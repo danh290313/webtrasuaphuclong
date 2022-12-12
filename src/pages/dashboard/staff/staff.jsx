@@ -36,14 +36,15 @@ export function Staff() {
     setOpen(false);
     if (type === "resetpass") resetPassStaff(idChoosing);
     else {
-      deleteStaff(idChoosing);
       (async () => {
+        await deleteStaff(idChoosing);
         let npage;
         if (staffs?.data?.length === 1) npage = page - 1;
         else npage = page;
         const res = await getStaffs(npage);
+        console.log({ res });
         setStaffs(res);
-        setPage((prev) => prev - 1);
+        if (npage !== page) setPage(npage);
       })();
     }
   };
