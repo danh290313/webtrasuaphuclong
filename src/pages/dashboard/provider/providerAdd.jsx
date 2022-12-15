@@ -18,16 +18,19 @@ const initialValues = {
   name: "",
   address: "",
   phoneNumber: "",
-  active: 1,
 };
 
 function ProviderAdd() {
   const { addProvider } = useProvider();
   const nav = useNavigate();
-  const handleSubmit = (value) => {
-    console.log({ value });
-    addProvider(value);
-    nav("/dashboard/provider");
+  const handleSubmit = (valSubmit) => {
+    const reContructVal = {
+      name: valSubmit.name,
+      phone_number: valSubmit.phoneNumber,
+      address: valSubmit.address,
+    };
+    console.log({ reContructVal });
+    addProvider(reContructVal);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">

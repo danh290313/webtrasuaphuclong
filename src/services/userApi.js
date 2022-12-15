@@ -60,58 +60,23 @@ const users = {
     total: 4,
   },
 };
-export const getAllUser = async (token) => {
-  // const res = await get("/admin/users", { token });
-  const res = {};
-  res.data = users;
+export const getUsers = async (page, token) => {
+  const res = await get("/admin/users?page=" + page, { token });
   return res;
 };
 export const addUser = async (val, token) => {
-  //   const res = await post("/admin/users",val, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Thêm khách hàng thành công",
-  };
+  const res = await post("/admin/users", val, { token });
   return res;
 };
-//   return res;
-// };
 export const getUser = async (id, token) => {
-  //   const res = await post("/admin/staffs", {id}, {  token });
-  const res = {};
-  res.data = {
-    data: {
-      id: 1,
-      email: "Danhhh@gmail.com",
-      password: "123",
-      role: 
-        {
-          id: 1,
-          name: "Quan ly",
-        },
-    },
-  };
+  const res = await get("/admin/users/" + id, { token });
   return res;
 };
-
-
 export const editUser = async (id, data, token) => {
-  //   const res = await put(`/admin/staffs${id}`, data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Sửa thông tin nhân viên thành công.",
-  };
+  const res = await put(`/admin/users/${id}`, data, { token });
   return res;
 };
 export const deleteUser = async (id, token) => {
-  //   const res = await delete(`/admin/staffs/${id}`, data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Xóa khách hàng thành công",
-  };
+  const res = await deletereq(`/admin/users/${id}`, {}, { token });
   return res;
 };
-

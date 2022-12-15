@@ -22,17 +22,10 @@ import { positions } from "@mui/system";
 export function Provider() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState(false);
   const [provider, setProvider] = useState();
-  const [page, setPage] = useState(provider?.meta?.current_page);
+  const [page, setPage] = useState(1);
   const { getProviders, deleteProvider } = useProvider();
-  useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      // console.log(data);
-      setProvider(res);
-    })();
-  }, []);
+  
   const handleOpen = (id) => {
     setOpen(true);
     setIdChoosing(id);
@@ -47,6 +40,14 @@ export function Provider() {
   const handleChangePage = (e, npage) => {
     setPage(npage);
   };
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders(page);
+      console.log("danh",res);
+      setProvider(res);
+    })();
+  }, [page]);
+
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -108,8 +109,6 @@ export function Provider() {
                     name,
                     address,
                     phoneNumber,
-                    dateOpened,
-                    active,
                   },
                   key
                 ) => {

@@ -14,32 +14,24 @@ export function useProvider() {
   const nav = useNavigate();
   const { token } = useAuth();
   const getProvider = async (id) => await getProviderServices(id, token);
-  const getProviders = async () => {
-    const { data } = await getProvidersServices(token);
-    if (data?.status === "success") return data;
-    else {
-      toastError(data?.msg);
-      return data;
-    }
+  const getProviders = async (page) => {
+    const res = await getProvidersServices(page, token);
+    return res;
   };
-  const editProvider = async (value) => {
-    const res = await editProviderServices(value, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+  const editProvider = async (id,value) => {
+    const res = await editProviderServices(id, value, token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const deleteProvider = async (id) => {
     const res = await deleteProviderServices(id, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const addProvider = async (val) => {
     const res = await addProviderServices(val, token);
-    if (res.data.status === "success") {
-      toastSuccess(res.data.msg);
-      nav("/dashboard/provider");
-    } else toastError(res.data.msg);
+    if (res.status === "success") {
+      toastSuccess(res.msg);
+      nav("/dashboard/providers");
+    } else toastError(res.msg);
   };
  
   return {

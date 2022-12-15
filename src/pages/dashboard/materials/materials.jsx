@@ -28,11 +28,13 @@ export function Materials() {
   const [materials, setMaterials] = useState();
   const [page, setPage] = useState(1);
 
-  const { getMaterials } = useMaterial();
+  const { getMaterials,deleteMaterial } = useMaterial();
   useEffect(() => {
     (async () => {
       const res = await getMaterials(page);
+      console.log("daanhd",res);
       setMaterials(res);
+    
     })();
   }, [page]);
   const handleOpen = (id) => {
@@ -42,6 +44,16 @@ export function Materials() {
   const handleOK = () => {
     // deleteWarehouse(idChoosing);
     setOpen(false);
+    (async () => {
+      await deleteMaterial(idChoosing);
+      let npage;
+      if (materials?.data?.length === 1) npage = page - 1;
+      else npage = page;
+      const res = await getMaterials(npage);
+      console.log({ res });
+      setMaterials(res);
+      if (npage !== page) setPage(npage);
+    })();
   };
   const handleClose = () => {
     setOpen(false);

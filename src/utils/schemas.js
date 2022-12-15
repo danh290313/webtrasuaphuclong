@@ -9,6 +9,10 @@ const phoneNumber = Yup.string()
 const name = Yup.string()
   .min(2, "Name must be at least 2 characters")
   .required("This field is required");
+const nameSize = Yup.string()
+.min(1, "Name must be at least 2 characters")
+.required("This field is required");
+
 const email = Yup.string()
   .email("Email is invalid")
   .required("This field is required");
@@ -32,6 +36,8 @@ const gender = Yup.string().required("This field is required");
 const password = Yup.string().required("This field is required");
 const branch = Yup.string().required("This field is required");
 const position = Yup.string().required("This field is required");
+const ratio = Yup.string().required("This field is required");
+const uom = Yup.string().required("This field is required");
 export const staffSchema = Yup.object().shape({
   phoneNumber,
   name,
@@ -83,3 +89,14 @@ export const signinSchema = Yup.object().shape({
   email,
   password,
 });
+
+
+export const sizeSchema = Yup.object().shape({
+  name: nameSize ,
+  ratio,
+});  
+
+export const materialSchema = Yup.object().shape({
+  name,
+  uom,
+});  

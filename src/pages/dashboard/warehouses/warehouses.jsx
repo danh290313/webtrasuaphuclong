@@ -26,15 +26,10 @@ export function Warehouses() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
   const [warehouses, setWarehouses] = useState();
-  const [page, setPage] = useState(warehouses?.meta?.current_page);
+  const [page, setPage] = useState(1);
 
   const { getAllWarehouses, deleteWarehouse } = useWarehouse();
-  useEffect(() => {
-    (async () => {
-      const res = await getAllWarehouses();
-      setWarehouses(res);
-    })();
-  }, []);
+  
   const handleOpen = (id, type) => {
     setOpen(!open);
     setIdChoosing(id);
@@ -49,6 +44,15 @@ export function Warehouses() {
   const handleChangePage = (e, npage) => {
     setPage(npage);
   };
+
+  useEffect(() => {
+    (async () => {
+      const res = await getAllWarehouses();
+      setWarehouses(res);
+    
+    })();
+  }, [page]);
+
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
@@ -98,9 +102,9 @@ export function Warehouses() {
                   "address",
                   "active",
                   "",
-                ].map((el, i) => (
+                ].map((el) => (
                   <th
-                    key={i}
+                    key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
                   >
                     <Typography
@@ -116,7 +120,12 @@ export function Warehouses() {
             <tbody>
               {warehouses?.data?.map(
                 (
-                  { active, dateOpened, id, name, phoneNumber, address },
+                  { active, 
+                    dateOpened, 
+                    id, 
+                    name, 
+                    phoneNumber,
+                    address },
                   key
                 ) => {
                   const className = `py-3 px-5 ${

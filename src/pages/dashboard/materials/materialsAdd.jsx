@@ -6,32 +6,35 @@ import SelectField from "@/components/custom-fields/SelectField/SelectField";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DatePickerField from "@/components/custom-fields/DatePickerField/DatePickerField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
-import { warehousesSchema } from "@/utils/schemas";
+import { sizeSchema } from "@/utils/schemas";
+import useSize from "@/hooks/useSize";
+import BackBtn from "@/components/BackBtn";
+import { materialSchema } from "@/utils/schemas";
+import useMaterial from "@/hooks/useMaterial";
 const initialValues = {
-  id: "123",
-  name: "chi nhanh da nang",
-  address: "ho chi minh",
-  phone_number: "09222222",
-  date_opened: "11/11/1111",
-  active: "true",
+  name: "",
+  uom: ""
 };
 
-const validationShema = warehousesSchema;
 
-export function WarehousesAdd() {
+export function MaterialAdd() {
+  const { addMaterial } = useMaterial();
   const handleSubmit = (value) => {
     console.log(value);
+    addMaterial(value);
+
   };
+
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationShema}
+            validationSchema={materialSchema}
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -51,48 +54,17 @@ export function WarehousesAdd() {
                           />
                         </FormGroup>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="address"
-                            component={InputField}
-                            label="Address"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="phone_number"
-                            component={InputField}
-                            label="Phone"
-                          />
-                        </FormGroup>
-                      </Grid>
 
                       <Grid item xs={12} md={6}>
                         <FormGroup>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <Field
-                              name="date_opened"
-                              component={DatePickerField}
-                              label="Date Opened"
-                              inputFormat="DD/MM/YYYY"
-                            />
-                          </LocalizationProvider>
-                        </FormGroup>
-                      </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="active"
-                            component={SwitchField}
-                            label="active"
-                            confirm={"Deactive this staff ?"}
+                          <FastField
+                            name="uom"
+                            component={InputField}
+                            label="Uom"
                           />
                         </FormGroup>
                       </Grid>
+                      
                     </Grid>
                     <Button
                       variant={"gradient"}
@@ -118,4 +90,4 @@ export function WarehousesAdd() {
   );
 }
 
-export default WarehousesAdd;
+export default MaterialAdd;

@@ -67,6 +67,7 @@ function CustomerAdd() {
                           <Field
                             name="gender"
                             component={SelectField}
+                            value="value"
                             label="Gender"
                             options={[
                               { id: 0, value: "Nam" },

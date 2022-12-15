@@ -14,32 +14,24 @@ export function useBranch() {
   const nav = useNavigate();
   const { token } = useAuth();
   const getBranch = async (id) => await getBranchServices(id, token);
-  const getBranches = async () => {
-    const { data } = await getBranchesServices(token);
-    if (data?.status === "success") return data;
-    else {
-      toastError(data?.msg);
-      return data;
-    }
+  const getBranches = async (page) => {
+    const res = await getBranchesServices(page, token);
+    return res;
   };
-  const editBranch = async (value) => {
-    const res = await editBranchServices(value, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+  const editBranch = async (id,value) => {
+    const res = await editBranchServices(id, value, token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const deleteBranch = async (id) => {
     const res = await deleteBranchServices(id, token);
-    res.data.status === "success"
-      ? toastSuccess(res.data.msg)
-      : toastError(res.data.msg);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const addBranch = async (val) => {
     const res = await addBranchServices(val, token);
-    if (res.data.status === "success") {
-      toastSuccess(res.data.msg);
-      nav("/dashboard/staff");
-    } else toastError(res.data.msg);
+    if (res.status === "success") {
+      toastSuccess(res.msg);
+      nav("/dashboard/branches");
+    } else toastError(res.msg);
   };
  
   return {

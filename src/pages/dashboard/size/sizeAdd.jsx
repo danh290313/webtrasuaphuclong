@@ -9,41 +9,29 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
-import { BranchSchema } from "@/utils/schemas";
-import useBranch from "@/hooks/useBranch";
+import { sizeSchema } from "@/utils/schemas";
+import useSize from "@/hooks/useSize";
 import BackBtn from "@/components/BackBtn";
-
-
 const initialValues = {
   name: "",
-  address: "",
-  phoneNumber: "",
-  dateOpened: "",
-  active: 1,
+  ratio: "",
+ 
 };
 
-function BranchAdd() {
-  const { addBranch } = useBranch();
+function SizeAdd() {
+  const { addSize } = useSize();
   const nav = useNavigate();
-  const handleSubmit = (valSubmit) => {
-    const reContructVal = {
-      name: valSubmit.name,
-      address: valSubmit.address,
-      phone_number: valSubmit.phoneNumber,
-      date_opened: valSubmit.dateOpened,
-      active: valSubmit.active,
-    };
-    console.log({ reContructVal });
-    addBranch(reContructVal);
+  const handleSubmit = (value) => {
+    addSize(value);
   };
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
-      <BackBtn to="/dashboard/branch" />
+      <BackBtn to="/dashboard/size" />
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={BranchSchema}
+            validationSchema={sizeSchema}
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -59,53 +47,21 @@ function BranchAdd() {
                           <FastField
                             name="name"
                             component={InputField}
-                            label="Full name"
-                          />
-                        </FormGroup>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="address"
-                            component={InputField}
-                            label="Address"
+                            label="Name"
                           />
                         </FormGroup>
                       </Grid>
 
                       <Grid item xs={12} md={6}>
                         <FormGroup>
-                          <Field
-                            name="phoneNumber"
+                          <FastField
+                            name="ratio"
                             component={InputField}
-                            label="Phone Number"
+                            label="Ratio"
                           />
                         </FormGroup>
                       </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <Field
-                              name="dateOpened"
-                              component={DatePickerField}
-                              label="Date Opened"
-                              inputFormat="DD/MM/YYYY"
-                            />
-                          </LocalizationProvider>
-                        </FormGroup>
-                      </Grid>
-                    
-                     
-                      <Grid item xs={12} md={6}>
-                        <FormGroup>
-                          <Field
-                            name="active"
-                            component={SwitchField}
-                            label="active"
-                          />
-                        </FormGroup>
-                      </Grid>
+                      
                     </Grid>
 
                     <Button
@@ -132,4 +88,4 @@ function BranchAdd() {
   );
 }
 
-export default BranchAdd;
+export default SizeAdd;

@@ -57,6 +57,7 @@ export function Staff() {
   useEffect(() => {
     (async () => {
       const res = await getStaffs(page);
+      console.log(res);
       setStaffs(res);
     })();
   }, [page]);

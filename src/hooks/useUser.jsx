@@ -1,9 +1,9 @@
 import {
-  getAllUser as getAllUserService,
-  deleteUser as deleteUserService,
-  addUser as addUserService,
-  getUser as getUserService,
-  editUser as editUserService,
+  getUsers as getUsersServices,
+  deleteUser as deleteUserServices,
+  addUser as addUserServices,
+  getUser as getUserServices,
+  editUser as editUserServices,
 } from "@/services/userApi";
 import { toastError, toastSuccess } from "@/utils/toast";
 import { useEffect, useState, useLayoutEffect } from "react";
@@ -12,48 +12,34 @@ import { toast } from "react-toastify";
 import useAuth from "./useAuth";
 export function useUser() {
   const nav = useNavigate();
-  // const { token } = useAuth();
-  // const [staffs, setStaffs] = useState([]);
-  // const [positions, setPositions] = useState([]);
-  const getUser = async (id) => await getUserService(id, token);
-  const editUser = async (id, value) => {
-    const res = await editUserService(id, value, token);
-    if (res.data.status === "success") {
-      toastSuccess(res.data.msg);
-      nav("/dashboard/staff");
-    } else toastError(res.data.msg);
-  };
+
   const { token } = useAuth();
-  const getAllUser = async () => {
-    const { data } = await getAllUserService(token);
-    if (data?.status === "success") return data;
-    else {
-      toastError(data?.msg);
-      return data;
-    }
+
+  const getUser = async (id) => await getUserServices(id, token);
+  const getUsers = async (page) => {
+    const res = await getUsersServices(page, token);
+    return res;
+  };
+  const editUser = async (id,value) => {
+    const res = await editUserServices(id, value, token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
   const deleteUser = async (id) => {
-    const { data } = await deleteUserService(id, token);
-    if (data?.status === "success") {
-      toastSuccess(data?.msg);
-      return data;
-    } else {
-      toastError(data?.msg);
-      return data;
-    }
+    const res = await deleteUserServices(id, token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
   };
-  const addUser = async (value) => {
-    const { data } = await addUserService(value, token);
-    if (data?.status === "success") {
-      toastSuccess(data?.msg);
-      return data;
-    } else {
-      toastError(data?.msg);
-      return data;
-    }
+  const addUser = async (val) => {
+    const res = await addUserServices(val, token);
+    if (res.status === "success") {
+      toastSuccess(res.msg);
+      nav("/dashboard/users");
+    } else toastError(res.msg);
   };
+
+
+  
   return {
-    getAllUser,
+    getUsers,
     deleteUser,
     addUser,
     getUser,

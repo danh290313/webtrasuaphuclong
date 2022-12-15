@@ -19,7 +19,7 @@ const role = {
   ],
 };
 
-export const getAllRoles = async (signal, token) => {
+export const getRoles = async (signal, token) => {
   //   const res = await post("/admin/staffs", {}, { signal, token });
   const res = {};
   res.data = role.roles;

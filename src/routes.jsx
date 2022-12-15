@@ -12,6 +12,7 @@ import {
   TruckIcon,
   BeakerIcon,
   UserIcon,
+  AdjustmentsVerticalIcon
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
@@ -39,7 +40,7 @@ import {
   OrderDetails,
   OrdersEdit,
 } from "./pages/dashboard/orders";
-import { Materials } from "./pages/dashboard/materials/materials";
+
 
 import { Branch, BranchAdd, BranchEdit } from "./pages/dashboard/branch";
 import {
@@ -47,7 +48,15 @@ import {
   ProviderAdd,
   ProviderEdit,
 } from "./pages/dashboard/provider";
+import {
+  Size,
+  SizeAdd,
+  SizeEdit,
+} from "@/pages/dashboard/size";
+
+
 import { UserMinusIcon } from "@heroicons/react/24/outline";
+import { Materials, MaterialEdit, MaterialAdd } from "./pages/dashboard/materials";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -117,20 +126,40 @@ export const routes = [
         path: "/drinks",
         element: <Drinks />,
       },
+
+      {
+        notOnSidebar: true,
+        path: "/size/add",
+        element: <SizeAdd />,
+      },
+
+      {
+        notOnSidebar: true,
+        path: "/size/:id",
+        element: <SizeEdit />,
+      },
+
+      {
+        icon: <AdjustmentsVerticalIcon {...icon} />,
+        name: "size",
+        path: "/size",
+        element: <Size />,
+      },
+
       {
         icon: <HomeModernIcon {...icon} />,
-        name: "warehouses",
-        path: "/warehouses",
+        name: "warehouse",
+        path: "/warehouse",
         element: <Warehouses />,
       },
       {
         notOnSidebar: true,
-        path: "/warehouses/Add",
+        path: "/warehouse/Add",
         element: <WarehousesAdd />,
       },
       {
         notOnSidebar: true,
-        path: "/warehouses/:id",
+        path: "/warehouse/:id",
         element: <WarehousesEdit />,
       },
 
@@ -197,10 +226,21 @@ export const routes = [
       },
       {
         icon: <BuildingStorefrontIcon {...icon} />,
-        name: "Materials",
-        path: "/materials",
+        name: "Material",
+        path: "/material",
         element: <Materials />,
       },
+      {
+        notOnSidebar: true,
+        path: "/material/:id",
+        element: <MaterialEdit />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/material/add",
+        element: <MaterialAdd />,
+      },
+
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",

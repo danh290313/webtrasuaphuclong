@@ -66,6 +66,7 @@ function StaffEdit() {
       dob: valSubmit.dob,
       active: valSubmit.active,
     };
+    console.log("test");
     setValue(reContructVal);
     if (initialValues.active != reContructVal.active) {
       setOpen(true);

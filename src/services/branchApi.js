@@ -1,4 +1,4 @@
-import { post } from "@/utils/request";
+import { post, deletereq, get, put } from "@/utils/request";
 const branches = {
   data: [
     {
@@ -175,43 +175,24 @@ const branches = {
     total: 3,
   },
 };
-export const getBranches = async (token) => {
-  //   const res = post("/admin/branches", {}, { token });
-  const res = {};
-  res.data = branches;
-  return res;
-};
 
-export const getBranch = async (id, token) => {
-  const res = await post("/admin/branches", {}, { token });
-  return res;
-};
-
-export const editBranch = async (data, token) => {
-  //   const res = await put("/admin/staffs", data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Sửa thông tin chi nhánh thành công.",
-  };
-  return res;
-};
-export const deleteBranch = async (id, token) => {
-  //   const res = await delete(`/admin/staffs/${id}`, data, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Xóa chi nhánh thành công",
-  };
+export const getBranches = async (page, token) => {
+  const res = await get("/admin/branches?page=" + page, { token });
   return res;
 };
 export const addBranch = async (val, token) => {
-  //   const res = await post("/admin/staffs",val, { token });
-  const res = {};
-  res.data = {
-    status: "success",
-    msg: "Thêm chi nhánh thành công",
-  };
-
+  const res = await post("/admin/branches", val, { token });
+  return res;
+};
+export const getBranch = async (id, token) => {
+  const res = await get("/admin/branches/" + id, { token });
+  return res;
+};
+export const editBranch = async (id, data, token) => {
+  const res = await put(`/admin/branches/${id}`, data, { token });
+  return res;
+};
+export const deleteBranch = async (id, token) => {
+  const res = await deletereq(`/admin/branches/${id}`, {}, { token });
   return res;
 };

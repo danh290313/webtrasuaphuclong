@@ -1,5 +1,5 @@
 import {
-  getAllRoles as getRolesServices,
+  getRoles as getRolesServices,
  
 } from "@/services/roleApi";
 import { toastError, toastSuccess } from "@/utils/toast";

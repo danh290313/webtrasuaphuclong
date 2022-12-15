@@ -22,7 +22,6 @@ import { positions } from "@mui/system";
 export function Branch() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState(false);
   const [branch, setBranch] = useState();
   const [page, setPage] = useState(branch?.meta?.current_page);
   const { getBranches, deleteBranch } = useBranch();
@@ -39,7 +38,16 @@ export function Branch() {
   };
   const handleOK = () => {
     setOpen(false);
-    deleteBranch(idChoosing);
+    (async () => {
+      await deleteBranch(idChoosing);
+      let npage;
+      if (branch?.data?.length === 1) npage = page - 1;
+      else npage = page;
+      const res = await getBranches(npage);
+      setBranch(res);
+      if (npage !== page) setPage(npage);
+    })();
+    
   };
   const handleClose = () => {
     setOpen(false);

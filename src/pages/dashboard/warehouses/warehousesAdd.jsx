@@ -10,28 +10,67 @@ import { Link } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
 import { warehousesSchema } from "@/utils/schemas";
-const initialValues = {
-  id: "123",
-  name: "chi nhanh da nang",
-  address: "ho chi minh",
-  phone_number: "09222222",
-  date_opened: "11/11/1111",
-  active: "true",
-};
+import useWarehouse from "@/hooks/useWarehouse";
+import useMaterial from "@/hooks/useMaterial";
+import { useState, useEffect } from "react";
 
-const validationShema = warehousesSchema;
+
 
 export function WarehousesAdd() {
-  const handleSubmit = (value) => {
-    console.log(value);
+  const { addWarehouse} = useWarehouse();
+  const { getMaterials} = useMaterial();
+  const [material, setMaterial] = useState();
+
+  const initialValues = {
+    name: "",
+    address: "",
+    phone_number: "0961144072",
+    date_opened: "2000/11/11",
+    active: 1,
+    list_material: material?.data?.map(
+      (mat) => ({
+        id: mat.id,
+        amount: 0,
+      }),
+    )
+   
   };
+  
+  console.log("testsss", initialValues)
+
+  const handleSubmit = (value) => {
+    const reContructVal ={
+      name: value.name,
+      address: value.address,
+      phone_number: value.phone_number,
+      date_opened: value.date_opened,
+      active: value.active,
+      list_material: material?.data?.map(
+        (mat) => ({
+          id: mat.id,
+          amount: 0,
+        }),
+      )
+    };
+    console.log(reContructVal);
+    addWarehouse(reContructVal);
+   };
+
+  useEffect(() => {
+    (async () =>{
+      const res = await getMaterials();
+      setMaterial(res);
+    })();
+    
+  },[]);
+  console.log("danH", material);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationShema}
+            
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -41,7 +80,7 @@ export function WarehousesAdd() {
               return (
                 <>
                   <Form>
-                    <Grid container spacing={2}>
+                  <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
@@ -97,7 +136,7 @@ export function WarehousesAdd() {
                     <Button
                       variant={"gradient"}
                       type="submit"
-                      color={"blue"}
+                      color={"red"}
                       className="mt-4 flex items-center py-1 px-6 capitalize"
                     >
                       <Typography
@@ -116,6 +155,8 @@ export function WarehousesAdd() {
       </Card>
     </div>
   );
+
+
 }
 
 export default WarehousesAdd;

@@ -1,34 +1,34 @@
 import {
-  getAllCus as getAllCusService,
-  deleteCus as deleteCusService,
-  addCus as addCusService,
-  getCus as getCusService,
-  editCus as editCusService,
-} from "@/services/customerApi";
+  getSizes as getSizesService,
+  deleteSize as deleteSizeService,
+  addSize as addSizeService,
+  getSize as getSizeService,
+  editSize as editSizeService,
+} from "@/services/sizeApi";
 import { toastError, toastSuccess } from "@/utils/toast";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "./useAuth";
-export function useCus() {
+export function useSize() {
   const nav = useNavigate();
   const { token } = useAuth();
   // const [staffs, setStaffs] = useState([]);
   // const [positions, setPositions] = useState([]);
-  const getCus = async (id) => await getCusService(id, token);
-  const editCus = async (id, value) => {
-    const res = await editCusService(id, value, token);
+  const getSize = async (id) => await getSizeService(id, token);
+  const editSize = async (id, value) => {
+    const res = await editSizeService(id, value, token);
     if (res?.status === "success") {
       toastSuccess(res.msg);
-      nav("/dashboard/customer");
+      nav("/dashboard/size");
     } else toastError(res?.msg);
   };
-  const getAllCus = async (page) => {
-    const res = await getAllCusService(page, token);
+  const getSizes = async (page) => {
+    const res = await getSizesService(page, token);
     return res;
   };
-  const deleteCus = async (id) => {
-    const res = await deleteCusService(id, token);
+  const deleteSize = async (id) => {
+    const res = await deleteSizeService(id, token);
     if (res?.status === "success") {
       toastSuccess(res?.msg);
       return res;
@@ -37,12 +37,12 @@ export function useCus() {
       return res;
     }
   };
-  const addCus = async (value) => {
+  const addSize = async (value) => {
     try {
-      const res = await addCusService(value, token);
+      const res = await addSizeService(value, token);
       if (res?.status === "success") {
         toastSuccess(res?.msg);
-        nav("/dashboard/customer");
+        nav("/dashboard/size");
       }
      
     } catch (e) {
@@ -52,12 +52,12 @@ export function useCus() {
 
   };
   return {
-    getAllCus,
-    deleteCus,
-    addCus,
-    getCus,
-    editCus,
+    getSizes,
+    deleteSize,
+    addSize,
+    getSize,
+    editSize,
   };
 }
 
-export default useCus;
+export default useSize;
