@@ -21,6 +21,7 @@ export function useProvider() {
   const editProvider = async (id,value) => {
     const res = await editProviderServices(id, value, token);
     res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
+    nav("/dashboard/provider");
   };
   const deleteProvider = async (id) => {
     const res = await deleteProviderServices(id, token);
@@ -30,7 +31,7 @@ export function useProvider() {
     const res = await addProviderServices(val, token);
     if (res.status === "success") {
       toastSuccess(res.msg);
-      nav("/dashboard/providers");
+      nav("/dashboard/provider");
     } else toastError(res.msg);
   };
  

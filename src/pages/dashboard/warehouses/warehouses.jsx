@@ -47,7 +47,7 @@ export function Warehouses() {
 
   useEffect(() => {
     (async () => {
-      const res = await getAllWarehouses();
+      const res = await getAllWarehouses(page);
       setWarehouses(res);
     
     })();
@@ -94,7 +94,7 @@ export function Warehouses() {
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
-              <tr>
+              <tr className="bg-cyan-600 ">
                 {[
                   "name",
                   "phone number",
@@ -109,7 +109,7 @@ export function Warehouses() {
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                      className="text-[15px] font-bold uppercase text-white"
                     >
                       {el}
                     </Typography>

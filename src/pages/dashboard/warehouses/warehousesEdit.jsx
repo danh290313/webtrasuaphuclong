@@ -223,7 +223,7 @@ export function WarehousesEdit() {
                       <div>
                         {
                           <table className="w-full min-w-[640px] table-auto">
-                            <thead>
+                            <thead className="bg-green-500 ">
                               <tr>
                                 {["id", "name", "uom", "amount"].map((el) => (
                                   <th
@@ -232,7 +232,7 @@ export function WarehousesEdit() {
                                   >
                                     <Typography
                                       variant="small"
-                                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                                      className="text-[15px] font-bold uppercase text-blue-gray-400 text-white"
                                     >
                                       {el}
                                     </Typography>
@@ -248,7 +248,7 @@ export function WarehousesEdit() {
                                     index ===
                                     warehouse?.materialsOfWarehouse?.length - 1
                                       ? ""
-                                      : "border-b border-blue-gray-50"
+                                      : "border-b border-blue-gray-50 "
                                   }`;
 
                                   return (
@@ -286,6 +286,7 @@ export function WarehousesEdit() {
                               name={`materialsOfWarehouse.${index}.amount`}
                               placeholder="Jane Doe"
                               type="text"
+                              className="text-blue-900 underline decoration-dotted text-xl"
                               />
                       </td>
 
@@ -314,6 +315,8 @@ export function WarehousesEdit() {
                       </div>
                     )}
                   />
+
+        
 
                   <Button
                     variant={"gradient"}

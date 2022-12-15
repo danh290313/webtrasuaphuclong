@@ -107,7 +107,7 @@ export function Customer() {
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
               <thead>
-                <tr className="bg-orange-500 ">
+                <tr className="bg-cyan-600 ">
                   {[
                     "name",
                     "gender",
@@ -123,7 +123,7 @@ export function Customer() {
                     >
                       <Typography
                         variant="small"
-                        className="text-[11px] font-bold uppercase text-white"
+                        className="text-[15px] font-bold uppercase text-white"
                       >
                         {el}
                       </Typography>
@@ -137,7 +137,7 @@ export function Customer() {
                     { id, name, gender, phoneNumber, dob, active, addresses },
                     key
                   ) => {
-                    const className = `py-3 px-5 whitespace-nowrap ${
+                    const className = `py-3 px-5 whitespace-nowrap bg-cyan-50  ${
                       key === customer.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"

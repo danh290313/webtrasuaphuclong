@@ -14,15 +14,9 @@ import useProvider from "@/hooks/useProvider";
 import BackBtn from "@/components/BackBtn";
 import { useState,useEffect } from "react";
 
-const initialValues = {
-  name: "",
-  address: "",
-  phoneNumber: "",
-};
 
-function ProviderAdd() {
+function ProviderEdit() {
   const [provider, setProvider] = useState(null);
-  const {} = useProvider();
 
   let { id } = useParams();
   id = +id;
@@ -31,30 +25,31 @@ function ProviderAdd() {
     id: id,
     name: provider?.name,
     address: provider?.address,
-    phoneNumber: provider?.phoneNumber, 
-    dateOpened: provider?.dateOpened,
-    active: provider?.active,
+    phone_number: provider?.phone_number, 
   };
-  console.log({ initialValues });
+
+  console.log({ initialValues },"tst");
   useEffect(() => {
     (async () => {
       const res = await getProvider(id);
-      // console.log({ res });
-      setProvider(res?.data?.data);
+      console.log({ res }, "test");
+      setProvider(res?.provider);
     })();
   }, []);
+
   const handleSubmit = (value) => {
     console.log({ value });
     editProvider(id, value);
   };
   return (
+    provider &&
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <BackBtn to="/dashboard/provider" />
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={ProviderSchema}
+           //validationSchema={ProviderSchema}
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -87,7 +82,7 @@ function ProviderAdd() {
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <Field
-                            name="phoneNumber"
+                            name="phone_number"
                             component={InputField}
                             label="Phone Number"
                           />
@@ -121,4 +116,4 @@ function ProviderAdd() {
   );
 }
 
-export default ProviderAdd;
+export default ProviderEdit;

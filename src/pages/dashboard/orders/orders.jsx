@@ -182,7 +182,7 @@ export function Orders() {
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                      className="text-[15px] font-bold uppercase text-blue-gray-400"
                     >
                       {el}
                     </Typography>
@@ -192,7 +192,7 @@ export function Orders() {
             </thead>
             <tbody>
               {Order.map(({ id, created_at, paid, note, status }, key) => {
-                const className = `py-3 px-5 whitespace-nowrap ${
+                const className = `py-3 px-5 whitespace-nowrap bg-cyan-50  ${
                   key === Order.length - 1 ? "" : "border-b border-blue-gray-50"
                 }`;
 

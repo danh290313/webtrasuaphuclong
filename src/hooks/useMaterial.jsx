@@ -45,13 +45,14 @@ function useMaterial() {
       console.log("danh",res);
       if (res?.status === "success") {
         toastSuccess(res?.msg);
-        nav("/dashboard/material");
+        
       }
      
     } catch (e) {
       console.error(e);
       toastError(e?.response?.data?.errors || e.message);
     }
+    nav("/dashboard/material");
 
   };
   return {

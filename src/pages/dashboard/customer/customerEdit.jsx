@@ -34,6 +34,7 @@ function CustomerEdit() {
       setCus(res?.data);
     })();
   }, []);
+  console.log(initialValues, "test");
   const handleSubmit = (value) => {
     console.log({ value });
     editCus(id, value);
