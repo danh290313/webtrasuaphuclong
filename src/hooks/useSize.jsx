@@ -44,12 +44,10 @@ export function useSize() {
         toastSuccess(res?.msg);
         nav("/dashboard/size");
       }
-     
     } catch (e) {
-      console.error(e);
-      toastError(e?.response?.data?.errors || e.message);
+      console.log(e?.response?.data || e.message);
+      toastError(e?.response?.data?.message || e.message);
     }
-
   };
   return {
     getSizes,

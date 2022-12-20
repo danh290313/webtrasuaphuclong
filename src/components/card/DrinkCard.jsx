@@ -14,12 +14,11 @@ import {
 import { Link } from "react-router-dom";
 import { RecipesIcon } from "@/assets/icon";
 function DrinkCard({ data }) {
-  // console.log({ data });
   return (
     <Card className="w-full">
       <CardBody>
         <div className="flex justify-between">
-          <img src={data.imageSource} alt="" className="mr-10 w-[50px]" />
+          <img src={data.image} alt="" className="mr-10 w-[50px]" />
           <div className="flex justify-between">
             <div>
               <Chip value="active" className="bg-green-400" />

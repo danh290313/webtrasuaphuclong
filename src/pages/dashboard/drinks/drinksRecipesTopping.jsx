@@ -24,7 +24,7 @@ function DrinksRecipesTopping() {
   const [schema, setChema] = useState(null);
   const [mats, setMats] = useState();
   const nav = useNavigate();
-  const { getAllMaterial } = useMaterial();
+  const { getMaterials } = useMaterial();
   const [drink, setDrink] = useState();
   const { getDrink } = useDrink();
   const handleOnChangeMat = (e, mats) => {
@@ -79,10 +79,11 @@ function DrinksRecipesTopping() {
       });
     })();
     (async () => {
-      const res = await getAllMaterial();
+      const res = await getMaterials();
       setMats(res.data);
     })();
   }, []);
+  console.log(matsChoosed, mats);
   return (
     mats &&
     matsChoosed && (
@@ -96,11 +97,11 @@ function DrinksRecipesTopping() {
                 multiple
                 id="materials"
                 options={mats}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option?.name}
                 defaultValue={matsChoosed.map((m, i) =>
                   mats.find((v) => m.id === v.id)
                 )}
-                isOptionEqualToValue={(o, v) => o.id === v.id}
+                isOptionEqualToValue={(o, v) => o?.id === v?.id}
                 filterSelectedOptions
                 onChange={handleOnChangeMat}
                 renderInput={(params) => (

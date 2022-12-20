@@ -66,7 +66,7 @@ export function Drinks() {
                 </Grid>
               );
             })
-          : drinks?.data?.map((drink, i) => (
+          : drinks?.data?.data?.map((drink, i) => (
               <Grid key={i} item md={6} sm={12}>
                 <DrinkCard data={drink} />
               </Grid>

@@ -23,7 +23,7 @@ import useStaff from "@/hooks/useStaff";
 
 import useRole from "@/hooks/useRole";
 import useUser from "@/hooks/useUser";
-
+import BackBtn from "@/components/BackBtn";
 
 function StaffUser() {
   const nav = useNavigate();
@@ -36,7 +36,7 @@ function StaffUser() {
   const [value, setValue] = useState(null);
 
   const [staff, setStaff] = useState();
-  const {  getStaff, editStaff } = useStaff();
+  const { getStaff, editStaff } = useStaff();
   useEffect(() => {
     // setUser(getUser(id));
     (async () => {
@@ -44,7 +44,6 @@ function StaffUser() {
       setStaff(res?.data?.data);
     })();
   }, []);
-
 
   useEffect(() => {
     // setUser(getUser(id));
@@ -64,12 +63,10 @@ function StaffUser() {
       email: valSubmit.email,
       password: valSubmit.password,
       role: valSubmit.role,
-      
     };
     setValue(reContructVal);
-      editUser(value);
-      nav("/dashboard/User");
-    
+    editUser(value);
+    nav("/dashboard/User");
   };
   const handleOK = () => {
     editUser(value);
@@ -83,9 +80,9 @@ function StaffUser() {
   }, []);
   return (
     User &&
-    role &&
-     (
-      <div className="mt-12 mb-8 flex flex-col gap-12">
+    role && (
+      <div className="mt-12 flex flex-col gap-4">
+        <BackBtn to="/dashboard/staff" />
         <Card>
           <CardBody>
             <Formik
@@ -97,9 +94,8 @@ function StaffUser() {
               {(props) => {
                 return (
                   <>
-
                     <Form>
-                      <Grid container spacing={2} >
+                      <Grid container spacing={2}>
                         <Grid item xs={12} md={6}>
                           <FormGroup>
                             <FastField
@@ -121,7 +117,6 @@ function StaffUser() {
                           </FormGroup>
                         </Grid>
                       </Grid>
-                        
                     </Form>
 
                     <Form>
@@ -139,14 +134,12 @@ function StaffUser() {
                           <FormGroup>
                             <Field
                               name="password"
-                              
                               component={InputField}
                               type="password"
                               label="Password"
                             />
                           </FormGroup>
                         </Grid>
-                     
 
                         <Grid item xs={12} md={6}>
                           <FormGroup>
@@ -163,8 +156,6 @@ function StaffUser() {
                             />
                           </FormGroup>
                         </Grid>
-                      
-
                       </Grid>
                       <div className="flex">
                         <Button
