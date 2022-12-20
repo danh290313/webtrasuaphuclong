@@ -32,7 +32,12 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OrderCard from "@/components/card/OrderCard";
+import DrinkCardSkeleton from "@/components/card/DrinkCardSkeleton";
 import { Grid } from "@mui/material";
+import useOrder from "@/hooks/useOrder";
+import { useEffect } from "react";
+
+
 const Order = [
   {
     id: "123",
@@ -85,27 +90,25 @@ const filter = [
   },
 ];
 export function Orders() {
-  const [idChoosing, setIdChoosing] = useState(null);
 
-  const handleResetPass = () => {
-    console.log({ idChoosing });
-    setOpen(!open);
-    toast.success("🦄 Success!", {
-      position: "bottom-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-  const [open, setOpen] = useState(false);
-  const handleOpen = (id) => {
-    setOpen(!open);
-    setIdChoosing(id);
-  };
+  const [idChoosing, setIdChoosing] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { getOrders } = useOrder();
+  useEffect(() => {
+    setLoading(true);
+    const getOrderss = async () => {
+      try {
+        const res = await getOrders(1);
+        setOrders(res?.data);
+        setLoading(false);
+      } catch (err) {
+        toastError(err.message);
+      }
+    };
+    getOrderss();
+  }, []);
+  console.log("danh ",orders);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -153,14 +156,25 @@ export function Orders() {
             {filter.map(({ value, desc }) => (
               <TabPanel key={value} value={value}>
                 {value === "online" || value === "all" ? (
-                  <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                  </div>
+                 // <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+
+                    <Grid container spacing={2}>
+                      {false
+                        ? [1, 2, 3, 4].map((v, i) => {
+                          return (
+                            <Grid key={i} item md={6} sm={12}>
+                              <DrinkCardSkeleton />
+                            </Grid>
+                          );
+                        })
+                        : orders.map((order, i) => (
+                          
+                          <Grid key={i} item md={6} sm={12}>
+                            <OrderCard data={order} />
+                          </Grid>
+                        ))}
+                    </Grid>
+                 // </div>
                 ) : (
                   "123"
                 )}

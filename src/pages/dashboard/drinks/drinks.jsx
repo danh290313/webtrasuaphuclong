@@ -19,8 +19,10 @@ export function Drinks() {
     setLoading(true);
     const getDrinks = async () => {
       try {
-        const res = await getAllDrinks();
-        setDrinks(res);
+        const res = await getAllDrinks(1);
+        console.log("test",res);
+        setDrinks(res?.data);
+
         setLoading(false);
       } catch (err) {
         toastError(err.message);
@@ -28,6 +30,7 @@ export function Drinks() {
     };
     getDrinks();
   }, []);
+  console.log("t", drinks);
   return (
     <div className="mt-12 mb-8 flex  flex-col gap-8">
       <div className="flex justify-between">
@@ -57,21 +60,22 @@ export function Drinks() {
           </Button>
         </Link>
       </div>
-      <Grid container spacing={2}>
-        {loading
-          ? [1, 2, 3, 4].map((v, i) => {
-              return (
+        <Grid container spacing={2}>
+          {loading
+            ? [1, 2, 3, 4].map((v, i) => {
+                return (
+                  <Grid key={i} item md={6} sm={12}>
+                    <DrinkCardSkeleton />
+                  </Grid>
+                );
+              })
+            : drinks?.data?.map((drink, i) => (
+            
                 <Grid key={i} item md={6} sm={12}>
-                  <DrinkCardSkeleton />
+                  <DrinkCard data={drink} />
                 </Grid>
-              );
-            })
-          : drinks?.data?.map((drink, i) => (
-              <Grid key={i} item md={6} sm={12}>
-                <DrinkCard data={drink} />
-              </Grid>
-            ))}
-      </Grid>
+              ))}
+        </Grid>
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
