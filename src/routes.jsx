@@ -53,6 +53,10 @@ import {
   SizeAdd,
   SizeEdit,
 } from "@/pages/dashboard/size";
+import {
+  User,
+  UserEdit,
+} from "@/pages/dashboard/user";
 
 
 import { UserMinusIcon } from "@heroicons/react/24/outline";
@@ -240,6 +244,18 @@ export const routes = [
         path: "/material/add",
         element: <MaterialAdd />,
       },
+      {
+        icon: <BuildingStorefrontIcon {...icon} />,
+        name: "User",
+        path: "/user",
+        element: <User />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/user/:id",
+        element: <UserEdit />,
+      },
+      
 
       {
         icon: <UserCircleIcon {...icon} />,

@@ -11,11 +11,11 @@ export function useRole() {
   const { token } = useAuth();
  
   const getRoles = async () => {
-    const { data } = await getRolesServices(token);
-    if (data?.status === "success") return data;
+    const res = await getRolesServices(token);
+    if (res?.status === "success") return res;
     else {
-      toastError(data?.msg);
-      return data;
+      toastError(res?.msg);
+      return res;
     }
   };
   

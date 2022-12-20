@@ -19,90 +19,54 @@ import { useNavigate, useParams } from "react-router-dom";
 import { forwardRef, useEffect, useState } from "react";
 import { confirmPasswordSchema } from "@/utils/schemas";
 import ConfirmDialog from "@/components/ConfirmDialog";
-import useStaff from "@/hooks/useStaff";
-
-import useRole from "@/hooks/useRole";
 import useUser from "@/hooks/useUser";
-import BackBtn from "@/components/BackBtn";
+import useRole from "@/hooks/useRole";
 
-function StaffUser() {
+
+
+function userEdit() {
   const nav = useNavigate();
   let { id } = useParams();
   id =+id;
 
-  const [User, setUser] = useState();
+  const [user, setUser] = useState();
   const { getRoles } = useRole();
   const [role, setRole] = useState();
-  const { addUser, editUser } = useUser();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState();
+  const { editUser, getUser } = useUser();
 
+  const initialValues =
+  {
+    email: user?.email,
+    role: user?.role_id,
+   ...user?.staff
+  //  name: user?.staff.name,
+  //  phoneNumber: user?.staff.phoneNumber
+  };
 
-  const [staff, setStaff] = useState();
-  const { getStaff, editStaff } = useStaff();
-  useEffect(() => {
-    // setUser(getUser(id));
-    (async () => {
-      const res = await getStaff(id);
-      setStaff(res?.data?.data);
-    })();
-  }, []);
 
   useEffect(() => {
     // setUser(getUser(id));
     (async () => {
       const res = await getUser(id);
-      setUser(res?.data?.data);
+      setUser(res?.data  );
     })();
-  }, []);
-  const initialValues = {
-    ...staff,
-    ...User,
-    role: User?.role?.id,
-  };
-  const handleSubmit = (valSubmit) => {
-    const reContructVal = {
-      email: valSubmit.email,
-      password: valSubmit.password,
-      role: valSubmit.role,
-    };
-    setValue(reContructVal);
-    editUser(value);
-    nav("/dashboard/User");
-  };
- 
-  const handleClose = () => setOpen(false);
-  
-  const handleOK = () => {
-    editUser(value);
-    nav("/dashboard/staff");
-  };
 
-  useEffect(() => {
     (async () => {
       const res = await getRoles();
       setRole(res?.data);
     })();
   }, []);
 
-  useEffect(() => {
-    // setUser(getUser(id));
-    (async () => {
-      const res = await getStaff(id);
-      setStaff(res?.staff_infomation    );
-    })();
-  }, []);
+  const handleSubmit = (valSubmit) => {
+    const reContructVal = {
+      email: valSubmit.email,
+      password: valSubmit.password,
+      password_confirmation: valSubmit.confirmpassword,
+      role_id: valSubmit.role,
+      staff_id: id
+    };
 
-  // const handleSubmit = (valSubmit) => {
-  //   const reContructVal = {
-  //     email: valSubmit.email,
-  //     password: valSubmit.password,
-  //     password_confirmation: valSubmit.confirmpassword,
-  //     role_id: valSubmit.role,
-  //     staff_id: id
-  //   };
-
-    addUser(reContructVal);
+    editUser(id, reContructVal);
     console.log("da", reContructVal);
       nav("/dashboard/User");
     
@@ -110,15 +74,14 @@ function StaffUser() {
 
 
   return (
-    staff &&
+    user &&
     role &&
      (
       <div className="mt-12 mb-8 flex flex-col gap-12">
-          <BackBtn to="/dashboard/staff" />
         <Card>
           <CardBody>
             <Formik
-              initialValues={staff}
+              initialValues={initialValues}
               validationSchema={confirmPasswordSchema}
               onSubmit={handleSubmit}
               validateOnBlur={true}
@@ -126,8 +89,9 @@ function StaffUser() {
               {(props) => {
                 return (
                   <>
+
                     <Form>
-                      <Grid container spacing={2}>
+                      <Grid container spacing={2} >
                         <Grid item xs={12} md={6}>
                           <FormGroup>
                             <FastField
@@ -149,6 +113,7 @@ function StaffUser() {
                           </FormGroup>
                         </Grid>
                       </Grid>
+                        
                     </Form>
 
                     <Form>
@@ -166,6 +131,7 @@ function StaffUser() {
                           <FormGroup>
                             <Field
                               name="password"
+                              
                               component={InputField}
                               type="password"
                               label="Password"
@@ -179,6 +145,7 @@ function StaffUser() {
                             />
                           </FormGroup>
                         </Grid>
+                     
 
                         <Grid item xs={12} md={6}>
                           <FormGroup>
@@ -195,6 +162,8 @@ function StaffUser() {
                             />
                           </FormGroup>
                         </Grid>
+                      
+
                       </Grid>
                       <div className="flex">
                         <Button
@@ -238,5 +207,4 @@ function StaffUser() {
   );
 }
 
-
-export default StaffUser;
+export default userEdit;

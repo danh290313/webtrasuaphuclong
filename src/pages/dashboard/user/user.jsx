@@ -14,18 +14,24 @@ import {
 } from "@material-tailwind/react";
 // import { authorsTableData, projectsTableData } from "@/data";
 import ConfirmDialog from "@/components/ConfirmDialog";
-import useStaff from "@/hooks/useStaff";
+import useUser from "@/hooks/useUser";
+import useRole from "@/hooks/useRole";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Pagination } from "@mui/material";
 import { positions } from "@mui/system";
-export function Staff() {
+export function User() {
+  console.log("test");
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
-  const { deleteStaff, getStaffs, resetPassStaff } = useStaff();
-  const [staffs, setStaffs] = useState();
+  const [user,setUser] = useState();
+  const { deleteUser, getUsers,getUser, resetPassUser } = useUser();
+  const { getRoles } = useRole();
+  const [role, setRole] = useState();
+
+  const [Users, setUsers] = useState();
   const [page, setPage] = useState(1);
   const handleOpen = (id, type) => {
     setType(type);
@@ -34,15 +40,22 @@ export function Staff() {
   };
   const handleOK = () => {
     setOpen(false);
-    if (type === "resetpass") resetPassStaff(idChoosing);
+    if (type === "resetpass") 
+    {
+      (async () => {
+        await resetPassUser(idChoosing);
+       
+      })();
+    }
     else {
       (async () => {
-        await deleteStaff(idChoosing);
+        await deleteUser(idChoosing);
         let npage;
-        if (staffs?.data?.length === 1) npage = page - 1;
+        if (Users?.length === 1) npage = page - 1;
         else npage = page;
-        const res = await getStaffs(npage);
-        setStaffs(res);
+        const res = await getUsers(npage);
+        console.log({ res });
+        setUsers(res);
         if (npage !== page) setPage(npage);
       })();
     }
@@ -55,12 +68,32 @@ export function Staff() {
   };
   useEffect(() => {
     (async () => {
-      const res = await getStaffs(page);
-      console.log(res);
-      setStaffs(res);
+      const res = await getUsers(page);
+      console.log("test",res);
+      setUsers(res?.data?.data);
     })();
   }, [page]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getRoles();
+      setRole(res?.data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    // setStaff(getStaff(id));
+    (async () => {
+      const res = await getUser(id);
+      setUser(res);
+    })();
+  }, []);
+  
+  console.log(role);
+
   return (
+    role &&
+    Users &&
     <div className="mt-12 mb-8 flex flex-col gap-8">
       <div className="flex justify-between">
         <div>
@@ -72,22 +105,22 @@ export function Staff() {
               type="search"
               id="default-search"
               className="primary-search"
-              placeholder="Search staff"
+              placeholder="Search User"
               required
             />
           </div>
         </div>
-        <Link to="add" className="">
+        {/* <Link to="add" className="">
           <Button
             variant={"gradient"}
             color={"blue"}
             className="flex items-center px-3 py-1 capitalize"
           >
             <Typography color="inherit" className="font-medium capitalize">
-              Add Staff
+              Add User
             </Typography>
           </Button>
-        </Link>
+        </Link> */}
       </div>
       <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -95,13 +128,10 @@ export function Staff() {
             <thead className="bg-cyan-600 ">
               <tr>
                 {[
-                  "name",
-                  "gender",
-                  "phone",
-                  "dob",
-                  "active",
-                  "branch",
-                  "position",
+                  "id",
+                  "email",
+                  "role",
+                 
                   "",
                 ].map((el) => (
                   <th
@@ -119,75 +149,55 @@ export function Staff() {
               </tr>
             </thead>
             <tbody>
-              {staffs?.data?.map(
+              {Users.map(
                 (
                   {
-                    active,
-                    dob,
-                    gender,
                     id,
-                    name,
-                    phoneNumber,
-                    branch,
-                    position,
+                    email,
+                    role_id,
+
                   },
                   key
                 ) => {
                   const className = `py-3 px-5 whitespace-nowrap bg-cyan-50  ${
-                    key === staffs.length - 1
+                    key === Users.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
                   }`;
 
                   return (
                     <tr key={key}>
+
                       <td className={className}>
-                        <div>{name}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{gender === 0 ? "Nam" : "Nữ"}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{phoneNumber}</div>
+                        <div>{id}</div>
                       </td>
 
                       <td className={className}>
-                        <div>{dob}</div>
+                        <div>{email}</div>
+                      </td>
+                      
+                      <td className={className}>
+                        <div>{role.map((obj) =>
+                        (
+                          obj.id === role_id ? obj.name :""
+                        ))}</div>
                       </td>
 
-                      <td className={className}>
-                        <div>{String(active)}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{branch.name}</div>
-                      </td>
-                      <td className={className}>
-                        <div>{position.name}</div>
-                      </td>
                       <td className={className}>
                         <div className="flex items-center space-x-3">
-                          {/* <Link to={`delete/${id}`}>
-                          <Tooltip content="Edit">
-                            <TrashIcon className="h-5 w-5 text-red-500" />
-
-                          </Link> */}
-
-                          <Link to={`edituser/${id}`}>
-                            <Tooltip content="AddUser">
-                              <UserIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
-                            </Tooltip>
-                          </Link>
+                    
+                         
 
                           <Link to={`${id}`}>
                             <Tooltip content="Edit">
                               <PencilSquareIcon className="h-9 w-5 cursor-pointer text-light-blue-600" />
                             </Tooltip>
                           </Link>
-                          {/* <button onClick={() => handleOpen(id, "resetpass")}>
+                          <button onClick={() => handleOpen(id, "resetpass")}>
                             <Tooltip content="Reset password">
                               <ArrowPathIcon className="h-5 w-5 cursor-pointer text-red-500" />
                             </Tooltip>
-                          </button> */}
+                          </button>
                           <button onClick={() => handleOpen(id, "delete")}>
                             <Tooltip content="delete">
                               <TrashIcon className="h-5 w-5 cursor-pointer text-red-500" />
@@ -205,7 +215,7 @@ export function Staff() {
       </Card>
       <div className="m-auto w-fit">
         <Pagination
-          count={Math.ceil(staffs?.meta?.total / staffs?.meta?.per_page)}
+          count={Math.ceil(Users?.meta?.total / Users?.meta?.per_page)}
           page={page}
           onChange={handleChangePage}
         />
@@ -213,8 +223,8 @@ export function Staff() {
       <ConfirmDialog
         title={
           type === "resetpass"
-            ? "Reset this staff's password ?"
-            : "Delete this staff ?"
+            ? "Reset this User's password ?"
+            : "Delete this User ?"
         }
         handleClose={handleClose}
         open={open}
@@ -224,4 +234,4 @@ export function Staff() {
   );
 }
 
-export default Staff;
+export default User;
