@@ -100,3 +100,13 @@ export const materialSchema = Yup.object().shape({
   name,
   uom,
 });  
+
+export const confirmPasswordSchema = Yup.object().shape({
+   password: Yup
+    .string()
+    .required('Password is required')
+    .min(5, 'Your password is too short.'),
+  confirmpassword: Yup
+    .string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  });

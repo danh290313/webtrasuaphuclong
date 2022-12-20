@@ -80,3 +80,8 @@ export const deleteUser = async (id, token) => {
   const res = await deletereq(`/admin/users/${id}`, {}, { token });
   return res;
 };
+export const resetPassUser = async (id, token) => {
+  const res = await post(`/admin/users/reset-password/${id}`, {}, { token });
+  return res;
+};
+

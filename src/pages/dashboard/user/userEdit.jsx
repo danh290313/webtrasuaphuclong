@@ -19,47 +19,41 @@ import { useNavigate, useParams } from "react-router-dom";
 import { forwardRef, useEffect, useState } from "react";
 import { confirmPasswordSchema } from "@/utils/schemas";
 import ConfirmDialog from "@/components/ConfirmDialog";
-import useStaff from "@/hooks/useStaff";
-
-import useRole from "@/hooks/useRole";
 import useUser from "@/hooks/useUser";
+import useRole from "@/hooks/useRole";
 
 
-function StaffUser() {
+
+function userEdit() {
   const nav = useNavigate();
   let { id } = useParams();
   id =+id;
 
-  const [User, setUser] = useState();
+  const [user, setUser] = useState();
   const { getRoles } = useRole();
   const [role, setRole] = useState();
-  const { addUser, editUser } = useUser();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState();
+  const { editUser, getUser } = useUser();
 
-
-  const [staff, setStaff] = useState();
-  const {  getStaff, editStaff } = useStaff();
- 
-  const handleClose = () => setOpen(false);
-  
-  const handleOK = () => {
-    editUser(value);
-    nav("/dashboard/staff");
+  const initialValues =
+  {
+    email: user?.email,
+    role: user?.role_id,
+   ...user?.staff
+  //  name: user?.staff.name,
+  //  phoneNumber: user?.staff.phoneNumber
   };
 
-  useEffect(() => {
-    (async () => {
-      const res = await getRoles();
-      setRole(res?.data);
-    })();
-  }, []);
 
   useEffect(() => {
     // setUser(getUser(id));
     (async () => {
-      const res = await getStaff(id);
-      setStaff(res?.staff_infomation    );
+      const res = await getUser(id);
+      setUser(res?.data  );
+    })();
+
+    (async () => {
+      const res = await getRoles();
+      setRole(res?.data);
     })();
   }, []);
 
@@ -72,7 +66,7 @@ function StaffUser() {
       staff_id: id
     };
 
-    addUser(reContructVal);
+    editUser(id, reContructVal);
     console.log("da", reContructVal);
       nav("/dashboard/User");
     
@@ -80,14 +74,14 @@ function StaffUser() {
 
 
   return (
-    staff &&
+    user &&
     role &&
      (
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Card>
           <CardBody>
             <Formik
-              initialValues={staff}
+              initialValues={initialValues}
               validationSchema={confirmPasswordSchema}
               onSubmit={handleSubmit}
               validateOnBlur={true}
@@ -213,4 +207,4 @@ function StaffUser() {
   );
 }
 
-export default StaffUser;
+export default userEdit;

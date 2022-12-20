@@ -4,6 +4,7 @@ import {
   addUser as addUserServices,
   getUser as getUserServices,
   editUser as editUserServices,
+  resetPassUser as resetPassUserServices
 } from "@/services/userApi";
 import { toastError, toastSuccess } from "@/utils/toast";
 import { useEffect, useState, useLayoutEffect } from "react";
@@ -32,8 +33,15 @@ export function useUser() {
     const res = await addUserServices(val, token);
     if (res.status === "success") {
       toastSuccess(res.msg);
-      nav("/dashboard/users");
+      nav("/dashboard/staff");
     } else toastError(res.msg);
+  };
+  const resetPassUser = async(id) =>
+  {
+    const res = await resetPassUserServices(id, token);
+    console.log("testuser", token);
+    res.status === "success" ? toastSuccess(res.msg) : toastError(res.msg);
+
   };
 
 
@@ -44,6 +52,7 @@ export function useUser() {
     addUser,
     getUser,
     editUser,
+    resetPassUser,
   };
 }
 
