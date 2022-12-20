@@ -66,12 +66,12 @@ export function Drinks() {
                   </Grid>
                 );
               })
-            : drinks?.data?.map((drink, i) => (
-                <Grid key={i} item md={6} sm={12}>
-                  <DrinkCard data={drink} />
-                </Grid>
-              ))}
-        </Grid>
+            : drinks?.data?.data?.map((drink, i) => (
+              <Grid key={i} item md={6} sm={12}>
+                <DrinkCard data={drink} />
+              </Grid>
+            ))}
+      </Grid>
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">

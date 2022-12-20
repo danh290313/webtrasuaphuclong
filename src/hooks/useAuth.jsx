@@ -26,6 +26,7 @@ function useAuth() {
         return dispatch(loginFail(data));
       }
     } catch (err) {
+      console.error(err);
       if (err?.response?.data?.msg) {
         toastError(err.response.data.msg);
         return dispatch(loginFail(err.response.data.msg));

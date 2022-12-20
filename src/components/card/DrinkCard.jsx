@@ -14,7 +14,6 @@ import {
 import { Link } from "react-router-dom";
 import { RecipesIcon } from "@/assets/icon";
 function DrinkCard({ data }) {
-  // console.log({ data });
   return (
     <Card className="w-full">
       <CardBody>

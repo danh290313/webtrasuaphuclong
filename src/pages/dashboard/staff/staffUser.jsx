@@ -23,7 +23,7 @@ import useStaff from "@/hooks/useStaff";
 
 import useRole from "@/hooks/useRole";
 import useUser from "@/hooks/useUser";
-
+import BackBtn from "@/components/BackBtn";
 
 function StaffUser() {
   const nav = useNavigate();
@@ -39,7 +39,42 @@ function StaffUser() {
 
 
   const [staff, setStaff] = useState();
-  const {  getStaff, editStaff } = useStaff();
+  const { getStaff, editStaff } = useStaff();
+  useEffect(() => {
+    // setUser(getUser(id));
+    (async () => {
+      const res = await getStaff(id);
+      setStaff(res?.data?.data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    // setUser(getUser(id));
+    (async () => {
+      const res = await getUser(id);
+      setUser(res?.data?.data);
+    })();
+  }, []);
+  const initialValues = {
+    ...staff,
+    ...User,
+    role: User?.role?.id,
+  };
+  const handleSubmit = (valSubmit) => {
+    const reContructVal = {
+      email: valSubmit.email,
+      password: valSubmit.password,
+      role: valSubmit.role,
+    };
+
+    
+    setValue(reContructVal);
+    // editUser(value);
+    // nav("/dashboard/User");
+    addUser(reContructVal);
+    console.log("da", reContructVal);
+      nav("/dashboard/User");
+  };
  
   const handleClose = () => setOpen(false);
   
@@ -63,20 +98,18 @@ function StaffUser() {
     })();
   }, []);
 
-  const handleSubmit = (valSubmit) => {
-    const reContructVal = {
-      email: valSubmit.email,
-      password: valSubmit.password,
-      password_confirmation: valSubmit.confirmpassword,
-      role_id: valSubmit.role,
-      staff_id: id
-    };
+  // const handleSubmit = (valSubmit) => {
+  //   const reContructVal = {
+  //     email: valSubmit.email,
+  //     password: valSubmit.password,
+  //     password_confirmation: valSubmit.confirmpassword,
+  //     role_id: valSubmit.role,
+  //     staff_id: id
+  //   };
 
-    addUser(reContructVal);
-    console.log("da", reContructVal);
-      nav("/dashboard/User");
+   
     
-  };
+  
 
 
   return (
@@ -84,6 +117,7 @@ function StaffUser() {
     role &&
      (
       <div className="mt-12 mb-8 flex flex-col gap-12">
+          <BackBtn to="/dashboard/staff" />
         <Card>
           <CardBody>
             <Formik
@@ -95,9 +129,8 @@ function StaffUser() {
               {(props) => {
                 return (
                   <>
-
                     <Form>
-                      <Grid container spacing={2} >
+                      <Grid container spacing={2}>
                         <Grid item xs={12} md={6}>
                           <FormGroup>
                             <FastField
@@ -119,7 +152,6 @@ function StaffUser() {
                           </FormGroup>
                         </Grid>
                       </Grid>
-                        
                     </Form>
 
                     <Form>
@@ -137,7 +169,6 @@ function StaffUser() {
                           <FormGroup>
                             <Field
                               name="password"
-                              
                               component={InputField}
                               type="password"
                               label="Password"
@@ -151,7 +182,6 @@ function StaffUser() {
                             />
                           </FormGroup>
                         </Grid>
-                     
 
                         <Grid item xs={12} md={6}>
                           <FormGroup>
@@ -168,8 +198,6 @@ function StaffUser() {
                             />
                           </FormGroup>
                         </Grid>
-                      
-
                       </Grid>
                       <div className="flex">
                         <Button
@@ -212,5 +240,6 @@ function StaffUser() {
     )
   );
 }
+
 
 export default StaffUser;
