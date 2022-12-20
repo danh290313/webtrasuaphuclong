@@ -57,21 +57,21 @@ export function Drinks() {
           </Button>
         </Link>
       </div>
-      <Grid container spacing={2}>
-        {loading
-          ? [1, 2, 3, 4].map((v, i) => {
-              return (
+        <Grid container spacing={2}>
+          {loading
+            ? [1, 2, 3, 4].map((v, i) => {
+                return (
+                  <Grid key={i} item md={6} sm={12}>
+                    <DrinkCardSkeleton />
+                  </Grid>
+                );
+              })
+            : drinks?.data?.map((drink, i) => (
                 <Grid key={i} item md={6} sm={12}>
-                  <DrinkCardSkeleton />
+                  <DrinkCard data={drink} />
                 </Grid>
-              );
-            })
-          : drinks?.data?.map((drink, i) => (
-              <Grid key={i} item md={6} sm={12}>
-                <DrinkCard data={drink} />
-              </Grid>
-            ))}
-      </Grid>
+              ))}
+        </Grid>
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">

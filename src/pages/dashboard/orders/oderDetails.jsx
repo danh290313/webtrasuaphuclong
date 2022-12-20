@@ -1,70 +1,105 @@
 import BackBtn from "@/components/backBtn";
+import useOrder from "@/hooks/useOrder";
+import useStaff from "@/hooks/useStaff";
 import { Card, CardBody, Typography } from "@material-tailwind/react";
 import { Divider } from "@mui/material";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 function OrderDetails() {
+  const [order, setOrder] = useState();
+  let {id } = useParams();
+  const { getOrder } = useOrder();
+  useEffect(
+    () => {
+      ( async () => {
+        const res = await getOrder(id);
+        setOrder(res);
+      })();
+
+    }, []
+  );
+  console.log("danh ", order);
+
   return (
-    <>
+    order &&
+    <> 
       <BackBtn to={"/dashboard/orders"} />
-      <div className="gap-4 md:flex">
-        <div className="flex-1 space-y-4">
-          <Card>
+      <div className="gap-4 md:flex ">
+        <div className="flex-1 space-y-4 ">
+          <Card className="bg-green-100">
             <CardBody>
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <div className="flex  w-full flex-col">
-                    <span>order id</span>
-                    <span>#123123123</span>
+                    <span className="text-red-600 uppercase font-bold" >order id {order?.order?.id}</span>
                   </div>
                   <div className="flex  w-full flex-col">
-                    <span>order date</span>
-                    <span>MAY 11,2020, 5:54:24 pm</span>
+                    <span className="text-cyan-600 uppercase font-bold">order date</span>
+                    <span>{order?.order?.createdAt}</span>
                   </div>
                   <div className="flex w-full flex-col">
-                    <span>payment</span>
-                    <span>cash</span>
+                    <span className="text-cyan-600 uppercase font-bold">payment</span>
+                    <span>{order?.order?.paid}</span>
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <div className="flex w-full flex-col">
-                    <span>ship to</span>
-                    <span>1642 Cambridge Drive, Phoenix, 85029 Arizona</span>
+                  <div className="flex max-w-[200px] w-full flex-col">
+                    <span className="text-cyan-600 uppercase font-bold">ship to</span>
+                    <span>{order?.order?.address.address}</span>
                   </div>
                   <div className="flex min-w-[85px] flex-col">
-                    <span>paid</span>
-                    <span>yes</span>
+                    <span className="text-cyan-600 uppercase font-bold">paid</span>
+                    <span>{order?.order?.paid}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span>status</span>
+                    <span className="text-cyan-600 uppercase font-bold">status</span>
                     <span>success</span>
                   </div>
                 </div>
               </div>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="bg-green-50">
             <CardBody>
               <Typography varient="h2" className="font-bold">
                 ITEMS
               </Typography>
-              {[1, 2, 3, 4, 5, 6].map(() => (
-                <div className="mt-4 space-y-3">
+              {order?.orderDetail.map(({drinkName,drinkSize,quantity,price,topping_list}) => (
+                <div className="mt-4 space-y-3" >
                   <div className="flex">
-                    <div className="flex">
+                    <div className="flex mt-4">
                       <img
                         src="https://aeonmall-binhduongcanary.com.vn/wp-content/uploads/2020/05/tra-dao.png"
                         alt=""
                         className="h-20 w-20"
                       />
                       <div className="ml-3">
-                        <div className="font-bold">Trà đào x2</div>
-                        <div className="">Des: Đá: Không, Đường: ít</div>
-                        <div>Customer note: ko trà ko đào</div>
+                        <div className="font-bold">{drinkName}</div>
+                        <div className="">{drinkSize}</div>
+                        <div>Quantity: {quantity}</div>
+                        
                         <div className="flex space-x-3">
-                          <div className="line-through">45000.00 đ</div>{" "}
-                          <div>300000.00 đ</div>
+                          <div >{price}</div>
                         </div>
                       </div>
+
+                    </div>
+                    <div className="flex">
+                        {
+                         
+                          // ({topping_list})?.map(
+                          //   (quan) =>
+                          //   (
+                          //     <div className="flex">
+                          //       <div >asdna {quan}</div>
+                          //     </div>
+                          //   )
+                          // )
+                         
+                        }
+                        
                     </div>
                   </div>
                 </div>
@@ -73,27 +108,27 @@ function OrderDetails() {
           </Card>
         </div>
         <div className="mt-4 flex-1 space-y-4 md:mt-0">
-          <Card>
+          <Card className="bg-green-100">
             <CardBody>
               <div className="space-y-3">
                 <div className="space-y-6">
-                  <div className="flex  w-full flex-col">
-                    <span>user name</span>
-                    <span>tu nguyen</span>
+                  <div className="flex  w-full ">
+                    <span className="mr-2 text-cyan-600 uppercase font-bold" > Name:  </span>
+                    <span>  {order?.order?.staff.name}</span>
                   </div>
-                  <div className="flex w-full flex-col">
-                    <span>user mobile</span>
-                    <span>0934213413</span>
+                  <div className="flex w-full l">
+                    <span className="mr-2 text-cyan-600 uppercase font-bold">phoneNumber:</span>
+                    <span> {order?.order?.staff.phoneNumber}</span>
                   </div>
-                  <div className="flex w-full flex-col">
-                    <span>user address</span>
-                    <span>1642 Cambridge Drive, Phoenix, 85029 Arizona</span>
+                  <div className="flex w-full ">
+                    <span className="mr-2 text-cyan-600 uppercase font-bold">Address:</span>
+                    <span>  {order?.order?.staff.address}</span>
                   </div>
                 </div>
               </div>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="bg-green-50">
             <CardBody>
               <div className="space-y-3">
                 <div className="space-y-6">
