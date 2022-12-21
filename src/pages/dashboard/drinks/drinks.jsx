@@ -19,10 +19,8 @@ export function Drinks() {
     setLoading(true);
     const getDrinks = async () => {
       try {
-        const res = await getAllDrinks(1);
-        console.log("test",res);
-        setDrinks(res?.data);
-
+        const res = await getAllDrinks();
+        setDrinks(res);
         setLoading(false);
       } catch (err) {
         toastError(err.message);
@@ -30,7 +28,6 @@ export function Drinks() {
     };
     getDrinks();
   }, []);
-  console.log("t", drinks);
   return (
     <div className="mt-12 mb-8 flex  flex-col gap-8">
       <div className="flex justify-between">
@@ -59,7 +56,8 @@ export function Drinks() {
             </Typography>
           </Button>
         </Link>
-      </div>
+      {/* </div>
+<<<<<<< HEAD
         <Grid container spacing={2}>
           {loading
             ? [1, 2, 3, 4].map((v, i) => {
@@ -72,19 +70,34 @@ export function Drinks() {
 <<<<<<< HEAD
             : drinks?.data?.map((drink, i) => (
             
+=======
+      <Grid container spacing={2}>
+        {loading
+          ? [1, 2, 3, 4].map((v, i) => {
+              return (
+>>>>>>> parent of 4bf7e63 (order)
                 <Grid key={i} item md={6} sm={12}>
-                  <DrinkCard data={drink} />
+                  <DrinkCardSkeleton />
                 </Grid>
+<<<<<<< HEAD
               ))}
         </Grid>
 =======
             : drinks?.data?.data?.map((drink, i) => (
+=======
+              );
+            })
+          : drinks?.data?.map((drink, i) => (
+>>>>>>> parent of 4bf7e63 (order)
               <Grid key={i} item md={6} sm={12}>
                 <DrinkCard data={drink} />
               </Grid>
             ))}
       </Grid>
+<<<<<<< HEAD
 >>>>>>> c68e792691599eb981401cf6f004e9d63b0a3e25
+=======
+>>>>>>> parent of 4bf7e63 (order) */}
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
@@ -188,6 +201,7 @@ export function Drinks() {
           </table>
         </CardBody>
       </Card> */}
+    </div>
     </div>
   );
 }

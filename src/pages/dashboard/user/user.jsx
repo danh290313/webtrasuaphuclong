@@ -26,7 +26,6 @@ export function User() {
   const [idChoosing, setIdChoosing] = useState(null);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
-  const [user,setUser] = useState();
   const { deleteUser, getUsers,getUser, resetPassUser } = useUser();
   const { getRoles } = useRole();
   const [role, setRole] = useState();
@@ -81,15 +80,7 @@ export function User() {
     })();
   }, []);
 
-  useEffect(() => {
-    // setStaff(getStaff(id));
-    (async () => {
-      const res = await getUser(id);
-      setUser(res);
-    })();
-  }, []);
   
-  console.log(role);
 
   return (
     role &&
