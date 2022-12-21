@@ -13,60 +13,11 @@ import { warehousesSchema } from "@/utils/schemas";
 import { useState } from "react";
 import { useEffect } from "react";
 import useWarehouse from "@/hooks/useWarehouse";
-
-import {
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
-
-import { Pagination } from "@mui/material";
-
-const initialValues = {
-  name: "",
-  address: "",
-  phone_number: "0961144072",
-  date_opened: "2000/11/11",
-  materialsOfWarehouse: [
-    {
-      id: "1",
-      name: "danh",
-      uom: "kg",
-      amount:"",
-    },
-  ],
-  active: 1,
-  
-};
-
 export function WarehousesEdit() {
   const [warehouse, setWarehouse] = useState();
-  const { getWarehouse } = useWarehouse();
+  const { getWarehouse, editWarehouse } = useWarehouse();
+
   const { id } = useParams();
-
-  // const handleSubmit = (value) => {
-  //   const reContructVal = {
-  //     //name: value.name,
-  //     address: value.address,
-  //     phone_number: value.phone_number,
-  //     date_opened: value.date_opened,
-  //     materialsOfWarehouse: value.materialsOfWarehouse.map(
-  //                           (mat) => ({
-  //                             id: mat.id,
-  //                             amount: mat.amount,
-  //                             name: mat.name,
-  //                           }),
-  //                         ),
-  //     active: value.active,
-  //   }
-  // }
-    
-
-  // };
-  // initContructVal(warehouse);
-
-
-
   useEffect(() => {
     (async () => {
       const res = await getWarehouse(id);
@@ -74,41 +25,24 @@ export function WarehousesEdit() {
     })();
   }, []);
 
-  console.log(warehouse, "danh");
-
-  const [idChoosing, setIdChoosing] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1);
-
-  const { editWarehouse, getAllWarehouses, deleteWarehouse } = useWarehouse();
-
   const handleChangePage = (e, npage) => {
     setPage(npage);
   };
 
-
-
   const handleSubmit = (value) => {
-
     const reContructVal = {
       name: value.name,
       address: value.address,
       phone_number: value.phone_number,
       date_opened: value.date_opened,
-      list_material: value.materialsOfWarehouse.map(
-                            (mat) => ({
-                              id: mat.id,
-                              amount: mat.amount,
-                            }),
-                          ),
+      list_material: value.materialsOfWarehouse.map((mat) => ({
+        id: mat.id,
+        amount: mat.amount,
+      })),
       active: value.active,
-    }
+    };
     editWarehouse(id, reContructVal);
-
-
-    console.log("tsssssss", value);
   };
-  console.log(warehouse, "danh");
 
   return (
     warehouse && (
@@ -117,6 +51,7 @@ export function WarehousesEdit() {
           initialValues={warehouse}
           onSubmit={handleSubmit}
           validateOnBlur={true}
+          // validationSchema={warehousesSchema}
         >
           {({ values }) => {
             //do somthing here
@@ -232,7 +167,7 @@ export function WarehousesEdit() {
                                   >
                                     <Typography
                                       variant="small"
-                                      className="text-[15px] font-bold uppercase text-blue-gray-400 text-white"
+                                      className="text-[15px] font-bold uppercase text-white"
                                     >
                                       {el}
                                     </Typography>
@@ -243,7 +178,7 @@ export function WarehousesEdit() {
 
                             <tbody>
                               {values.materialsOfWarehouse.map(
-                                ({id, name},index) => {
+                                ({ id, name }, index) => {
                                   const className = `py-3 px-5 ${
                                     index ===
                                     warehouse?.materialsOfWarehouse?.length - 1
@@ -254,56 +189,45 @@ export function WarehousesEdit() {
                                   return (
                                     <tr key={index}>
                                       {/* <input className={className}
-    name="idMaterial"
-    value={idMaterial}
-    component={InputField}
-    
-  /> */}
+                                          name="idMaterial"
+                                          value={idMaterial}
+                                          component={InputField}
+                                        /> */}
+                                      <td className={className}>
+                                        <Field
+                                          name={`materialsOfWarehouse.${index}.id`}
+                                          placeholder="Jane Doe"
+                                          type="text"
+                                          disabled
+                                        />
+                                      </td>
 
-                              <td className={className}> 
-                                <Field
-                              name={`materialsOfWarehouse.${index}.id`}
-                              placeholder="Jane Doe"
-                              type="text"
-                              disabled
-                              />
-                               </td>
+                                      <td className={className}>
+                                        <Field
+                                          name={`materialsOfWarehouse.${index}.name`}
+                                          placeholder="Jane Doe"
+                                          type="text"
+                                          disabled
+                                        />
+                                      </td>
 
-                           
+                                      <td className={className}>
+                                        <Field
+                                          name={`materialsOfWarehouse.${index}.amount`}
+                                          placeholder="Jane Doe"
+                                          type="text"
+                                          className="text-xl text-blue-900 underline decoration-dotted"
+                                        />
+                                      </td>
 
-                              <td className={className}>
-                              <Field
-                              name={`materialsOfWarehouse.${index}.name`}
-                              placeholder="Jane Doe"
-                              type="text"
-                              disabled
-                              />
-                               </td>
-
-                             
-                      <td className={className}>
-                        <Field
-                              name={`materialsOfWarehouse.${index}.amount`}
-                              placeholder="Jane Doe"
-                              type="text"
-                              className="text-blue-900 underline decoration-dotted text-xl"
-                              />
-                      </td>
-
-                      <td className={className}>
-                      <Field
-                              name={`materialsOfWarehouse.${index}.uom`}
-                              placeholder="Jane Doe"
-                              type="text"
-                              disabled
-                              />
-                      </td>
-
-                            
-
-                              
-
-                                      
+                                      <td className={className}>
+                                        <Field
+                                          name={`materialsOfWarehouse.${index}.uom`}
+                                          placeholder="Jane Doe"
+                                          type="text"
+                                          disabled
+                                        />
+                                      </td>
                                     </tr>
                                   );
                                 }
@@ -311,12 +235,9 @@ export function WarehousesEdit() {
                             </tbody>
                           </table>
                         }
-                      
                       </div>
                     )}
                   />
-
-        
 
                   <Button
                     variant={"gradient"}

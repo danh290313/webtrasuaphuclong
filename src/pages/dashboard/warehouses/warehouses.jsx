@@ -29,14 +29,22 @@ export function Warehouses() {
   const [page, setPage] = useState(1);
 
   const { getAllWarehouses, deleteWarehouse } = useWarehouse();
-  
+
   const handleOpen = (id, type) => {
     setOpen(!open);
     setIdChoosing(id);
   };
   const handleOK = () => {
-    deleteWarehouse(idChoosing);
     setOpen(false);
+    (async () => {
+      await deleteWarehouse(idChoosing);
+      let npage;
+      if (warehouses?.data?.length === 1) npage = page - 1;
+      else npage = page;
+      const res = await getAllWarehouses(npage);
+      setWarehouses(res);
+      if (npage !== page) setPage(npage);
+    })();
   };
   const handleClose = () => {
     setOpen(false);
@@ -49,10 +57,8 @@ export function Warehouses() {
     (async () => {
       const res = await getAllWarehouses(page);
       setWarehouses(res);
-    
     })();
   }, [page]);
-
 
   return (
     <div className="mt-12 mb-8 flex flex-col gap-8">
@@ -120,12 +126,7 @@ export function Warehouses() {
             <tbody>
               {warehouses?.data?.map(
                 (
-                  { active, 
-                    dateOpened, 
-                    id, 
-                    name, 
-                    phoneNumber,
-                    address },
+                  { active, dateOpened, id, name, phoneNumber, address },
                   key
                 ) => {
                   const className = `py-3 px-5 ${

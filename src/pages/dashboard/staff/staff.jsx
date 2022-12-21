@@ -42,7 +42,6 @@ export function Staff() {
         if (staffs?.data?.length === 1) npage = page - 1;
         else npage = page;
         const res = await getStaffs(npage);
-        console.log({ res });
         setStaffs(res);
         if (npage !== page) setPage(npage);
       })();

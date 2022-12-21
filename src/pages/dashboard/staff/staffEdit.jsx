@@ -21,6 +21,7 @@ import useBranch from "@/hooks/useBranch";
 import { forwardRef, useEffect, useState } from "react";
 import useStaff from "@/hooks/useStaff";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import BackBtn from "@/components/BackBtn";
 
 function StaffEdit() {
   const nav = useNavigate();
@@ -92,7 +93,8 @@ function StaffEdit() {
     staff &&
     branch &&
     positions && (
-      <div className="mt-12 mb-8 flex flex-col gap-12">
+      <div className="mt-12  flex flex-col gap-4">
+        <BackBtn to="/dashboard/staff" />
         <Card>
           <CardBody>
             <Formik

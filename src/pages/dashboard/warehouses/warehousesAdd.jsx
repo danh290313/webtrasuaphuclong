@@ -14,63 +14,50 @@ import useWarehouse from "@/hooks/useWarehouse";
 import useMaterial from "@/hooks/useMaterial";
 import { useState, useEffect } from "react";
 
-
-
 export function WarehousesAdd() {
-  const { addWarehouse} = useWarehouse();
-  const { getMaterials} = useMaterial();
+  const { addWarehouse } = useWarehouse();
+  const { getMaterials } = useMaterial();
   const [material, setMaterial] = useState();
 
   const initialValues = {
     name: "",
     address: "",
-    phone_number: "0961144072",
-    date_opened: "2000/11/11",
+    phone_number: "",
+    date_opened: "",
     active: 1,
-    list_material: material?.data?.map(
-      (mat) => ({
-        id: mat.id,
-        amount: 0,
-      }),
-    )
-   
+    list_material: material?.data?.map((mat) => ({
+      id: mat.id,
+      amount: 0,
+    })),
   };
-  
-  console.log("testsss", initialValues)
-
   const handleSubmit = (value) => {
-    const reContructVal ={
+    const reContructVal = {
       name: value.name,
       address: value.address,
       phone_number: value.phone_number,
       date_opened: value.date_opened,
       active: value.active,
-      list_material: material?.data?.map(
-        (mat) => ({
-          id: mat.id,
-          amount: 0,
-        }),
-      )
+      list_material: material?.data?.map((mat) => ({
+        id: mat.id,
+        amount: 0,
+      })),
     };
     console.log(reContructVal);
     addWarehouse(reContructVal);
-   };
+  };
 
   useEffect(() => {
-    (async () =>{
+    (async () => {
       const res = await getMaterials();
       setMaterial(res);
     })();
-    
-  },[]);
-  console.log("danH", material);
+  }, []);
   return (
     <div className="mt-12 mb-8 flex flex-col gap-12">
       <Card>
         <CardBody>
           <Formik
             initialValues={initialValues}
-            
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >
@@ -80,7 +67,7 @@ export function WarehousesAdd() {
               return (
                 <>
                   <Form>
-                  <Grid container spacing={2}>
+                    <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <FormGroup>
                           <FastField
@@ -155,8 +142,6 @@ export function WarehousesAdd() {
       </Card>
     </div>
   );
-
-
 }
 
 export default WarehousesAdd;
