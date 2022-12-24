@@ -20,7 +20,13 @@ function OrderDetails() {
 
     }, []
   );
-  console.log("danh ", order);
+ 
+  const sum = order?.orderDetail.reduce( 
+    (subtotal, a ) => subtotal + a.quantity*a.price, 0
+  )
+
+    
+
 
   return (
     order &&
@@ -67,6 +73,7 @@ function OrderDetails() {
                 ITEMS
               </Typography>
               {order?.orderDetail.map(({drinkName,drinkSize,quantity,price,topping_list}) => (
+                
                 <div className="mt-4 space-y-3" >
                   <div className="flex">
                     <div className="flex mt-4">
@@ -132,27 +139,29 @@ function OrderDetails() {
             <CardBody>
               <div className="space-y-3">
                 <div className="space-y-6">
+
                   <div className="flex  w-full flex-col">
-                    <span>Subtotal </span>
-                    <span>2000000.00 đ</span>
+                    <span className="text-cyan-600 uppercase font-bold ">Subtotal: </span>
+                    <span>{sum} đ</span>
                   </div>
-                  <div className="flex w-full flex-col">
-                    <span>Discount</span>
-                    <span>-500000.00 đ</span>
+         
+                  <div className="flex w-full flex-col ">
+                    <span className="text-cyan-600 uppercase font-bold" >Discount</span>
+                    <span>0 đ</span>
                   </div>
-                  <div className="flex w-full flex-col">
-                    <span>Tax</span>
+                  <div className="flex w-full flex-col ">
+                    <span className="text-cyan-600 uppercase font-bold" >Tax</span>
                     <span>3000.00 đ</span>
                   </div>
                   <div className="flex w-full flex-col">
-                    <span>Shipping</span>
+                    <span className="text-cyan-600 uppercase font-bold" >Shipping</span>
                     <span>20000.00 đ</span>
                   </div>
                   <div className="space-y-2">
                     <div className="w-full border-b-2 border-gray-800" />
-                    <div className="flex w-full flex-col">
-                      <span className="font-bold font-semibold">Total</span>
-                      <span>1500000.00 đ</span>
+                    <div className="flex w-full flex-row">
+                      <span className="font-bold font-semibold text-cyan-600 uppercase font-bold">Total</span>
+                      <span className="ml-5 font-bold">{sum + 3000 + 20000 } đ</span>
                     </div>
                     <div className="w-full border-b-2 border-gray-900" />
                   </div>

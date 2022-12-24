@@ -10,7 +10,10 @@ import DrinkCardSkeleton from "@/components/card/DrinkCardSkeleton";
 import { toast } from "react-toastify";
 import { toastError } from "@/utils/toast";
 import useDrink from "@/hooks/useDrink";
+
 export function Drinks() {
+
+
   const [idChoosing, setIdChoosing] = useState(null);
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -56,48 +59,22 @@ export function Drinks() {
             </Typography>
           </Button>
         </Link>
-      {/* </div>
-<<<<<<< HEAD
-        <Grid container spacing={2}>
-          {loading
-            ? [1, 2, 3, 4].map((v, i) => {
-                return (
-                  <Grid key={i} item md={6} sm={12}>
-                    <DrinkCardSkeleton />
-                  </Grid>
-                );
-              })
-<<<<<<< HEAD
-            : drinks?.data?.map((drink, i) => (
-            
-=======
+      </div>
       <Grid container spacing={2}>
         {loading
           ? [1, 2, 3, 4].map((v, i) => {
               return (
->>>>>>> parent of 4bf7e63 (order)
                 <Grid key={i} item md={6} sm={12}>
                   <DrinkCardSkeleton />
                 </Grid>
-<<<<<<< HEAD
-              ))}
-        </Grid>
-=======
-            : drinks?.data?.data?.map((drink, i) => (
-=======
               );
             })
-          : drinks?.data?.map((drink, i) => (
->>>>>>> parent of 4bf7e63 (order)
+          : drinks?.data?.data.map((drink, i) => (
               <Grid key={i} item md={6} sm={12}>
                 <DrinkCard data={drink} />
               </Grid>
             ))}
       </Grid>
-<<<<<<< HEAD
->>>>>>> c68e792691599eb981401cf6f004e9d63b0a3e25
-=======
->>>>>>> parent of 4bf7e63 (order) */}
       {/* <Card>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <table className="w-full min-w-[640px] table-auto">
@@ -201,7 +178,6 @@ export function Drinks() {
           </table>
         </CardBody>
       </Card> */}
-    </div>
     </div>
   );
 }

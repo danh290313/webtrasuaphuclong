@@ -34,10 +34,9 @@ const initialValues = {
   type: "2",
 };
 const validationShema = drinksSchema;
-function DrinksEdit() {
+function DrinksAdd() {
   const [imgLink, setImgLink] = useState();
-  let {id} = useParams();
-  id=+id;
+
   const [drink, setDrink] = useState();
   const [typeofdrink, setTypeofDrink] = useState();
   const [needValidate, setNeedValidate] = useState(true);
@@ -57,11 +56,7 @@ function DrinksEdit() {
   const { getDrink, getTypeofDrink } = useDrink();
 
   useEffect(() => {
-    (async () => {
-      const res = await getDrink(id);
-      setDrink(res?.drinkInfo);
-    }
-    )();
+   
     (async() => {
       const res = await getTypeofDrink();
       setTypeofDrink(res?.sizes);
@@ -76,7 +71,7 @@ function DrinksEdit() {
 
   return (
     typeofdrink &&
-    drink &&
+
     <div className="mt-12 mb-8 flex flex-col gap-12 ">
       <Formik
         initialValues={drink}
@@ -226,4 +221,4 @@ function DrinksEdit() {
   );
 }
 
-export default DrinksEdit;
+export default DrinksAdd;

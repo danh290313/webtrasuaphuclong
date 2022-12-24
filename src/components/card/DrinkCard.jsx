@@ -21,7 +21,7 @@ function DrinkCard({ data }) {
           <img src={data.image} alt="" className="mr-10 w-[50px]" />
           <div className="flex justify-between">
             <div>
-              <Chip value="active" className="bg-green-400" />
+              <Chip value={data.active?"active":"unactive"} className="bg-green-400" />
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@ function DrinkCard({ data }) {
             {data.name}
           </Typography>
 
-          <Chip value="40.0000 đ" />
+          <Chip value={data.price} />
         </div>
         <p
           // variant="small"
@@ -41,7 +41,7 @@ function DrinkCard({ data }) {
         <div className="flex">
           <div>
             {/* <span className="mr-10 cursor-default">Sale on day: 0</span> */}
-            <div className="text-bold">slug: /{data.slug}</div>
+            <div className="text-bold">slug: {data.slug}</div>
           </div>
           <div className="ml-auto flex items-center justify-between space-x-3">
             <Link to={`${data.id}`}>

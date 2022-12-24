@@ -83,6 +83,7 @@ function DrinksRecipesTopping() {
       setMats(res.data);
     })();
   }, []);
+
   console.log(matsChoosed, mats);
   return (
     mats &&
@@ -98,8 +99,8 @@ function DrinksRecipesTopping() {
                 id="materials"
                 options={mats}
                 getOptionLabel={(option) => option?.name}
-                defaultValue={matsChoosed.map((m, i) =>
-                  mats.find((v) => m.id === v.id)
+                defaultValue={matsChoosed.map(
+                  (m, i) => mats.find((v) => m.id === v.id)
                 )}
                 isOptionEqualToValue={(o, v) => o?.id === v?.id}
                 filterSelectedOptions

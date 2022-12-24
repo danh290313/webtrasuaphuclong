@@ -1,6 +1,7 @@
 import {
   getAllDrinks as getAllDrinksService,
   getDrink as getDrinkService,
+  getTypeofDrink as getTypeofDrinkService
 } from "@/services/drinksApi";
 import { toastError, toastSuccess } from "@/utils/toast";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,12 @@ function useDrink() {
     const res = await getDrinkService(id, token);
     return res;
   };
+  const getTypeofDrink = async () =>
+  {
+    const res = await getTypeofDrinkService(token);
+    return res;
+  };
+
   // const deleteWarehouse = async (id) => {
   //   const { data } = await deleteWarehouseService(id, token);
   //   if (data.status === "success") {
@@ -30,7 +37,9 @@ function useDrink() {
   //   !data && toastError("Error finding warehouse");
   //   return data;
   // };
-  return { getAllDrinks, getDrink };
+
+
+  return { getAllDrinks, getDrink,getTypeofDrink };
 }
 
 export default useDrink;

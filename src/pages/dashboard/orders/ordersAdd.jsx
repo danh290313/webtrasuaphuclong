@@ -9,6 +9,14 @@ import DatePickerField from "@/components/custom-fields/DatePickerField/DatePick
 import { useNavigate } from "react-router-dom";
 import InputField from "@/components/custom-fields/InputField";
 import SwitchField from "@/components/custom-fields/SwitchField/SwitchField";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Label } from "@mui/icons-material";
+import useOrder from '@/hooks/useOrder';
+import useStaff from '@/hooks/useStaff';
+import useBranch from '@/hooks/useBranch';
+import {useEffect, useState} from 'react';
+import { BranchSchema } from "@/utils/schemas";
+
 const listStaff = [
   { id: "1", value: "Male" },
   { id: "2", value: "Female" },
@@ -30,14 +38,34 @@ const listBranch = [
   { id: "3", value: "Nha Trang" },
 ];
 
-const initialValues = {
-  id: "123",
-  created_at: "11/11/1111",
-  paid: "True",
-  note: "description",
-  status: { id: 18, value: "shipping" }
-
+const initialValues = 
+  {
+    staff_id: "",
+    branch_id: 1,
+    note: "",
+    paid: 1,
+    order_detail:[
+        {
+            drink_detail_id: "",
+            quantity: 0,
+            price : "",
+            topping_list: [
+                // {
+                //     quan: 0,
+                //     topping:[
+                //          {
+                //           topping_id: "",
+                //          },
+                       
+                //     ]
+                // }
+                
+            ]
+        }
+    ]
 };
+
+
 const validationShema = Yup.object().shape({
   note: Yup.string().min(10, "Name must be at least 10 characters"),
   status: Yup.string().required("This field is required"),
@@ -46,13 +74,39 @@ const validationShema = Yup.object().shape({
 
 });
 function OrdersAdd() {
+  const [staffs, setStaffs] = useState();
+  const [ branches, setBranches] = useState();
+  const {addOrder} = useOrder();
+  const {getStaffs} = useStaff();
+  const {getBranches} = useBranch();
+  
   const handleSubmit = (value) => {
-    console.log(value);
+    console.log('value :>> ', value);
+    addOrder(value);
   };
-  const nav = useNavigate();
+
+  useEffect(() => { 
+    (async () => 
+    {
+      const res = await getStaffs();
+      setStaffs(res?.data);
+    })();
+
+    (async () => 
+    {
+      const res = await getBranches();
+      setBranches(res?.data);
+    })();
+
+
+   },[]);
+
+
 
   return (
-    initialValues && (
+    branches &&
+    staffs &&
+      (
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <Formik
           initialValues={initialValues}
@@ -69,18 +123,62 @@ function OrdersAdd() {
                     <Card>
                       <CardBody>
                         <Grid container spacing={2}>
+
+                        
                           <Grid item xs={12} md={6}>
                             <FormGroup>
-                              <FastField
-                                name="id"
-                                component={InputField}
-                                label="Id"
-                                disabled
+                              <Field
+                                name="staff_id"
+                                component={SelectField}
+                                value="value"
+                                label="Staff"
+                                options={staffs.map((v) => ({ id: v.id,
+                                value: v.name, }))}
+                                defaultOp="Choose Staff"
                               />
                             </FormGroup>
                           </Grid>
 
                           <Grid item xs={12} md={6}>
+                            <FormGroup>
+                              <Field
+                                name="branch_id"
+                                component={SelectField}
+                                value="value"
+                                label="Branch"
+                                options={branches.map(
+                                  (v) => ({ id: v.id,
+                                  value: v.name, })
+                                )}
+                                defaultOp="Choose branch"
+                              />
+                            </FormGroup>
+                          </Grid>
+
+
+                          <Grid item xs={12} md={6}>
+                            <FormGroup>
+                              <Field
+                                name="note"
+                                component={InputField}
+                                label="Note"
+                              />
+                            </FormGroup>
+                          </Grid>
+
+                          <Grid item xs={12} md={6}>
+                            <FormGroup>
+                              <Field
+                                name="paid"
+                                component={SwitchField}
+                                label="Paied"
+                                confirm={"The buyer has paid bill ?"}
+                              />
+                            </FormGroup>
+                          </Grid>
+
+{/*                           
+                          <Grid item xs={12} md={6}>           
                             <FormGroup>
                               <Field
                                 name="status"
@@ -91,41 +189,13 @@ function OrdersAdd() {
                                 defaultOp="Choose Status"
                               />
                             </FormGroup>
-                          </Grid>
-                          <Grid item xs={12} md={6}>
-                            <FormGroup>
-                              <Field
-                                name="note"
-                                component={InputField}
-                                label="Note"
-                              />
-                            </FormGroup>
-                          </Grid>
-                          <Grid item xs={12} md={6}>
-                            <FormGroup>
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <Field
-                                  name="created_at"
-                                  component={DatePickerField}
-                                  label="Day is Created"
-                                  inputFormat="DD/MM/YYYY"
-                                />
-                              </LocalizationProvider>
-                            </FormGroup>
-                          </Grid>
+                          </Grid> */}
 
-                          <Grid item xs={12} md={6}>
-                            <FormGroup>
-                              <Field
-                                name="branch"
-                                component={SelectField}
-                                value="value"
-                                label="Branch"
-                                options={listBranch}
-                                defaultOp="Choose branch"
-                              />
-                            </FormGroup>
-                          </Grid>
+                          
+                         
+{/* 
+
+
                           <Grid item xs={12} md={6}>
                             <FormGroup>
                               <Field
@@ -138,112 +208,87 @@ function OrdersAdd() {
                               />
                             </FormGroup>
                           </Grid>
-                          <Grid item xs={12} md={6}>
-                            <FormGroup>
-                              <Field
-                                name="active"
-                                component={SwitchField}
-                                label="Paied"
-                                confirm={"The buyer has paid bill ?"}
-                              />
-                            </FormGroup>
-                          </Grid>
+                           */}
 
                         </Grid>
                       </CardBody>
                     </Card>
                   </div>
                   <div className="gap-4 md:flex ">
-                    <div className="flex-1 space-y-4 ">
+                    <div className="flex-2 space-y-4 ">
                       <Card className="bg-green-50">
                         <CardBody>
                           <Typography varient="h2" className="font-bold">
                             Detail order
                           </Typography>
                           <Typography>
-{/* 
-                          <FieldArray
-              name="listBranch"
-              render={({ insert, remove, push }) => (
-                <div>
-                  {
-                    values.listBranch.map((friend, index) => (
-                      <div className="row" key={index}>
-                        <div className="col">
-                          <label htmlFor={`listBranch.${index}.name`}>Name</label>
-                          <Field
-                            name={`listBranch.${index}.name`}
-                            placeholder="Jane Doe"
-                            type="text"
-                          />
-                          {errors.listBranch &&
-                            errors.listBranch[index] &&
-                            errors.listBranch[index].name &&
-                            touched.listBranch &&
-                            touched.listBranch[index].name && (
-                              <div className="field-error">
-                                {errors.listBranch[index].name}
-                              </div>
-                            )}
-                        </div>
-                        <div className="col">
-                          <label htmlFor={`listBranch.${index}.email`}>
-                            Email
-                          </label>
-                          <Field
-                            name={`listBranch.${index}.email`}
-                            placeholder="jane@acme.com"
-                            type="email"
-                          />
-                          {errors.listBranch &&
-                            errors.listBranch[index] &&
-                            errors.listBranch[index].email &&
-                            touched.listBranch &&
-                            touched.listBranch[index].email && (
-                              <div className="field-error">
-                                {errors.listBranch[index].email}
-                              </div>
-                            )}
-                        </div>
-                        <div className="col">
-                          <button
-                            type="button"
-                            className="secondary"
-                            onClick={() => remove(index)}
-                          >
-                            X
-                          </button>
-                        </div>
+
+                  <FieldArray name="order_detail">
+                    {arrayHelpers => (
+                      <div>
+                        {values.order_detail.map((item, index) => (
+                          <div key={index}>
+
+                            <Grid container spacing={2}>
+                              <Grid item xs={12} md={3}>
+                                <FormGroup>
+                                  <FastField
+                                    name={`order_detail.${index}.drink_detail_id`}
+                                    component={InputField}
+                                    label="drink_detail_id"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                              <Grid item xs={12} md={3}>
+                                <FormGroup>
+                                  <Field
+                                    name={`order_detail.${index}.quantity`}
+                                    component={InputField}
+                                    label="Quantity:"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                              <Grid item xs={12} md={3}>
+                                <FormGroup>
+                                  <Field
+                                    name={`order_detail.${index}.price`}
+                                    component={InputField}
+                                    label="Price:"
+                                  />
+                                </FormGroup>
+                              </Grid>
+
+                              <Grid item xs={12} md={3}>
+                                <FormGroup>
+                                <Button className="mt-8 mb-1" type="button" onClick={() => arrayHelpers.remove(index)}>
+                                Remove
+                                </Button>
+                              
+                                </FormGroup>
+                              </Grid>
+                              
+                            </Grid>
+
+                          
+                          </div>
+                        ))}
+                          <Button className="mt-1 mb-1" type="button" onClick={() => arrayHelpers.push({ drink_detail_id: '', quantity: 0, price: 0, topping_list:[] })}>
+                                  Add 
+                          </Button>
+                      
                       </div>
-                    ))}
-                  <button
-                    type="button"
-                    className="secondary"
-                    onClick={() => push({ name: "", email: "" })}
-                  >
-                    Add Friend
-                  </button>
-                </div>
-              )}
-            />
-            <br />
-            <button
-              onClick={event => {
-                event.preventDefault();
-                handleReset();
-              }}
-            >
-              Reset
-            </button> */}
-
-
+                    )}
+                  </FieldArray>
+                      
+                         
+                         
                           </Typography>
 
                         </CardBody>
                       </Card>
 
                     </div>
-                    <div className="mt-4 flex-1 space-y-4 md:mt-0">
+                    {/* <div className="mt-4 flex-1 space-y-4 md:mt-0">
                       <Card className="bg-green-50">
                         <CardBody>
                           <Typography varient="h2" className="font-bold">
@@ -251,13 +296,12 @@ function OrdersAdd() {
                           </Typography>
                           <Typography>
 
-
                           </Typography>
 
                         </CardBody>
                       </Card>
 
-                    </div>
+                    </div> */}
                   </div>
 
 

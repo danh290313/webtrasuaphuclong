@@ -30,6 +30,7 @@ import {
 import {
   Drinks,
   DrinksEdit,
+  DrinksAdd,
   DrinksRecipesTopping,
 } from "./pages/dashboard/drinks";
 
@@ -61,6 +62,7 @@ import {
 
 import { UserMinusIcon } from "@heroicons/react/24/outline";
 import { Materials, MaterialEdit, MaterialAdd } from "./pages/dashboard/materials";
+
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -129,6 +131,11 @@ export const routes = [
         name: "drinks",
         path: "/drinks",
         element: <Drinks />,
+      },
+      {
+        notOnSidebar: true,
+        path: "/drinks/add",
+        element: <DrinksAdd />,
       },
 
       {
