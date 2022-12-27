@@ -58,7 +58,7 @@ export function WarehousesAdd() {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            validationSchema={warehousesSchema}
+            //validationSchema={warehousesSchema}
             onSubmit={handleSubmit}
             validateOnBlur={true}
           >

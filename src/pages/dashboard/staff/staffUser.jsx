@@ -74,7 +74,7 @@ function StaffUser() {
 
     addUser(reContructVal);
     console.log("da", reContructVal);
-      nav("/dashboard/User");
+   
     
   };
 

@@ -42,7 +42,7 @@ function useWarehouse() {
   };
   const addWarehouse = async (value) => {
     try {
-      const { data } = await addWarehouseService(value, token);
+      const  data  = await addWarehouseService(value, token);
       if (data?.status === "success") {
         toastSuccess(data?.msg);
         nav("/dashboard/warehouse");
